@@ -1,7 +1,7 @@
 ﻿namespace Catalog.API.Products.GetProducts
 {
   public record GetProductsQuery(int? PageNumber = 1, int? PageSize = 10) : IQuery<GetProductsResult>;
-  public record GetProductsResult(IEnumerable<Product> Products);
+  public record GetProductsResult(IEnumerable<ProductDto> ProductDtos);
 
   internal class GetProductsQueryHandler
     (IDocumentSession session)
@@ -12,7 +12,8 @@
       var products = await session.Query<Product>()
           .ToPagedListAsync(query.PageNumber ?? 1, query.PageSize ?? 10, cancellationToken);
 
-      return new GetProductsResult(products);
+      var result = products.Adapt<IEnumerable<ProductDto>>();
+      return new GetProductsResult(result);
     }
   }
 }

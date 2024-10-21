@@ -1,7 +1,7 @@
 ﻿namespace Catalog.API.Products.GetProductById
 {
   public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;
-  public record GetProductByIdResult(Product Product);
+  public record GetProductByIdResult(ProductDto ProductDto);
 
   internal class GetProductByIdQueryHandler
       (IDocumentSession session)
@@ -16,7 +16,9 @@
         throw new ProductNotFoundException(query.Id);
       }
 
-      return new GetProductByIdResult(product);
+      var result = product.Adapt<ProductDto>();
+
+      return new GetProductByIdResult(result);
     }
   }
 }

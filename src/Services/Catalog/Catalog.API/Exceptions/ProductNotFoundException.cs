@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Exceptions;
+﻿using Common.Exceptions;
 
 namespace Catalog.API.Exceptions
 {

@@ -24,7 +24,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 950.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("5332k396-8457-4cf0-815c-ed2117c4ff61"),
                     CreatedAt = DateTime.UtcNow,
                 },
                 new Product()
@@ -34,7 +34,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 840.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("53323996-8457-4cf0-815c-ed2b77c22261"),
                     CreatedAt = DateTime.UtcNow,
                 },
                 new Product()
@@ -44,7 +44,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 650.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("53312196-8457-4cf0-815c-ed2b11222261"),
                     CreatedAt = DateTime.UtcNow,
                 },
                 new Product()
@@ -54,7 +54,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 470.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("11212196-8457-4cf0-815c-e93811222261"),
                     CreatedAt = DateTime.UtcNow,
                 },
                 new Product()
@@ -64,7 +64,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 380.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("11000196-8457-4cf0-815c-e93811000261"),
                     CreatedAt = DateTime.UtcNow,
                 },
                 new Product()
@@ -74,7 +74,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 240.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("11aaa196-8457-4cf0-815c-e9381aaa0261"),
                     CreatedAt = DateTime.UtcNow,
                 },
                 new Product()
@@ -84,7 +84,7 @@ namespace Catalog.API.Data
                     Description = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                     Price = 240.00M,
                     StockQuantity = 10,
-                    CategoryId = 1,
+                    CategoryId = new Guid("11aa8826-8457-4cf0-815c-e938kdj90261"),
                     CreatedAt = DateTime.UtcNow,
                 }
             };
