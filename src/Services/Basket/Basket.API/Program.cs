@@ -32,9 +32,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 ////Grpc Services
-//builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+//builder.Services.AddGrpcClient<PromotionProtoService.PromotionProtoServiceClient>(options =>
 //{
-//  options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+//  options.Address = new Uri(builder.Configuration["GrpcSettings:PromotionUrl"]!);
 //})
 //.ConfigurePrimaryHttpMessageHandler(() =>
 //{

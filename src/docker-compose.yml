@@ -22,6 +22,13 @@ services:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
+  promotion.grpc:
+    image: ${DOCKER_REGISTRY-}promotiongrpc
+    build:
+      context: .
+      dockerfile: Services/Promotion/Promotion.Grpc/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+

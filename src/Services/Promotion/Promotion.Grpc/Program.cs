@@ -1,9 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using Promotion.Grpc.Data;
 using Promotion.Grpc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddGrpc();
+
+builder.Services.AddDbContext<PromotionContext>(opts =>
+        opts.UseSqlite(builder.Configuration.GetConnectionString("Database")));
 
 var app = builder.Build();
 
