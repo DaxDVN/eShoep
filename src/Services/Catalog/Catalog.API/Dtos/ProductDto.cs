@@ -9,6 +9,7 @@
     public int StockQuantity { get; set; }
     public Guid CategoryId { get; set; }
     public Category? Category { get; set; }
+    public List<ProductImage> ProductImages { get; set; } = [];
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
   }

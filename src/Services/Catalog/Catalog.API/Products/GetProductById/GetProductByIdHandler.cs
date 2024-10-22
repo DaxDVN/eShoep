@@ -9,16 +9,28 @@
   {
     public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
-      var product = await session.LoadAsync<Product>(query.Id, cancellationToken);
+      var batch = session.CreateBatchQuery();
 
-      if (product is null)
+      var productBatch = batch.Load<Product>(query.Id);
+
+
+      var productImagesBatch = batch.Query<ProductImage>().Where(image => image.ProductId == query.Id).ToList();
+
+      await batch.Execute(cancellationToken);
+
+      if (productBatch.Result is null)
       {
         throw new ProductNotFoundException(query.Id);
       }
 
-      var result = product.Adapt<ProductDto>();
+      var category = await session.Query<Category>().FirstOrDefaultAsync(c => c.Id == productBatch.Result.CategoryId, cancellationToken);
 
-      return new GetProductByIdResult(result);
+      var productDto = productBatch.Result.Adapt<ProductDto>();
+
+      productDto.ProductImages = (List<ProductImage>)productImagesBatch.Result;
+      productDto.Category = category;
+
+      return new GetProductByIdResult(productDto);
     }
   }
 }
