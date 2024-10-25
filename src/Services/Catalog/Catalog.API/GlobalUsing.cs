@@ -1,10 +1,9 @@
-﻿global using Common.CQRS;
-global using Carter;
+﻿global using Carter;
 global using Catalog.API.Dtos;
 global using Catalog.API.Exceptions;
 global using Catalog.API.Models;
+global using Common.CQRS;
 global using FluentValidation;
 global using Mapster;
 global using Marten;
-global using Marten.Pagination;
 global using MediatR;

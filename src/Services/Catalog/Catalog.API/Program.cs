@@ -1,6 +1,6 @@
+using Catalog.API.Data;
 using Common.Behaviors;
 using Common.Exceptions;
-using Catalog.API.Data;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
