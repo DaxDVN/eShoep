@@ -1,6 +1,4 @@
-﻿using Purchasing.Domain.Exceptions;
-
-namespace Purchasing.Domain.ValueObjects
+﻿namespace Purchasing.Domain.ValueObjects
 {
   public record OrderId
   {

@@ -1,6 +1,4 @@
-﻿using Purchasing.Domain.Abstractions;
-
-namespace Purchasing.Domain.Models
+﻿namespace Purchasing.Domain.Models
 {
   public class Customer : Entity<CustomerId>
   {
