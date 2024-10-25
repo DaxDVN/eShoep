@@ -25,6 +25,7 @@ namespace Purchasing.Infrastructure.Data.Extensions
 
     private static async Task SeedCustomerAsync(ApplicationDbContext context)
     {
+      var test = await context.Customers.ToListAsync();
       if (!await context.Customers.AnyAsync())
       {
         await context.Customers.AddRangeAsync(InitialData.Customers);
@@ -50,4 +51,5 @@ namespace Purchasing.Infrastructure.Data.Extensions
       }
     }
   }
+
 }
