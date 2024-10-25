@@ -1,3 +1,11 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using Common.CQRS;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Logging;
+global using Purchasing.Application.Data;
 global using Purchasing.Application.Dtos;
+global using Purchasing.Application.Exceptions;
+global using Purchasing.Application.Extensions;
+global using Purchasing.Domain.Events;
 global using Purchasing.Domain.Models;
+global using Purchasing.Domain.ValueObjects;

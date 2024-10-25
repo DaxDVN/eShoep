@@ -15,7 +15,7 @@
 				<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
 		</ItemGroup>
 		<ItemGroup>
-				<!--<ProjectReference Include="..\..\..\Common\Common.Messaging\Common.Messaging.csproj" />-->
+				<ProjectReference Include="..\..\..\Common\Common.Messaging\Common.Messaging.csproj" />
 				<ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
 				<ProjectReference Include="..\Purchasing.Domain\Purchasing.Domain.csproj" />
 		</ItemGroup>
