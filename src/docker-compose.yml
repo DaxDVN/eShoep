@@ -10,6 +10,12 @@ services:
   distributedcache:
     image: redis
 
+  purchasingdb:
+    image: mcr.microsoft.com/mssql/server
+
+  messagebroker:
+    image: rabbitmq:management
+
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
@@ -28,7 +34,14 @@ services:
       context: .
       dockerfile: Services/Promotion/Promotion.Grpc/Dockerfile
 
+  purchasing.api:
+    image: ${DOCKER_REGISTRY-}purchasingapi
+    build:
+      context: .
+      dockerfile: Services/Purchasing/Purchasing.API/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
 
