@@ -1,18 +1,19 @@
 ﻿namespace Purchasing.Domain.ValueObjects
 {
-  public record ProductId
-  {
-    public Guid Value { get; }
-    private ProductId(Guid value) => Value = value;
-    public static ProductId Of(Guid value)
+    public record ProductId
     {
-      ArgumentNullException.ThrowIfNull(value);
-      if (value == Guid.Empty)
-      {
-        throw new DomainException("ProductId cannot be empty.");
-      }
+        public Guid Value { get; }
+        private ProductId(Guid value) => Value = value;
 
-      return new ProductId(value);
+        public static ProductId Of(Guid value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            if (value == Guid.Empty)
+            {
+                throw new DomainException("ProductId cannot be empty.");
+            }
+
+            return new ProductId(value);
+        }
     }
-  }
 }

@@ -3,53 +3,52 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Purchasing.Infrastructure.Data.Extensions
 {
-  public static class DatabaseExtentions
-  {
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
+    public static class DatabaseExtentions
     {
-      using var scope = app.Services.CreateScope();
+        public static async Task InitialiseDatabaseAsync(this WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
 
-      var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-      context.Database.MigrateAsync().GetAwaiter().GetResult();
+            context.Database.MigrateAsync().GetAwaiter().GetResult();
 
-      await SeedAsync(context);
+            await SeedAsync(context);
+        }
+
+        private static async Task SeedAsync(ApplicationDbContext context)
+        {
+            await SeedCustomerAsync(context);
+            await SeedProductAsync(context);
+            await SeedOrdersWithItemsAsync(context);
+        }
+
+        private static async Task SeedCustomerAsync(ApplicationDbContext context)
+        {
+            var test = await context.Customers.ToListAsync();
+            if (!await context.Customers.AnyAsync())
+            {
+                await context.Customers.AddRangeAsync(InitialData.Customers);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private static async Task SeedProductAsync(ApplicationDbContext context)
+        {
+            if (!await context.Products.AnyAsync())
+            {
+                await context.Products.AddRangeAsync(InitialData.Products);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private static async Task SeedOrdersWithItemsAsync(ApplicationDbContext context)
+        {
+            if (!await context.Orders.AnyAsync())
+            {
+                await context.Orders.AddRangeAsync(InitialData.OrdersWithItems);
+                await context.SaveChangesAsync();
+            }
+        }
     }
-
-    private static async Task SeedAsync(ApplicationDbContext context)
-    {
-      await SeedCustomerAsync(context);
-      await SeedProductAsync(context);
-      await SeedOrdersWithItemsAsync(context);
-    }
-
-    private static async Task SeedCustomerAsync(ApplicationDbContext context)
-    {
-      var test = await context.Customers.ToListAsync();
-      if (!await context.Customers.AnyAsync())
-      {
-        await context.Customers.AddRangeAsync(InitialData.Customers);
-        await context.SaveChangesAsync();
-      }
-    }
-
-    private static async Task SeedProductAsync(ApplicationDbContext context)
-    {
-      if (!await context.Products.AnyAsync())
-      {
-        await context.Products.AddRangeAsync(InitialData.Products);
-        await context.SaveChangesAsync();
-      }
-    }
-
-    private static async Task SeedOrdersWithItemsAsync(ApplicationDbContext context)
-    {
-      if (!await context.Orders.AnyAsync())
-      {
-        await context.Orders.AddRangeAsync(InitialData.OrdersWithItems);
-        await context.SaveChangesAsync();
-      }
-    }
-  }
-
 }
