@@ -1,0 +1,97 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.4"
+services:
+  apigateway:
+    build:
+      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
+      dockerfile: "Gateway/ApiGateWay/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/ApiGateWay.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "apigateway:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Gateway\\ApiGateWay:/app:rw"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
+    working_dir: "/app"
+  basket.api:
+    build:
+      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
+      dockerfile: "Services/Basket/Basket.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Basket.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "basketapi:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Basket\\\
+      Basket.API:/app:rw"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
+    working_dir: "/app"
+  catalog.api:
+    build:
+      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
+      dockerfile: "Services/Catalog/Catalog.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Catalog.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "catalogapi:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Catalog\\\
+      Catalog.API:/app:rw"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
+    working_dir: "/app"
+  promotion.grpc:
+    build:
+      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
+      dockerfile: "Services/Promotion/Promotion.Grpc/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Promotion.Grpc.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "promotiongrpc:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Promotion\\\
+      Promotion.Grpc:/app:rw"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
+    working_dir: "/app"
+  purchasing.api:
+    build:
+      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
+      dockerfile: "Services/Purchasing/Purchasing.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Purchasing.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "purchasingapi:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Purchasing\\\
+      Purchasing.API:/app:rw"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
+    working_dir: "/app"
