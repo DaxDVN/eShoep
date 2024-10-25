@@ -26,4 +26,10 @@
 		  <ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
 		</ItemGroup>
 
+		<ItemGroup>
+		  <Protobuf Include="..\..\Promotion\Promotion.Grpc\Protos\coupon.proto" GrpcServices="Client">
+		    <Link>Protos\coupon.proto</Link>
+		  </Protobuf>
+		</ItemGroup>
+
 </Project>

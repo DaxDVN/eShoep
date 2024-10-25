@@ -1,5 +1,6 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Promotion.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,20 +33,20 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 ////Grpc Services
-//builder.Services.AddGrpcClient<PromotionProtoService.PromotionProtoServiceClient>(options =>
-//{
-//  options.Address = new Uri(builder.Configuration["GrpcSettings:PromotionUrl"]!);
-//})
-//.ConfigurePrimaryHttpMessageHandler(() =>
-//{
-//  var handler = new HttpClientHandler
-//  {
-//    ServerCertificateCustomValidationCallback =
-//      HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-//  };
+builder.Services.AddGrpcClient<CouponProtoService.CouponProtoServiceClient>(options =>
+{
+  options.Address = new Uri(builder.Configuration["GrpcSettings:PromotionUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+  var handler = new HttpClientHandler
+  {
+    ServerCertificateCustomValidationCallback =
+      HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+  };
 
-//  return handler;
-//});
+  return handler;
+});
 
 ////Async Communication Services
 //builder.Services.AddMessageBroker(builder.Configuration);
