@@ -1,3 +1,4 @@
+using Common.Messaging.MassTransit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Promotion.Grpc;
@@ -49,7 +50,7 @@ builder.Services.AddGrpcClient<CouponProtoService.CouponProtoServiceClient>(opti
 });
 
 ////Async Communication Services
-//builder.Services.AddMessageBroker(builder.Configuration);
+builder.Services.AddMessageBroker(builder.Configuration);
 
 //Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();

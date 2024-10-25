@@ -1,7 +1,9 @@
 ﻿
+using Basket.API.Dtos;
+
 namespace Basket.API.Basket.CheckoutBasket
 {
-  public record CheckoutCartRequest();
+  public record CheckoutCartRequest(CartCheckoutDto CartCheckoutDto);
   public record CheckoutCartResponse(bool IsSuccess);
 
   public class CheckoutCartEndpoints : ICarterModule
