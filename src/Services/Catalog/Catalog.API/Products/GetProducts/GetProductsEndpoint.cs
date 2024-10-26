@@ -1,8 +1,13 @@
 ﻿namespace Catalog.API.Products.GetProducts
 {
-    public record GetProductsRequest(int? PageNumber = 1, int? PageSize = 3);
+    public record GetProductsRequest(
+        int? PageNumber = 1,
+        int? PageSize = 3,
+        int? SortType = 1,
+        string? Name = "",
+        string? Category = "");
 
-    public record GetProductsResponse(IEnumerable<ProductDto> ProductDtos);
+    public record GetProductsResponse(IEnumerable<ProductDto> Products, long TotalProducts, List<Category> Categories);
 
     public class GetProductsEndpoint : ICarterModule
     {
