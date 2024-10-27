@@ -2,7 +2,7 @@
 {
     public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;
 
-    public record GetProductByIdResult(ProductDto ProductDto);
+    public record GetProductByIdResult(ProductDto Product);
 
     internal class GetProductByIdQueryHandler(IDocumentSession session)
         : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>

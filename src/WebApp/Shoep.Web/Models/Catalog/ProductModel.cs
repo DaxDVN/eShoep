@@ -16,8 +16,9 @@ public class ProductModel
 
 public record ProductImage(Guid Id, Guid ProductId, string ImageUrl, bool IsMain, DateTime CreatedAt);
 
-public record GetProductsResponse(IEnumerable<ProductModel> Products, long TotalProducts, List<CategoryModel> Categories);
-
-public record GetProductByCategoryResponse(IEnumerable<ProductModel> Products);
+public record GetProductsResponse(
+    IEnumerable<ProductModel> Products,
+    long TotalProducts,
+    List<CategoryModel> Categories);
 
 public record GetProductByIdResponse(ProductModel Product);
