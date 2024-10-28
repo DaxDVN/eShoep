@@ -5,13 +5,29 @@ using Shoep.Web.Services;
 
 namespace Shoep.Web.Pages
 {
-    public class CartModel(
+    public class ShoppingCartModel(
         ICatalogService catalogService,
         IBasketService basketService,
         ILogger<ProductListModel> logger) : PageModel
     {
-        public void OnGet()
+        public CartModel Cart { get; set; } = new();
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            try
+            {
+                var basket = await basketService.LoadUserBasket();
+                Cart = basket;
+            }
+            catch (Exception e)
+            {
+                Cart = new CartModel
+                {
+                    Items = []
+                };
+            }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAddToCartAsync([FromBody] AddToCartRequest request)

@@ -1,15 +1,15 @@
 ﻿$(document).ready(function () {
-  $('.addToCartButton').on('click', function (e) { // Thay # thành .
+  $('.addToCartButton').on('click', function (e) {
     e.preventDefault();
 
-    const productId = $('#add_cart_form').data('product-id');
+    const productId = $(this).closest('form').data('product-id');
     let qty = "1";
     const sst = $('#sst');
     if (sst.length) {
       qty = sst.val();
     }
     $.ajax({
-      url: '/Cart?handler=AddToCart',
+      url: '/ShoppingCart?handler=AddToCart',
       type: 'POST',
       contentType: "application/json",
       data: JSON.stringify({ProductId: productId, Qty: parseInt(qty)}),
@@ -33,5 +33,5 @@
   
   $("#closeBtn").click(function () {
     $('#addToCartModal').modal('hide');
-  })
+  });
 });
