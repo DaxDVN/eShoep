@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shoep.Web.Models.Basket;
 using Shoep.Web.Models.Catalog;
 using Shoep.Web.Services;
 
 namespace Shoep.Web.Pages;
 
-public class ProductListModel(ICatalogService catalogService, ILogger<ProductListModel> logger)
+public class ProductListModel(
+    ICatalogService catalogService,
+    IBasketService basketService,
+    ILogger<ProductListModel> logger)
     : PageModel
 {
     public IEnumerable<ProductModel> ProductModels { get; set; } = [];
@@ -20,8 +24,8 @@ public class ProductListModel(ICatalogService catalogService, ILogger<ProductLis
     {
         CurrentPage = currentPage;
         var response = await catalogService.GetProducts(
-            pageNumber: CurrentPage, 
-            pageSize: 6, 
+            pageNumber: CurrentPage,
+            pageSize: 6,
             sortType: SortOption,
             name: Name,
             category: SelectedCategory);

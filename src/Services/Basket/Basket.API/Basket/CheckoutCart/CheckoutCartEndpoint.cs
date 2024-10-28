@@ -1,6 +1,6 @@
 ﻿using Basket.API.Dtos;
 
-namespace Basket.API.Basket.CheckoutBasket
+namespace Basket.API.Basket.CheckoutCart
 {
     public record CheckoutCartRequest(CartCheckoutDto CartCheckoutDto);
 

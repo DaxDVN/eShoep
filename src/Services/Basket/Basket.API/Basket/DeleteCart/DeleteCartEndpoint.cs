@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Basket.DeleteBasket
+﻿using Basket.API.Basket.DeleteBasket;
+
+namespace Basket.API.Basket.DeleteCart
 {
     public record DeleteCartResponse(bool IsSuccess);
 

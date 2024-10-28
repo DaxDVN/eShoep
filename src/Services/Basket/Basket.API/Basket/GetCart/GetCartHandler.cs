@@ -1,4 +1,4 @@
-﻿namespace Basket.API.Basket.GetBasket
+﻿namespace Basket.API.Basket.GetCart
 {
     public record GetCartQuery(string UserName) : IQuery<GetCartResult>;
 
