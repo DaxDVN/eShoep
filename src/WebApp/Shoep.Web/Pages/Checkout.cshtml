@@ -1,0 +1,122 @@
+﻿@page
+@model Shoep.Web.Pages.CheckoutModel
+@{
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Checkout</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="single-product.html">Checkout</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        <div class="cupon_area">
+            <div class="check_title">
+                <h2>Have a coupon?</h2>
+            </div>
+            <input type="text" placeholder="Enter coupon code">
+            <a class="tp_btn" href="#">Apply Coupon</a>
+        </div>
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Billing Details</h3>
+                    <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="first" name="name" placeholder="first name">
+                            <span data-placeholder="First name"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="last" name="name" placeholder="last name">
+                            <span data-placeholder="Last name"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="number" name="number" placeholder="phone number">
+                            <span data-placeholder="Phone number"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="your email">
+                            <span data-placeholder="Email Address"></span>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="your address">
+                            <span data-placeholder="Address"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="creat_account">
+                                <h3>Shipping Details</h3>
+                            </div>
+                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <table class="table table-borderless">
+                            <tbody>
+                            @foreach (var cartItem in Model.Cart.Items)
+                            {
+                                <tr>
+                                    <td class="pl-0 pr-0">
+                                        <a asp-page="/ProductDetail" asp-route-code="@cartItem.ProductId" class="text-dark product-name">
+                                            @cartItem.ProductName
+                                        </a>
+                                    </td>
+                                    <td class="text-right pr-0">x @cartItem.Quantity</td>
+                                    <td class="text-right pl-0 pr-0">$@(cartItem.Price * cartItem.Quantity)</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+
+                        <ul class="list list_2">
+                            <li>
+                                <a href="#">Subtotal <span>$@Model.Cart.TotalPrice</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Shipping <span>$5.00</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Discount <span>$50.00</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Total <span>$2210.00</span></a>
+                            </li>
+                        </ul>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                        <a class="primary-btn" href="#">Proceed to Paypal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.product-name').each(function() {
+            const maxLength = 20; 
+            let text = $(this).text().trim();
+            if (text.length > maxLength) {
+                $(this).text(text.substring(0, maxLength) + '...');
+            }
+        });
+    });
+</script>
