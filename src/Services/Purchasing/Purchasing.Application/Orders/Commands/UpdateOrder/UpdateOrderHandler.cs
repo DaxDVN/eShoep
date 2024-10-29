@@ -11,12 +11,9 @@ public class UpdateOrderHandler(IApplicationDbContext dbContext)
 
         var orderId = OrderId.Of(command.Order.Id);
         var order = await dbContext.Orders
-            .FindAsync([orderId], cancellationToken: cancellationToken);
+            .FindAsync([orderId], cancellationToken);
 
-        if (order is null)
-        {
-            throw new OrderNotFoundException(command.Order.Id);
-        }
+        if (order is null) throw new OrderNotFoundException(command.Order.Id);
 
         UpdateOrderWithNewValues(order, command.Order);
 
@@ -38,10 +35,10 @@ public class UpdateOrderHandler(IApplicationDbContext dbContext)
             orderDto.Payment.Expiration, orderDto.Payment.Cvv, orderDto.Payment.PaymentMethod);
 
         order.Update(
-            orderName: OrderName.Of(orderDto.OrderName),
-            shippingAddress: updatedShippingAddress,
-            billingAddress: updatedBillingAddress,
-            payment: updatedPayment,
-            status: orderDto.Status);
+            OrderName.Of(orderDto.OrderName),
+            updatedShippingAddress,
+            updatedBillingAddress,
+            updatedPayment,
+            orderDto.Status);
     }
 }

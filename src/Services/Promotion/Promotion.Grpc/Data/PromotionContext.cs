@@ -5,12 +5,12 @@ namespace Promotion.Grpc.Data;
 
 public class PromotionContext : DbContext
 {
-    public DbSet<Coupon> Coupons { get; set; } = default!;
-
     public PromotionContext(DbContextOptions<PromotionContext> options)
         : base(options)
     {
     }
+
+    public DbSet<Coupon> Coupons { get; set; } = default!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

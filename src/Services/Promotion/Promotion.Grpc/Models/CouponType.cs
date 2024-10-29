@@ -1,8 +1,7 @@
-﻿namespace Promotion.Grpc.Models
+﻿namespace Promotion.Grpc.Models;
+
+public enum CouponType
 {
-    public enum CouponType
-    {
-        Percentage,
-        FixedAmount
-    }
+    Percentage,
+    FixedAmount
 }

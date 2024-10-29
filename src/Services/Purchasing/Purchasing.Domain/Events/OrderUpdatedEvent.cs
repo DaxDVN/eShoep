@@ -1,4 +1,3 @@
-﻿namespace Purchasing.Domain.Events
-{
-    public record OrderUpdatedEvent(Order order) : IDomainEvent;
-}
+﻿namespace Purchasing.Domain.Events;
+
+public record OrderUpdatedEvent(Order order) : IDomainEvent;

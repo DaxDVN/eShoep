@@ -1,23 +1,22 @@
-﻿namespace Purchasing.Domain.Models
+﻿namespace Purchasing.Domain.Models;
+
+public class Product : Entity<ProductId>
 {
-    public class Product : Entity<ProductId>
+    public string Name { get; private set; } = default!;
+    public decimal Price { get; private set; }
+
+    public static Product Create(ProductId id, string name, decimal price)
     {
-        public string Name { get; private set; } = default!;
-        public decimal Price { get; private set; } = default!;
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
 
-        public static Product Create(ProductId id, string name, decimal price)
+        var product = new Product
         {
-            ArgumentException.ThrowIfNullOrWhiteSpace(name);
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
+            Id = id,
+            Name = name,
+            Price = price
+        };
 
-            var product = new Product
-            {
-                Id = id,
-                Name = name,
-                Price = price
-            };
-
-            return product;
-        }
+        return product;
     }
 }

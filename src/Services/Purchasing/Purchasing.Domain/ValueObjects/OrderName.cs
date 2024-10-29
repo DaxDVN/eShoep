@@ -1,17 +1,21 @@
-﻿namespace Purchasing.Domain.ValueObjects
+﻿namespace Purchasing.Domain.ValueObjects;
+
+public record OrderName
 {
-    public record OrderName
+    private const int DefaultLength = 5;
+
+    private OrderName(string value)
     {
-        private const int DefaultLength = 5;
-        public string Value { get; }
-        private OrderName(string value) => Value = value;
+        Value = value;
+    }
 
-        public static OrderName Of(string value)
-        {
-            ArgumentException.ThrowIfNullOrWhiteSpace(value);
-            //ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLength);
+    public string Value { get; }
 
-            return new OrderName(value);
-        }
+    public static OrderName Of(string value)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(value);
+        //ArgumentOutOfRangeException.ThrowIfNotEqual(value.Length, DefaultLength);
+
+        return new OrderName(value);
     }
 }

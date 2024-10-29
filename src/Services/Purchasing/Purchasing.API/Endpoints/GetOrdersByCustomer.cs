@@ -22,7 +22,7 @@ public class GetOrdersByCustomer : ICarterModule
                 return Results.Ok(response);
             })
             .WithName("GetOrdersByCustomer")
-            .Produces<GetOrdersByCustomerResponse>(StatusCodes.Status200OK)
+            .Produces<GetOrdersByCustomerResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary("Get Orders By Customer")

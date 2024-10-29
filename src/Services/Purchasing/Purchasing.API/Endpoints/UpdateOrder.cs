@@ -26,7 +26,7 @@ public class UpdateOrder : ICarterModule
                 return Results.Ok(response);
             })
             .WithName("UpdateOrder")
-            .Produces<UpdateOrderResponse>(StatusCodes.Status200OK)
+            .Produces<UpdateOrderResponse>()
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .WithSummary("Update Order")
             .WithDescription("Update Order");

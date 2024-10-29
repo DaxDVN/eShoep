@@ -1,19 +1,19 @@
-﻿namespace Purchasing.Domain.ValueObjects
+﻿namespace Purchasing.Domain.ValueObjects;
+
+public record OrderId
 {
-    public record OrderId
+    private OrderId(Guid value)
     {
-        public Guid Value { get; }
-        private OrderId(Guid value) => Value = value;
+        Value = value;
+    }
 
-        public static OrderId Of(Guid value)
-        {
-            ArgumentNullException.ThrowIfNull(value);
-            if (value == Guid.Empty)
-            {
-                throw new DomainException("OrderId cannot be empty.");
-            }
+    public Guid Value { get; }
 
-            return new OrderId(value);
-        }
+    public static OrderId Of(Guid value)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+        if (value == Guid.Empty) throw new DomainException("OrderId cannot be empty.");
+
+        return new OrderId(value);
     }
 }

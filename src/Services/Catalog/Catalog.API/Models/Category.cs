@@ -1,9 +1,8 @@
-﻿namespace Catalog.API.Models
+﻿namespace Catalog.API.Models;
+
+public class Category
 {
-    public class Category
-    {
-        public Guid Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
 }

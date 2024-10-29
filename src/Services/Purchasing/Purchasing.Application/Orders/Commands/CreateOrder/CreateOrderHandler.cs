@@ -27,19 +27,17 @@ public class CreateOrderHandler(IApplicationDbContext dbContext)
             orderDto.BillingAddress.State, orderDto.BillingAddress.ZipCode);
 
         var newOrder = Order.Create(
-            id: OrderId.Of(Guid.NewGuid()),
-            customerId: CustomerId.Of(orderDto.CustomerId),
-            orderName: OrderName.Of(orderDto.OrderName),
-            shippingAddress: shippingAddress,
-            billingAddress: billingAddress,
-            payment: Payment.Of(orderDto.Payment.CardName, orderDto.Payment.CardNumber, orderDto.Payment.Expiration,
+            OrderId.Of(Guid.NewGuid()),
+            CustomerId.Of(orderDto.CustomerId),
+            OrderName.Of(orderDto.OrderName),
+            shippingAddress,
+            billingAddress,
+            Payment.Of(orderDto.Payment.CardName, orderDto.Payment.CardNumber, orderDto.Payment.Expiration,
                 orderDto.Payment.Cvv, orderDto.Payment.PaymentMethod)
         );
 
         foreach (var orderItemDto in orderDto.OrderItems)
-        {
             newOrder.Add(ProductId.Of(orderItemDto.ProductId), orderItemDto.Quantity, orderItemDto.Price);
-        }
 
         return newOrder;
     }

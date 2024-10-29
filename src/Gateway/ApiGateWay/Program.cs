@@ -8,11 +8,11 @@ builder.Services.AddReverseProxy()
 
 builder.Services.AddRateLimiter(rateLimiterOptions =>
 {
-  rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
-  {
-    options.Window = TimeSpan.FromSeconds(10);
-    options.PermitLimit = 5;
-  });
+    rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(10);
+        options.PermitLimit = 5;
+    });
 });
 
 var app = builder.Build();

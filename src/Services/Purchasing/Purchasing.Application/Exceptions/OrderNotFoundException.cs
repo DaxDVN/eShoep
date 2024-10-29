@@ -1,11 +1,10 @@
 ﻿using Common.Exceptions;
 
-namespace Purchasing.Application.Exceptions
+namespace Purchasing.Application.Exceptions;
+
+public class OrderNotFoundException : NotFoundException
 {
-    public class OrderNotFoundException : NotFoundException
+    public OrderNotFoundException(Guid id) : base("Order", id)
     {
-        public OrderNotFoundException(Guid id) : base("Order", id)
-        {
-        }
     }
 }
