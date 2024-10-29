@@ -1,0 +1,154 @@
+﻿@page
+@model Shoep.Web.Pages.ShoppingCartModel
+@{
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @if (Model.Cart.Items.Count > 0)
+                    {
+                        @foreach (var cartItem in Model.Cart.Items)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="img/cart.jpg" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>@cartItem.ProductName</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5 class="item-price">$@cartItem.Price</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="text" name="qty" maxlength="12" value="@cartItem.Quantity" title="Quantity:"
+                                               class="input-text qty">
+                                        <button class="increase items-count" type="button">
+                                            <i class="lnr lnr-chevron-up"></i>
+                                        </button>
+                                        <button class="reduced items-count" type="button">
+                                            <i class="lnr lnr-chevron-down"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5 class="temp-price">$@(cartItem.Quantity * cartItem.Price)</h5>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                    <tr class="bottom_button">
+                        <td>
+                            <a class="gray_btn" href="#">Update Cart</a>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <h5>Subtotal</h5>
+                        </td>
+                        <td>
+                            <h5 id="subtotal">$@Model.Cart.TotalPrice</h5>
+                        </td>
+                    </tr>
+                    <tr class="out_button_area">
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <div class="checkout_btn_inner d-flex align-items-center">
+                                <a class="gray_btn" asp-page="/ProductList">Continue Shopping</a>
+                                <a class="primary-btn" asp-page="/Checkout">Proceed to checkout</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.increase').on('click', function () {
+            const quantityInput = $(this).siblings('input.qty');
+            let quantity = parseInt(quantityInput.val());
+
+            if (!isNaN(quantity)) {
+                quantity += 1;
+                quantityInput.val(quantity);
+
+                const priceElement = $(this).closest('tr').find('td:nth-child(2) h5');
+                const price = parseFloat(priceElement.text().replace('$', ''));
+
+                const newTotalPrice = quantity * price;
+
+                $(this).closest('tr').find('td:nth-child(4) h5').text(`$${newTotalPrice.toFixed(2)}`);
+                updateSubtotal();
+            }
+        });
+
+        $('.reduced').on('click', function () {
+            const quantityInput = $(this).siblings('input.qty');
+            let quantity = parseInt(quantityInput.val());
+
+            if (!isNaN(quantity) && quantity > 1) {
+                quantity -= 1;
+                quantityInput.val(quantity);
+
+                const priceElement = $(this).closest('tr').find('td:nth-child(2) h5');
+                const price = parseFloat(priceElement.text().replace('$', ''));
+
+                const newTotalPrice = quantity * price;
+
+                $(this).closest('tr').find('td:nth-child(4) h5').text(`$${newTotalPrice.toFixed(2)}`);
+                updateSubtotal();
+            }
+        });
+        function updateSubtotal() {
+            let subtotal = 0;
+            $('.temp-price').each(function () {
+                let price = parseFloat($(this).text().replace('$', ''));
+                subtotal += isNaN(price) ? 0 : price;
+            });
+            $('#subtotal').text(`$${subtotal.toFixed(2)}`);
+        }
+    })
+</script>

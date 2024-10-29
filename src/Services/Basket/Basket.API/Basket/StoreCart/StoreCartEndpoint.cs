@@ -1,4 +1,4 @@
-﻿namespace Basket.API.Basket.StoreBasket
+﻿namespace Basket.API.Basket.StoreCart
 {
     public record StoreCartRequest(Cart Cart);
 

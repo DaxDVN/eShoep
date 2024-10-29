@@ -2,7 +2,7 @@
 using Common.Messaging.Events;
 using MassTransit;
 
-namespace Basket.API.Basket.CheckoutBasket
+namespace Basket.API.Basket.CheckoutCart
 {
     public record CheckoutCartCommand(CartCheckoutDto CartCheckoutDto) : ICommand<CheckoutCartResult>;
 

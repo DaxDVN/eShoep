@@ -1,6 +1,6 @@
 ﻿using Promotion.Grpc;
 
-namespace Basket.API.Basket.StoreBasket
+namespace Basket.API.Basket.StoreCart
 {
     public record StoreCartCommand(Cart Cart) : ICommand<StoreCartResult>;
 
@@ -22,31 +22,54 @@ namespace Basket.API.Basket.StoreBasket
     {
         public async Task<StoreCartResult> Handle(StoreCartCommand command, CancellationToken cancellationToken)
         {
-            try
+            await DeductPromotion(command.Cart, cancellationToken);
+
+            await repository.StoreCart(command.Cart, cancellationToken);
+
+            return new StoreCartResult(command.Cart.UserName);
+        }
+
+        private async Task DeductPromotion(Cart cart, CancellationToken cancellationToken)
+        {
+            foreach (var item in cart.Items)
             {
-                foreach (var item in command.Cart.Items)
+                var coupon = await couponProto.GetCouponAsync(new GetCouponRequest
+                    { ProductId = item.ProductId.ToString() });
+                if (coupon.CouponType == "FixedAmount")
                 {
-                    var coupon = await couponProto.GetCouponAsync(new GetCouponRequest
-                        { ProductId = item.ProductId.ToString() });
-                    if (coupon.CouponType == "FixedAmount")
-                    {
-                        item.Price -= coupon.Amount;
-                    }
-                    else
-                    {
-                        item.Price -= item.Price * coupon.Amount / 100;
-                    }
+                    item.Price -= coupon.Amount;
                 }
-
-                await repository.StoreCart(command.Cart, cancellationToken);
-
-                return new StoreCartResult(command.Cart.UserName);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return new StoreCartResult(command.Cart.UserName);
+                else
+                {
+                    item.Price -= item.Price * coupon.Amount / 100;
+                }
             }
         }
     }
+
+    // public class StoreCartCommandHandler(
+    //     ICartRepository repository,
+    //     CouponProtoService.CouponProtoServiceClient couponProto)
+    //     : ICommandHandler<StoreCartCommand, StoreCartResult>
+    // {
+    //     public async Task<StoreCartResult> Handle(StoreCartCommand command, CancellationToken cancellationToken)
+    //     {
+    //         try
+    //         {
+    //             foreach (var item in command.Cart.Items)
+    //             {
+    //                
+    //             }
+    //
+    //             await repository.StoreCart(command.Cart, cancellationToken);
+    //
+    //             return new StoreCartResult(command.Cart.UserName);
+    //         }
+    //         catch (Exception ex)
+    //         {
+    //             Console.WriteLine(ex.ToString());
+    //             return new StoreCartResult(command.Cart.UserName);
+    //         }
+    //     }
+    // }
 }
