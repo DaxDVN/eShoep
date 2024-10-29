@@ -30,7 +30,7 @@
       }
     });
   });
-  
+
   $("#closeBtn").click(function () {
     $('#addToCartModal').modal('hide');
   });
