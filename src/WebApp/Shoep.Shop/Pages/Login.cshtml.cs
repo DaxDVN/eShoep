@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -46,16 +47,19 @@ public class LoginModel(IIdentityService identityService) : PageModel
         {
             var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(response.Content);
             var accessToken = tokenResponse?.AccessToken;
-            var tokenType = tokenResponse?.TokenType;
-            if (tokenResponse != null)
-            {
-                var expiresIn = tokenResponse.ExpiresIn;
-            }
 
-            var refreshToken = tokenResponse?.RefreshToken;
             if (accessToken == null) return RedirectToPage("/Index");
             
-            var claims = new List<Claim> { new Claim("access_token", accessToken) };
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(accessToken);
+
+            var claims = jwtToken.Claims.ToList();
+            
+            var userRoleClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+            var userRole = userRoleClaim?.Value;
+            
+            claims.Add(new Claim("access_token", accessToken));
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authProperties = new AuthenticationProperties
             {

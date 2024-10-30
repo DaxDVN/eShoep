@@ -5,30 +5,22 @@ using Shoep.Management.Services;
 
 namespace Shoep.Management.Controllers;
 
-public class ProductController : Controller
+public class ProductController(ICatalogService catalogService, ILogger<ProductController> logger)
+    : Controller
 {
-    private readonly ICatalogService _catalogService;
-    private readonly ILogger<ProductController> _logger;
-
-    public ProductController(ICatalogService catalogService, ILogger<ProductController> logger)
-    {
-        _catalogService = catalogService;
-        _logger = logger;
-    }
-
     // GET: Product/Index
     public async Task<IActionResult> Index(int? pageNumber = 1, int? pageSize = 10, int? sortType = 1,
         string? name = "", string? category = "")
     {
         try
         {
-            var response = await _catalogService.GetProducts(pageNumber, pageSize, sortType, name, category);
+            var response = await catalogService.GetProducts(pageNumber, pageSize, sortType, name, category);
             ViewBag.Categories = response.Categories;
             return View(response.Products);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error loading products");
+            logger.LogError(ex, "Error loading products");
             return View("Error");
         }
     }
@@ -38,12 +30,12 @@ public class ProductController : Controller
     {
         try
         {
-            var response = await _catalogService.GetProduct(id);
+            var response = await catalogService.GetProduct(id);
             return View(response.Product);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error loading product details");
+            logger.LogError(ex, "Error loading product details");
             return View("Error");
         }
     }
@@ -63,12 +55,12 @@ public class ProductController : Controller
 
         try
         {
-            var response = await _catalogService.CreateProduct(request);
+            var response = await catalogService.CreateProduct(request);
             return RedirectToAction(nameof(Details), new { id = response.Id });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating product");
+            logger.LogError(ex, "Error creating product");
             return View("Error");
         }
     }
@@ -78,7 +70,7 @@ public class ProductController : Controller
     {
         try
         {
-            var response = await _catalogService.GetProduct(id);
+            var response = await catalogService.GetProduct(id);
             var product = response.Product;
 
             var updateRequest = new UpdateProductRequest(
@@ -95,7 +87,7 @@ public class ProductController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error loading product for editing");
+            logger.LogError(ex, "Error loading product for editing");
             return View("Error");
         }
     }
@@ -109,12 +101,12 @@ public class ProductController : Controller
 
         try
         {
-            var response = await _catalogService.UpdateProduct(request);
+            var response = await catalogService.UpdateProduct(request);
             return RedirectToAction(nameof(Details), new { id = request.Id });
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating product");
+            logger.LogError(ex, "Error updating product");
             return View("Error");
         }
     }
@@ -124,12 +116,12 @@ public class ProductController : Controller
     {
         try
         {
-            var response = await _catalogService.GetProduct(id);
+            var response = await catalogService.GetProduct(id);
             return View(response.Product);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error loading product for deletion");
+            logger.LogError(ex, "Error loading product for deletion");
             return View("Error");
         }
     }
@@ -141,7 +133,7 @@ public class ProductController : Controller
     {
         try
         {
-            var response = await _catalogService.DeleteProduct(id);
+            var response = await catalogService.DeleteProduct(id);
             if (response.IsSuccess) return RedirectToAction(nameof(Index));
 
             ModelState.AddModelError("", "Failed to delete product");
@@ -149,7 +141,7 @@ public class ProductController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error deleting product");
+            logger.LogError(ex, "Error deleting product");
             return View("Error");
         }
     }

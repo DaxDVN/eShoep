@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using Shoep.Web.Services;
+using Shoep.Management.Services;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,8 +12,6 @@ builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
 
 builder.Services.AddRefitClient<ICatalogService>()
-    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
-builder.Services.AddRefitClient<IBasketService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
 builder.Services.AddControllers();
 

@@ -5,6 +5,6 @@ namespace Shoep.Shop.Services;
 
 public interface IIdentityService
 {
-    [Post("/login")]
+    [Post("/api/auth/login")]
     Task<ApiResponse<string>> LoginAsync([Body] LoginRequest loginRequest);
 }

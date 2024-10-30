@@ -1,5 +1,7 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Refit;
 using Shoep.Shop.Services;
 
@@ -22,10 +24,15 @@ builder.Services.AddAuthentication(options =>
         options.Authority = builder.Configuration["ApiSettings:IdentityApiUrl"];
         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
         {
-            ValidateAudience = false,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
             ValidIssuer = builder.Configuration["ApiSettings:IdentityApiUrl"],
             ValidateIssuerSigningKey = true,
-            ValidateIssuer = true
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? "_7imDaxinDev")
+            )
         };
     });
 

@@ -41,16 +41,29 @@
                         <li class="nav-item active">
                             <a class="nav-link" asp-page="/ProductList">Products</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" asp-page="/ProductList">Login</a>
-                        </li>
+                        @if (User.Identity is { IsAuthenticated: true })
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-page="/Logout">Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-page="/Login">Login</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item">
-                            <a asp-page="/ShoppingCart" class="cart">
-                                <span class="ti-bag"></span>
-                            </a>
-                        </li>
+                        @if (User.Identity is { IsAuthenticated: true })
+                        {
+                            <li class="nav-item">
+                                <a asp-page="/ShoppingCart" class="cart">
+                                    <span class="ti-bag"></span>
+                                </a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <button class="search">
                                 <span class="lnr lnr-magnifier" id="search"></span>
