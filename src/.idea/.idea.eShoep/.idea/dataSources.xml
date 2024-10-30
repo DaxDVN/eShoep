@@ -25,7 +25,7 @@
       <jdbc-url>jdbc:postgresql://localhost:5433/BasketDb?logServerErrorDetail=true&amp;password=postgres&amp;user=postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="IdentityDb@localhost" uuid="1d6fbef2-8b4b-4753-9697-5a8dc45d4202">
+    <data-source source="LOCAL" name="IdentityDb@localhost" uuid="3dc9a83e-bed7-4cb6-8253-2a17645f22d1">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
