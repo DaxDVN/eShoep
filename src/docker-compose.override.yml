@@ -162,3 +162,22 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  shoep.shop:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ApiSettings__GatewayAddress=http://apigateway:8080
+      - ApiSettings__IdentityApiUrl=http://identity.api:8081
+      - Jwt__Key=http://identity.api:8081
+      - Jwt__Issuer=http://identity.api:8081
+      - Jwt__Audience=http://shoep.shop:8081
+    depends_on:
+      - apigateway
+    ports:
+      - "6006:8080"
+      - "6066:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

@@ -55,7 +55,14 @@ services:
       context: .
       dockerfile: Services/Identity/Identity.API/Dockerfile
 
+  shoep.shop:
+    image: ${DOCKER_REGISTRY-}shoepshop
+    build:
+      context: .
+      dockerfile: WebApp/Shoep.Shop/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
   postgres_identity:
+

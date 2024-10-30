@@ -8,7 +8,8 @@
         "basket.api": "StartDebugging",
         "promotion.grpc": "StartDebugging",
         "purchasing.api": "StartDebugging",
-        "identity.api": "StartDebugging"
+        "identity.api": "StartDebugging",
+        "shoep.shop": "StartDebugging"
       }
     }
   }

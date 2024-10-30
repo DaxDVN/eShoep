@@ -1,28 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PurchasingDb@localhost" uuid="aee60614-0d6d-4f4c-ab6b-5e4d4d4b13d1">
+    <data-source source="LOCAL" name="PurchasingDb@localhost" uuid="7f682484-810b-4383-ab2f-f2879b2e6154">
       <driver-ref>sqlserver.jb</driver-ref>
       <synchronize>true</synchronize>
       <configured-by-url>true</configured-by-url>
       <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
       <jdbc-url>Server=localhost;Database=PurchasingDb;User Id=sa;Password=123;Encrypt=False;TrustServerCertificate=True;Trusted_Connection=True;</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="CatalogDb@localhost" uuid="024354b3-8cf3-4298-b1e2-654f39b0c60f">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/CatalogDb?logServerErrorDetail=true&amp;password=postgres&amp;user=postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="BasketDb@localhost" uuid="d4e23fb2-14d0-4ae0-a1b9-23fa230388c8">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <configured-by-url>true</configured-by-url>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5433/BasketDb?logServerErrorDetail=true&amp;password=postgres&amp;user=postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
