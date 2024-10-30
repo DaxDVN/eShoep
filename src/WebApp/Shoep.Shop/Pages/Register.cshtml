@@ -1,0 +1,79 @@
+﻿@page
+@model Shoep.Shop.Pages.RegisterModel
+@{
+}
+
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Login/Register</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Login/Register</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+
+<section class="login_box_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login_form_inner">
+                    <h3>Register New Account</h3>
+                    <form method="post" class="row login_form" novalidate="novalidate">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" asp-for="Input.FirstName" placeholder="First Name"/>
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" asp-for="Input.LastName" placeholder="Last Name"/>
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="email" class="form-control" asp-for="Input.Email" placeholder="Email"/>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" asp-for="Input.PhoneNumber" placeholder="Phone Number"/>
+                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" asp-for="Input.Password" placeholder="Password"/>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="password" class="form-control" asp-for="Input.ConfirmPassword" placeholder="Confirm Password"/>
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.RegistrationError))
+                        {
+                            <div class="text-danger mb-2">@Model.RegistrationError</div>
+                        }
+                        <div class="col-md-12 form-group">
+                            <button type="submit" class="primary-btn">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid" src="img/login.jpg" alt="">
+                    <div class="hover">
+                        <h4>Already have an account?</h4>
+                        <p>Please login to your account.</p>
+                        <a class="primary-btn" asp-page="/Login">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

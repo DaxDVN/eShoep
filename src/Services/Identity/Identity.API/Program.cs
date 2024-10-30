@@ -16,7 +16,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme)
     .AddBearerToken(IdentityConstants.BearerScheme);
 
-builder.Services.AddIdentityCore<User>()
+builder.Services.AddIdentityCore<User>(opts =>
+    {
+        opts.Password.RequireDigit = false;
+        opts.Password.RequireLowercase = false; 
+        opts.Password.RequireUppercase = false;
+        opts.Password.RequireNonAlphanumeric = true;
+        opts.Password.RequiredLength = 8;
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddApiEndpoints();
@@ -36,6 +43,8 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -50,7 +59,9 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
+
 app.MapIdentityApi<User>();
+
 app.MapPost("/api/auth/login",
     async (LoginRequest loginRequest, UserManager<User> userManager, TokenService tokenService) =>
     {
@@ -75,4 +86,25 @@ app.MapPost("/api/auth/login",
             refreshToken
         });
     });
+app.MapPost("/api/auth/register", async (UserRegisterRequest registerRequest, UserManager<User> userManager) =>
+{
+    var user = new User
+    {
+        FirstName = registerRequest.FirstName,
+        LastName = registerRequest.LastName,
+        Email = registerRequest.Email,
+        PhoneNumber = registerRequest.PhoneNumber,
+        UserName = registerRequest.Email
+    };
+
+    var result = await userManager.CreateAsync(user, registerRequest.Password);
+
+    return result.Succeeded
+        ? Results.Ok(new { message = "Registration successful." })
+        : Results.BadRequest(new { errors = result.Errors.Select(e => e.Description) });
+});
+app.MapControllers();
+
 app.Run();
+
+public record UserRegisterRequest(string FirstName, string LastName, string Email, string PhoneNumber, string Password);

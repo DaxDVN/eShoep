@@ -24,15 +24,20 @@ public class TokenService
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName)
+            new Claim(ClaimTypes.Name, user.UserName ?? "unknown"),
+            new Claim("FirstName", user.FirstName ?? "unknown"),
+            new Claim("LastName", user.LastName ?? "unknown"),
+            new Claim("Address", user.Address ?? "unknown"),
+            new Claim("PhoneNumber", user.PhoneNumber ?? "")
         };
 
         var roles = await _userManager.GetRolesAsync(user);
         if (!roles.Any())
         {
             await _userManager.AddToRoleAsync(user, "Customer");
-            roles.Add("customer");
+            roles.Add("Customer");
         }
+
         foreach (var role in roles)
         {
             claims.Add(new Claim(ClaimTypes.Role, role));
