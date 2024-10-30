@@ -28,8 +28,8 @@ public class BasketCheckoutEventHandler(ISender sender, ILogger<BasketCheckoutEv
 
         var orderDto = new OrderDto(
             orderId,
-            message.UserId,
-            message.UserName,
+            message.CustomerId,
+            message.CustomerName,
             addressDto,
             addressDto,
             paymentDto,

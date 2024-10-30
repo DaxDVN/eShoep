@@ -14,7 +14,7 @@ public class CheckoutCartCommandValidator
     public CheckoutCartCommandValidator()
     {
         RuleFor(x => x.CartCheckoutDto).NotNull().WithMessage("BasketCheckoutDto can't be null");
-        RuleFor(x => x.CartCheckoutDto.UserName).NotEmpty().WithMessage("UserName is required");
+        RuleFor(x => x.CartCheckoutDto.CustomerName).NotEmpty().WithMessage("UserName is required");
     }
 }
 
@@ -23,7 +23,7 @@ public class CheckoutCartCommandHandler(ICartRepository cartRepository, IPublish
 {
     public async Task<CheckoutCartResult> Handle(CheckoutCartCommand command, CancellationToken cancellationToken)
     {
-        var basket = await cartRepository.GetCart(command.CartCheckoutDto.UserName, cancellationToken);
+        var basket = await cartRepository.GetCart(command.CartCheckoutDto.CustomerName, cancellationToken);
         if (basket == null) return new CheckoutCartResult(false);
 
         var eventMessage = command.CartCheckoutDto.Adapt<CartCheckoutEvent>();
@@ -31,7 +31,7 @@ public class CheckoutCartCommandHandler(ICartRepository cartRepository, IPublish
 
         await publishEndpoint.Publish(eventMessage, cancellationToken);
 
-        await cartRepository.DeleteCart(command.CartCheckoutDto.UserName, cancellationToken);
+        await cartRepository.DeleteCart(command.CartCheckoutDto.CustomerName, cancellationToken);
 
         return new CheckoutCartResult(true);
     }

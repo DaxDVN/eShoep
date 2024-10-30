@@ -2,7 +2,7 @@
 
 public class CartCheckoutModel
 {
-    public string UserName { get; set; } = default!;
+    public string CustomerName { get; set; } = default!;
     public Guid CustomerId { get; set; } = default!;
     public decimal TotalPrice { get; set; } = default!;
 

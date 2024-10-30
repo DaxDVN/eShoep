@@ -2,6 +2,8 @@
 @model Shop.Pages.ShoppingCartModel
 @{
 }
+@Html.AntiForgeryToken()
+
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
     <div class="container">
@@ -21,88 +23,126 @@
 <section class="cart_area">
     <div class="container">
         <div class="cart_inner">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Total</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            @if (Model.Cart.Items.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table class="table" id="cart_table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    @if (Model.Cart.Items.Count > 0)
-                    {
-                        @foreach (var cartItem in Model.Cart.Items)
+                        @if (Model.Cart.Items.Count > 0)
                         {
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
+                            @foreach (var cartItem in Model.Cart.Items)
+                            {
+                                <tr data-product-id="@cartItem.ProductId">
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="img/cart.jpg" alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <p>@cartItem.ProductName</p>
+                                            </div>
                                         </div>
-                                        <div class="media-body">
-                                            <p>@cartItem.ProductName</p>
+                                    </td>
+                                    <td>
+                                        <h5 class="item-price">$@cartItem.Price</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <input type="text" name="qty" maxlength="12" value="@cartItem.Quantity" title="Quantity:"
+                                                   class="input-text qty">
+                                            <button class="increase items-count" type="button">
+                                                <i class="lnr lnr-chevron-up"></i>
+                                            </button>
+                                            <button class="reduced items-count" type="button">
+                                                <i class="lnr lnr-chevron-down"></i>
+                                            </button>
                                         </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5 class="item-price">$@cartItem.Price</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" maxlength="12" value="@cartItem.Quantity" title="Quantity:"
-                                               class="input-text qty">
-                                        <button class="increase items-count" type="button">
-                                            <i class="lnr lnr-chevron-up"></i>
+                                    </td>
+                                    <td>
+                                        <h5 class="temp-price">$@(cartItem.Quantity * cartItem.Price)</h5>
+                                    </td>
+                                    <td style="width: 10px; padding: 0; align-content: flex-start;">
+                                        <button type="button" class="close mt-1 remove-item">
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <button class="reduced items-count" type="button">
-                                            <i class="lnr lnr-chevron-down"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5 class="temp-price">$@(cartItem.Quantity * cartItem.Price)</h5>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
 
-                    <tr class="bottom_button">
-                        <td>
-                            <a class="gray_btn" href="#">Update Cart</a>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <h5>Subtotal</h5>
-                        </td>
-                        <td>
-                            <h5 id="subtotal">$@Model.Cart.TotalPrice</h5>
-                        </td>
-                    </tr>
-                    <tr class="out_button_area">
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <div class="checkout_btn_inner d-flex align-items-center">
-                                <a class="gray_btn" asp-page="/ProductList">Continue Shopping</a>
-                                <a class="primary-btn" asp-page="/Checkout">Proceed to checkout</a>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        <tr class="bottom_button">
+                            <td>
+                                <a class="gray_btn" href="#" id="update-cart">Update Cart</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <h5>Subtotal</h5>
+                            </td>
+                            <td>
+                                <h5 id="subtotal">$@Model.Cart.TotalPrice</h5>
+                            </td>
+                        </tr>
+                        <tr class="out_button_area">
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <a class="gray_btn" asp-page="/ProductList">Continue Shopping</a>
+                                    <a class="primary-btn" asp-page="/Checkout">Proceed to checkout</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h3>
+                    You have yet add anything to your cart
+                </h3>
+                <button class="btn btn-outline-info">
+                    Back to buy something!
+                </button>
+            }
         </div>
     </div>
 </section>
 <!--================End Cart Area =================-->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/cart.js"></script>
+
+<div class="modal fade" id="updateCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addToCartModalLabel">Success!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Update cart successfully!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         $('.increase').on('click', function () {
@@ -148,5 +188,55 @@
             });
             $('#subtotal').text(`$${subtotal.toFixed(2)}`);
         }
+        const cartItems = [];
+        $('#update-cart').click(function (e) {
+            e.preventDefault();
+            $('#cart_table tbody tr').each(function(){
+            
+                const productId = $(this).data('product-id');
+                if (productId === undefined) {
+                    return;
+                }
+                const quantity = parseInt($(this).find('.product_count input.qty').val());
+                const item = {
+                    ProductId: productId,
+                    Qty: quantity
+                };
+                
+                cartItems.push(item);
+
+                
+            });
+            $.ajax({
+                url: '/ShoppingCart?handler=UpdateCart',
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({ cartRequests: cartItems }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success: function (response) {
+                    $('#loadingModal').modal('hide');
+
+                    if (response.success) {
+                        $('#updateCartModal').modal('show');
+                    } else {
+                        location.href = "/Cart";
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $('#loadingModal').modal('hide');
+
+                    console.error("Error:", error);
+                    alert("There was an error processing your request.");
+                }
+            });
+        });
+        $('.remove-item').on('click', function () {
+            const row = $(this).closest('tr');
+            row.find('.product_count input.qty').val(0);
+            row.hide();
+        });
     })
 </script>

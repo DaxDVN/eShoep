@@ -34,30 +34,30 @@
                     <h3>Billing Details</h3>
                     <form class="row contact_form" action="#" method="post" novalidate="novalidate">
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="first" name="name" placeholder="first name">
+                            <input type="text" class="form-control" id="first" placeholder="first name" value="@Model.UserInfo.FirstName">
                             <span data-placeholder="First name"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="last" name="name" placeholder="last name">
+                            <input type="text" class="form-control" id="last" placeholder="last name" value="@Model.UserInfo.Lastname">
                             <span data-placeholder="Last name"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="number" name="number" placeholder="phone number">
+                            <input type="text" class="form-control" id="number" name="number" placeholder="phone number" value="@Model.UserInfo.PhoneNumber">
                             <span data-placeholder="Phone number"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="your email">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="your email" value="@Model.UserInfo.Email">
                             <span data-placeholder="Email Address"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="address" name="address" placeholder="your address">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="your address" value="@Model.UserInfo.Address">
                             <span data-placeholder="Address"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
                                 <h3>Shipping Details</h3>
                             </div>
-                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Order Notes"></textarea>
+                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Do you want to say something with us?"></textarea>
                         </div>
                     </form>
                 </div>
@@ -86,13 +86,13 @@
                                 <a href="#">Subtotal <span>$@Model.Cart.TotalPrice</span></a>
                             </li>
                             <li>
-                                <a href="#">Shipping <span>$5.00</span></a>
+                                <a href="#">Shipping <span>$5</span></a>
                             </li>
                             <li>
                                 <a href="#">Discount <span>$50.00</span></a>
                             </li>
                             <li>
-                                <a href="#">Total <span>$2210.00</span></a>
+                                <a href="#">Total <span>$@(Model.Cart.TotalPrice + 5)</span></a>
                             </li>
                         </ul>
                         <div class="creat_account">
@@ -108,6 +108,8 @@
     </div>
 </section>
 <!--================End Checkout Area =================-->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('.product-name').each(function() {
