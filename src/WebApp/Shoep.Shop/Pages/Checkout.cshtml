@@ -32,33 +32,66 @@
             <div class="row">
                 <div class="col-lg-8">
                     <h3>Billing Details</h3>
-                    <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                    <form asp-page-handler="Checkout" method="post" class="row contact_form" id="checkoutForm" novalidate="novalidate">
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="first" placeholder="first name" value="@Model.UserInfo.FirstName">
+                            <input type="text" class="form-control" id="first" asp-for="UserInfo.FirstName" placeholder="first name" value="@Model.UserInfo.FirstName">
                             <span data-placeholder="First name"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="last" placeholder="last name" value="@Model.UserInfo.Lastname">
+                            <input type="text" class="form-control" id="last" asp-for="UserInfo.Lastname" placeholder="last name" value="@Model.UserInfo.Lastname">
                             <span data-placeholder="Last name"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="number" name="number" placeholder="phone number" value="@Model.UserInfo.PhoneNumber">
+                            <input type="text" class="form-control" id="number" asp-for="UserInfo.PhoneNumber" placeholder="phone number" value="@Model.UserInfo.PhoneNumber">
                             <span data-placeholder="Phone number"></span>
                         </div>
                         <div class="col-md-6 form-group p_star">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="your email" value="@Model.UserInfo.Email">
+                            <input type="text" class="form-control" id="email" asp-for="UserInfo.Email" placeholder="your email" value="@Model.UserInfo.Email">
                             <span data-placeholder="Email Address"></span>
                         </div>
                         <div class="col-md-12 form-group p_star">
-                            <input type="text" class="form-control" id="address" name="address" placeholder="your address" value="@Model.UserInfo.Address">
+                            <input type="text" class="form-control" id="address" asp-for="UserInfo.AddressLine" placeholder="your address" value="@Model.UserInfo.AddressLine">
                             <span data-placeholder="Address"></span>
                         </div>
+                        <div class="col-md-4 form-group p_star">
+                            <input type="text" class="form-control" id="country" asp-for="UserInfo.Country" placeholder="your country">
+                            <span data-placeholder="Email Address"></span>
+                        </div>
+                        <div class="col-md-4 form-group p_star">
+                            <input type="text" class="form-control" id="state" asp-for="UserInfo.State" placeholder="your state">
+                            <span data-placeholder="Email Address"></span>
+                        </div>
+                        <div class="col-md-4 form-group p_star">
+                            <input type="text" class="form-control" id="zipcode" asp-for="UserInfo.ZipCode" placeholder="your zipcode">
+                            <span data-placeholder="Email Address"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="card-name" asp-for="UserInfo.CardName" placeholder="card name">
+                            <span data-placeholder="Card Name"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="card-number" asp-for="UserInfo.CardNumber" placeholder="card number">
+                            <span data-placeholder="Card Number"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="expire" asp-for="UserInfo.Expiration" placeholder="expire">
+                            <span data-placeholder="Expiration"></span>
+                        </div>
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text" class="form-control" id="cvv" asp-for="UserInfo.Cvv" placeholder="cvv">
+                            <span data-placeholder="CVV"></span>
+                        </div>
+
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
-                                <h3>Shipping Details</h3>
+                                <h3>Noting</h3>
                             </div>
-                            <textarea class="form-control" name="message" id="message" rows="1" placeholder="Do you want to say something with us?"></textarea>
+                            <textarea class="form-control"
+                                id="message" rows="1" asp-for="UserInfo.Note"
+                                      placeholder="Do you want to say something with us?">
+                            </textarea>
                         </div>
+
                     </form>
                 </div>
                 <div class="col-lg-4">
@@ -100,7 +133,7 @@
                             <label for="f-option4">I’ve read and accept the </label>
                             <a href="#">terms & conditions*</a>
                         </div>
-                        <a class="primary-btn" href="#">Proceed to Paypal</a>
+                        <a class="primary-btn" href="#" id="proceedToPaypal">Proceed to Paypal</a>
                     </div>
                 </div>
             </div>
@@ -118,6 +151,11 @@
             if (text.length > maxLength) {
                 $(this).text(text.substring(0, maxLength) + '...');
             }
+        });
+
+        $('#proceedToPaypal').click(function (e) {
+            e.preventDefault(); 
+            $('#checkoutForm').submit();
         });
     });
 </script>

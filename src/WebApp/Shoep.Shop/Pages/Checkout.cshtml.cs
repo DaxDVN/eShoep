@@ -11,9 +11,9 @@ public class CheckoutModel(
     IBasketService basketService,
     ILogger<ProductListModel> logger) : PageModel
 {
-    [BindProperty] public CartCheckoutModel Order { get; set; } = default!;
+    public CartCheckoutModel Order { get; set; } = default!;
     public CartModel Cart { get; set; } = new();
-    public CustomerInformation UserInfo { get; set; } = new();
+    [BindProperty] public CustomerCheckout UserInfo { get; set; } = new();
 
     public async Task<IActionResult> OnGetAsync()
     {
@@ -26,8 +26,9 @@ public class CheckoutModel(
         var userId = enumerable.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         UserInfo.FirstName = enumerable.FirstOrDefault(c => c.Type == "FirstName")?.Value;
         UserInfo.Lastname = enumerable.FirstOrDefault(c => c.Type == "LastName")?.Value;
-        UserInfo.Address = enumerable.FirstOrDefault(c => c.Type == "Address")?.Value;
+        UserInfo.AddressLine = enumerable.FirstOrDefault(c => c.Type == "Address")?.Value;
         UserInfo.PhoneNumber = enumerable.FirstOrDefault(c => c.Type == "PhoneNumber")?.Value;
+        UserInfo.Email = enumerable.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
         try
         {
             var basket = await basketService.LoadUserBasket(userId!);
@@ -44,18 +45,34 @@ public class CheckoutModel(
         return Page();
     }
 
-    public async Task<IActionResult> OnPostCheckOutAsync()
+    public async Task<IActionResult> OnPostCheckoutAsync()
     {
+        if (User.Identity is { IsAuthenticated: false } or null)
+        {
+            return RedirectToPage("/Login");
+        }
+
         logger.LogInformation("Checkout button clicked");
 
         Cart = await basketService.LoadUserBasket();
 
-        if (!ModelState.IsValid) return Page();
+        if (!ModelState.IsValid) return RedirectToPage("/Checkout");
 
-        // assumption customerId is passed in from the UI authenticated user swn        
-        Order.CustomerId = new Guid("58c49479-ec65-4de2-86e7-033c546291aa");
-        Order.CustomerName = Cart.UserId;
+        Order.CustomerId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
+        Order.CustomerName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         Order.TotalPrice = Cart.TotalPrice;
+        Order.FirstName = UserInfo.FirstName!;
+        Order.LastName = UserInfo.Lastname!;
+        Order.EmailAddress = UserInfo.Email!;
+        Order.AddressLine = UserInfo.AddressLine!;
+        Order.Country = UserInfo.Country;
+        Order.State = UserInfo.State;
+        Order.ZipCode = UserInfo.ZipCode;
+        Order.CardName = UserInfo.CardName;
+        Order.CardNumber = UserInfo.CardNumber;
+        Order.Expiration = UserInfo.Expiration;
+        Order.CVV = UserInfo.Cvv;
+        Order.PaymentMethod = 1;
 
         await basketService.CheckoutBasket(new CheckoutCartRequest(Order));
 
