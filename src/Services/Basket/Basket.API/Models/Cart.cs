@@ -2,9 +2,9 @@
 
 public class Cart
 {
-    public Cart(string userName)
+    public Cart(string userId)
     {
-        UserName = userName;
+        UserId = userId;
     }
 
     //Required for Mapping
@@ -12,7 +12,7 @@ public class Cart
     {
     }
 
-    public string UserName { get; set; } = default!;
+    public string UserId { get; set; } = default!;
     public List<CartItem> Items { get; set; } = new();
     public decimal TotalPrice => Items.Sum(x => x.Price * x.Quantity);
 }

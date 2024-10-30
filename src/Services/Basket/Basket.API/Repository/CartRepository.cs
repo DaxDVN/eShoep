@@ -3,11 +3,11 @@
 public class CartRepository(IDocumentSession session)
     : ICartRepository
 {
-    public async Task<Cart> GetCart(string userName, CancellationToken cancellationToken = default)
+    public async Task<Cart> GetCart(string userId, CancellationToken cancellationToken = default)
     {
-        var basket = await session.LoadAsync<Cart>(userName, cancellationToken);
+        var basket = await session.LoadAsync<Cart>(userId, cancellationToken);
 
-        return basket is null ? throw new CartNotFoundException(userName) : basket;
+        return basket is null ? throw new CartNotFoundException(userId) : basket;
     }
 
     public async Task<Cart> StoreCart(Cart basket, CancellationToken cancellationToken = default)
@@ -17,9 +17,9 @@ public class CartRepository(IDocumentSession session)
         return basket;
     }
 
-    public async Task<bool> DeleteCart(string userName, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteCart(string userId, CancellationToken cancellationToken = default)
     {
-        session.Delete<Cart>(userName);
+        session.Delete<Cart>(userId);
         await session.SaveChangesAsync(cancellationToken);
         return true;
     }

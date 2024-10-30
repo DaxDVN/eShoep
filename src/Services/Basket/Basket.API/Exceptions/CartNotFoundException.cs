@@ -2,7 +2,7 @@
 
 public class CartNotFoundException : NotFoundException
 {
-    public CartNotFoundException(string userName) : base("Cart", userName)
+    public CartNotFoundException(string userId) : base("Cart", userId)
     {
     }
 }

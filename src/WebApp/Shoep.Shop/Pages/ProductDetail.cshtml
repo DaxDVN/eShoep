@@ -191,46 +191,35 @@
     </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-@* <script src="js/cart.js"></script> *@
-<script>
-    $(document).ready(function () {
-        $('.addToCartButton').on('click', function (e) {
-            e.preventDefault();
+<script src="js/cart.js"></script>
+<div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addToCartModalLabel">Success!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Product has been successfully added to your cart!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-            const productId = $(this).closest('form').data('product-id');
-            let qty = "1";
-            const sst = $('#sst');
-            if (sst.length) {
-                qty = sst.val();
-            }
-            console.log(productId);
-            console.log(qty);
-            $.ajax({
-                url: '/ShoppingCart?handler=AddToCart',
-                type: 'POST',
-                contentType: "application/json",
-                data: JSON.stringify({ProductId: productId, Qty: parseInt(qty)}),
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#addToCartModal').modal('show');
-                    } else {
-                        alert("Failed to add to cart.");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error:", error);
-                    alert("There was an error processing your request.");
-                }
-            });
-        });
-
-        $("#closeBtn").click(function () {
-            $('#addToCartModal').modal('hide');
-        });
-    });
-
-</script>
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center" style="text-align: center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p>Loading, please wait...</p>
+            </div>
+        </div>
+    </div>
+</div>

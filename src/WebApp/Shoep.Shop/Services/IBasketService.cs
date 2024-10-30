@@ -6,33 +6,32 @@ namespace Shoep.Shop.Services;
 
 public interface IBasketService
 {
-    [Get("/basket-service/basket/{userName}")]
-    Task<GetCartResponse> GetBasket(string userName);
+    [Get("/basket-service/basket/{userId}")]
+    Task<GetCartResponse> GetBasket(string userId);
 
     [Post("/basket-service/basket")]
     Task<StoreCartResponse> StoreBasket(StoreCartRequest request);
 
-    [Delete("/basket-service/basket/{userName}")]
-    Task<DeleteCartResponse> DeleteBasket(string userName);
+    [Delete("/basket-service/basket/{userId}")]
+    Task<DeleteCartResponse> DeleteBasket(string userId);
 
     [Post("/basket-service/basket/checkout")]
     Task<CheckoutCartResponse> CheckoutBasket(CheckoutCartRequest request);
 
-    public async Task<CartModel> LoadUserBasket()
+    public async Task<CartModel> LoadUserBasket(string userId = "swn")
     {
-        var userName = "swn";
         CartModel basket;
 
         try
         {
-            var getBasketResponse = await GetBasket(userName);
+            var getBasketResponse = await GetBasket(userId);
             basket = getBasketResponse.Cart;
         }
         catch (ApiException apiException) when (apiException.StatusCode == HttpStatusCode.NotFound)
         {
             basket = new CartModel
             {
-                UserName = userName,
+                UserId = userId,
                 Items = []
             };
         }

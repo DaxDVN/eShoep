@@ -1,6 +1,6 @@
 ﻿namespace Basket.API.Carts.DeleteCart;
 
-public record DeleteCartCommand(string UserName) : ICommand<DeleteCartResult>;
+public record DeleteCartCommand(string UserId) : ICommand<DeleteCartResult>;
 
 public record DeleteCartResult(bool IsSuccess);
 
@@ -8,7 +8,7 @@ public class DeleteCartCommandValidator : AbstractValidator<DeleteCartCommand>
 {
     public DeleteCartCommandValidator()
     {
-        RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required");
+        RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId is required");
     }
 }
 
@@ -17,7 +17,7 @@ public class DeleteCartCommandHandler(ICartRepository repository)
 {
     public async Task<DeleteCartResult> Handle(DeleteCartCommand command, CancellationToken cancellationToken)
     {
-        await repository.DeleteCart(command.UserName, cancellationToken);
+        await repository.DeleteCart(command.UserId, cancellationToken);
 
         return new DeleteCartResult(true);
     }

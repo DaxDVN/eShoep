@@ -2,7 +2,7 @@
 
 public record StoreCartRequest(Cart Cart);
 
-public record StoreCartResponse(string UserName);
+public record StoreCartResponse(string UserId);
 
 public class StoreCartEndpoints : ICarterModule
 {
@@ -16,7 +16,7 @@ public class StoreCartEndpoints : ICarterModule
 
                 var response = result.Adapt<StoreCartResponse>();
 
-                return Results.Created($"/basket/{response.UserName}", response);
+                return Results.Created($"/basket/{response.UserId}", response);
             })
             .WithName("CreateCart")
             .Produces<StoreCartResponse>(StatusCodes.Status201Created)

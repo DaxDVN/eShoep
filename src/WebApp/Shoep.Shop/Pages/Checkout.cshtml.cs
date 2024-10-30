@@ -40,7 +40,7 @@ public class CheckoutModel(
 
         // assumption customerId is passed in from the UI authenticated user swn        
         Order.CustomerId = new Guid("58c49479-ec65-4de2-86e7-033c546291aa");
-        Order.UserName = Cart.UserName;
+        Order.UserName = Cart.UserId;
         Order.TotalPrice = Cart.TotalPrice;
 
         await basketService.CheckoutBasket(new CheckoutCartRequest(Order));

@@ -2,7 +2,7 @@
 
 public class CartModel
 {
-    public string UserName { get; set; } = default!;
+    public string UserId { get; set; } = default!;
     public List<CartItemModel> Items { get; set; } = [];
     public decimal TotalPrice => Items.Sum(x => x.Price * x.Quantity);
 }
@@ -19,6 +19,6 @@ public record GetCartResponse(CartModel Cart);
 
 public record StoreCartRequest(CartModel Cart);
 
-public record StoreCartResponse(string UserName);
+public record StoreCartResponse(string UserId);
 
 public record DeleteCartResponse(bool IsSuccess);

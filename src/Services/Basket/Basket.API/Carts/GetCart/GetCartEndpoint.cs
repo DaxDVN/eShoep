@@ -6,11 +6,11 @@ public class GetCartEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/basket/{username}", async (string username, ISender sender) =>
+        app.MapGet("/basket/{userId}", async (string userId, ISender sender) =>
             {
-                if (string.IsNullOrEmpty(username)) throw new BadRequestException("Username not found");
+                if (string.IsNullOrEmpty(userId)) throw new BadRequestException("UserId not found");
 
-                var result = await sender.Send(new GetCartQuery(username));
+                var result = await sender.Send(new GetCartQuery(userId));
 
                 var response = result.Adapt<GetCartResponse>();
 

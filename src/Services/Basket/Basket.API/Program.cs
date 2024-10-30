@@ -21,7 +21,7 @@ builder.Services.AddMediatR(config =>
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
-    opts.Schema.For<Cart>().Identity(x => x.UserName);
+    opts.Schema.For<Cart>().Identity(x => x.UserId);
 }).UseLightweightSessions();
 
 builder.Services.AddScoped<ICartRepository, CartRepository>();
