@@ -14,6 +14,7 @@ builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationSche
     .AddBearerToken(IdentityConstants.BearerScheme);
 
 builder.Services.AddIdentityCore<User>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddApiEndpoints();
 
@@ -27,6 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
     app.ApplyMigrations();
+    
+    await IdentityDataInitializer.SeedData(app.Services);
 }
 
 app.UseHttpsRedirection();
