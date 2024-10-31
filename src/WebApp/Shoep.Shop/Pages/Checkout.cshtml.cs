@@ -11,7 +11,7 @@ public class CheckoutModel(
     IBasketService basketService,
     ILogger<ProductListModel> logger) : PageModel
 {
-    public CartCheckoutModel Order { get; set; } = default!;
+    public CartCheckoutModel Order { get; set; } = new();
     public CartModel Cart { get; set; } = new();
     [BindProperty] public CustomerCheckout UserInfo { get; set; } = new();
 
@@ -55,12 +55,12 @@ public class CheckoutModel(
         logger.LogInformation("Checkout button clicked");
 
         Cart = await basketService.LoadUserBasket();
-
-        if (!ModelState.IsValid) return RedirectToPage("/Checkout");
+        if (!ModelState.IsValid) return Page();
 
         Order.CustomerId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
         Order.CustomerName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         Order.TotalPrice = Cart.TotalPrice;
+
         Order.FirstName = UserInfo.FirstName!;
         Order.LastName = UserInfo.Lastname!;
         Order.EmailAddress = UserInfo.Email!;
@@ -68,6 +68,7 @@ public class CheckoutModel(
         Order.Country = UserInfo.Country;
         Order.State = UserInfo.State;
         Order.ZipCode = UserInfo.ZipCode;
+
         Order.CardName = UserInfo.CardName;
         Order.CardNumber = UserInfo.CardNumber;
         Order.Expiration = UserInfo.Expiration;
@@ -76,6 +77,6 @@ public class CheckoutModel(
 
         await basketService.CheckoutBasket(new CheckoutCartRequest(Order));
 
-        return RedirectToPage("Confirmation", "OrderSubmitted");
+        return RedirectToPage("/Confirmation");
     }
 }

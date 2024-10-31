@@ -2,8 +2,9 @@
 
 public class CartCheckoutModel
 {
-    public string CustomerName { get; set; } = default!;
     public Guid CustomerId { get; set; } = default!;
+    public string CustomerName { get; set; } = default!;
+
     public decimal TotalPrice { get; set; } = default!;
 
     // Shipping and BillingAddress
@@ -23,6 +24,6 @@ public class CartCheckoutModel
     public int PaymentMethod { get; set; } = default!;
 }
 
-public record CheckoutCartRequest(CartCheckoutModel BasketCheckoutDto);
+public record CheckoutCartRequest(CartCheckoutModel CartCheckoutDto);
 
 public record CheckoutCartResponse(bool IsSuccess);

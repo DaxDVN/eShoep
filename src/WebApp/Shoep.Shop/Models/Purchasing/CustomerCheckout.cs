@@ -23,12 +23,16 @@ public class CustomerCheckout
     [Required(ErrorMessage = "Address is required.")]
     [StringLength(200, ErrorMessage = "Address cannot exceed 200 characters.")]
     public string? AddressLine { get; set; }
+
     public string Country { get; set; } = default!;
     public string State { get; set; } = default!;
+
+    [MaxLength(5, ErrorMessage = "ZipCode less than 5 digits.")]
     public string ZipCode { get; set; } = default!;
 
     [StringLength(500, ErrorMessage = "Note cannot exceed 500 characters.")]
     public string? Note { get; set; }
+
     public string CardName { get; set; } = default!;
 
     [Required(ErrorMessage = "Card number is required.")]
