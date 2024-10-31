@@ -114,3 +114,23 @@ services:
       Purchasing.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
     working_dir: "/app"
+  shoep.shop:
+    build:
+      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
+      dockerfile: "WebApp/Shoep.Shop/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Shoep.Shop.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/Shoep.Shop.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "shoepshop:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\WebApp\\Shoep.Shop:/app:rw"
+    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
+    working_dir: "/app"

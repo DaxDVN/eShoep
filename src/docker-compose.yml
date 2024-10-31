@@ -14,7 +14,7 @@ services:
     image: redis
 
   purchasingdb:
-    image: mcr.microsoft.com/mssql/server
+    image: postgres
 
   messagebroker:
     image: rabbitmq:management
@@ -65,4 +65,5 @@ volumes:
   postgres_catalog:
   postgres_basket:
   postgres_identity:
+  postgres_purchasing:
 

@@ -23,7 +23,7 @@ public class CheckoutCartCommandHandler(ICartRepository cartRepository, IPublish
 {
     public async Task<CheckoutCartResult> Handle(CheckoutCartCommand command, CancellationToken cancellationToken)
     {
-        var basket = await cartRepository.GetCart(command.CartCheckoutDto.CustomerName, cancellationToken);
+        var basket = await cartRepository.GetCart(command.CartCheckoutDto.CustomerId.ToString(), cancellationToken);
         if (basket == null) return new CheckoutCartResult(false);
 
         var eventMessage = command.CartCheckoutDto.Adapt<CartCheckoutEvent>();
