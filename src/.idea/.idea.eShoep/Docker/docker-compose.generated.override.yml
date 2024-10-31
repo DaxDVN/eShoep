@@ -76,23 +76,23 @@ services:
       Identity.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
     working_dir: "/app"
-  promotion.grpc:
+  promotion.api:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
-      dockerfile: "Services/Promotion/Promotion.Grpc/Dockerfile"
+      dockerfile: "Services/Promotion/Promotion.API/Dockerfile"
       target: "base"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/Promotion.Grpc.dll"
+    - "/app/bin/Debug/net8.0/Promotion.API.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "promotiongrpc:dev"
+    image: "promotionapi:dev"
     ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Promotion\\\
-      Promotion.Grpc:/app:rw"
+      Promotion.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
     working_dir: "/app"
   purchasing.api:

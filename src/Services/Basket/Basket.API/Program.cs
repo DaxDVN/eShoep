@@ -1,7 +1,7 @@
 using Common.Messaging.MassTransit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Promotion.Grpc;
+using Promotion.API;
 
 var builder = WebApplication.CreateBuilder(args);
 

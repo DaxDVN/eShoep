@@ -6,7 +6,7 @@
       "serviceActions": {
         "catalog.api": "StartDebugging",
         "basket.api": "StartDebugging",
-        "promotion.grpc": "StartDebugging",
+        "promotion.api": "StartDebugging",
         "purchasing.api": "StartDebugging",
         "identity.api": "StartDebugging",
         "shoep.shop": "StartDebugging"

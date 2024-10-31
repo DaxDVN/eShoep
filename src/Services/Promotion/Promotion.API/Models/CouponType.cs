@@ -1,4 +1,4 @@
-﻿namespace Promotion.Grpc.Models;
+﻿namespace Promotion.API.Models;
 
 public enum CouponType
 {

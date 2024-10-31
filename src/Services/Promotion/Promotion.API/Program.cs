@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Promotion.Grpc.Data;
-using Promotion.Grpc.Services;
+using Promotion.API.Data;
+using Promotion.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

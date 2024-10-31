@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Promotion.Grpc.Data;
+using Promotion.API.Data;
 
 #nullable disable
 
-namespace Promotion.Grpc.Migrations
+namespace Promotion.API.Migrations
 {
     [DbContext(typeof(PromotionContext))]
     [Migration("20241025112941_Init")]
@@ -20,7 +20,7 @@ namespace Promotion.Grpc.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
 
-            modelBuilder.Entity("Promotion.Grpc.Models.Coupon", b =>
+            modelBuilder.Entity("Promotion.API.Models.Coupon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

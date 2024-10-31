@@ -208,23 +208,23 @@ Summary / [Details](details.md) / [Diff Summary](diff.md) / [Diff Details](diff-
 | Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0 | 11 | 2,114 | 116 | 210 | 2,440 |
 | Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0 (Files) | 8 | 2,105 | 116 | 210 | 2,431 |
 | Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0\\staticwebassets | 3 | 9 | 0 | 0 | 9 |
-| Services\\Promotion\\Promotion.Grpc | 34 | 6,950 | 121 | 293 | 7,364 |
-| Services\\Promotion\\Promotion.Grpc (Files) | 5 | 82 | 3 | 17 | 102 |
-| Services\\Promotion\\Promotion.Grpc\\Data | 2 | 48 | 0 | 9 | 57 |
-| Services\\Promotion\\Promotion.Grpc\\Migrations | 3 | 149 | 6 | 28 | 183 |
-| Services\\Promotion\\Promotion.Grpc\\Models | 2 | 15 | 0 | 2 | 17 |
-| Services\\Promotion\\Promotion.Grpc\\Properties | 1 | 23 | 0 | 1 | 24 |
-| Services\\Promotion\\Promotion.Grpc\\Services | 1 | 101 | 2 | 17 | 120 |
-| Services\\Promotion\\Promotion.Grpc\\bin | 4 | 1,238 | 0 | 2 | 1,240 |
-| Services\\Promotion\\Promotion.Grpc\\bin\\Debug | 4 | 1,238 | 0 | 2 | 1,240 |
-| Services\\Promotion\\Promotion.Grpc\\bin\\Debug\\net8.0 | 4 | 1,238 | 0 | 2 | 1,240 |
-| Services\\Promotion\\Promotion.Grpc\\obj | 16 | 5,294 | 110 | 217 | 5,621 |
-| Services\\Promotion\\Promotion.Grpc\\obj (Files) | 5 | 3,205 | 0 | 0 | 3,205 |
-| Services\\Promotion\\Promotion.Grpc\\obj\\Debug | 11 | 2,089 | 110 | 217 | 2,416 |
-| Services\\Promotion\\Promotion.Grpc\\obj\\Debug\\net8.0 | 11 | 2,089 | 110 | 217 | 2,416 |
-| Services\\Promotion\\Promotion.Grpc\\obj\\Debug\\net8.0 (Files) | 6 | 60 | 11 | 8 | 79 |
-| Services\\Promotion\\Promotion.Grpc\\obj\\Debug\\net8.0\\Protos | 2 | 2,020 | 99 | 209 | 2,328 |
-| Services\\Promotion\\Promotion.Grpc\\obj\\Debug\\net8.0\\staticwebassets | 3 | 9 | 0 | 0 | 9 |
+| Services\\Promotion\\Promotion.API | 34 | 6,950 | 121 | 293 | 7,364 |
+| Services\\Promotion\\Promotion.API (Files) | 5 | 82 | 3 | 17 | 102 |
+| Services\\Promotion\\Promotion.API\\Data | 2 | 48 | 0 | 9 | 57 |
+| Services\\Promotion\\Promotion.API\\Migrations | 3 | 149 | 6 | 28 | 183 |
+| Services\\Promotion\\Promotion.API\\Models | 2 | 15 | 0 | 2 | 17 |
+| Services\\Promotion\\Promotion.API\\Properties | 1 | 23 | 0 | 1 | 24 |
+| Services\\Promotion\\Promotion.API\\Services | 1 | 101 | 2 | 17 | 120 |
+| Services\\Promotion\\Promotion.API\\bin | 4 | 1,238 | 0 | 2 | 1,240 |
+| Services\\Promotion\\Promotion.API\\bin\\Debug | 4 | 1,238 | 0 | 2 | 1,240 |
+| Services\\Promotion\\Promotion.API\\bin\\Debug\\net8.0 | 4 | 1,238 | 0 | 2 | 1,240 |
+| Services\\Promotion\\Promotion.API\\obj | 16 | 5,294 | 110 | 217 | 5,621 |
+| Services\\Promotion\\Promotion.API\\obj (Files) | 5 | 3,205 | 0 | 0 | 3,205 |
+| Services\\Promotion\\Promotion.API\\obj\\Debug | 11 | 2,089 | 110 | 217 | 2,416 |
+| Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0 | 11 | 2,089 | 110 | 217 | 2,416 |
+| Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0 (Files) | 6 | 60 | 11 | 8 | 79 |
+| Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0\\Protos | 2 | 2,020 | 99 | 209 | 2,328 |
+| Services\\Promotion\\Promotion.API\\obj\\Debug\\net8.0\\staticwebassets | 3 | 9 | 0 | 0 | 9 |
 | Services\\Purchasing | 131 | 20,348 | 111 | 584 | 21,043 |
 | Services\\Purchasing\\Purchasing.API | 33 | 8,209 | 48 | 78 | 8,335 |
 | Services\\Purchasing\\Purchasing.API (Files) | 7 | 124 | 3 | 23 | 150 |

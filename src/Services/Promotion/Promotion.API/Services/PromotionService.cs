@@ -1,10 +1,10 @@
 ﻿using Grpc.Core;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Promotion.Grpc.Data;
-using Promotion.Grpc.Models;
+using Promotion.API.Data;
+using Promotion.API.Models;
 
-namespace Promotion.Grpc.Services;
+namespace Promotion.API.Services;
 
 public class PromotionService(PromotionContext dbContext, ILogger<PromotionService> logger)
     : CouponProtoService.CouponProtoServiceBase

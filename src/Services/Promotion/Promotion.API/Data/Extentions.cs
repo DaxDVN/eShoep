@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Promotion.Grpc.Data;
+namespace Promotion.API.Data;
 
 public static class Extentions
 {

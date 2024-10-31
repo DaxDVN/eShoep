@@ -9,17 +9,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Promotion/Promotion.Grpc/Promotion.Grpc.csproj", "Services/Promotion/Promotion.Grpc/"]
-RUN dotnet restore "./Services/Promotion/Promotion.Grpc/Promotion.Grpc.csproj"
+COPY ["Services/Promotion/Promotion.API/Promotion.API.csproj", "Services/Promotion/Promotion.API/"]
+RUN dotnet restore "./Services/Promotion/Promotion.API/Promotion.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Promotion/Promotion.Grpc"
-RUN dotnet build "./Promotion.Grpc.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Promotion/Promotion.API"
+RUN dotnet build "./Promotion.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Promotion.Grpc.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Promotion.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Promotion.Grpc.dll"]
+ENTRYPOINT ["dotnet", "Promotion.API.dll"]
