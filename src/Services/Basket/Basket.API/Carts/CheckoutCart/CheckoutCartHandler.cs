@@ -31,7 +31,7 @@ public class CheckoutCartCommandHandler(ICartRepository cartRepository, IPublish
 
         await publishEndpoint.Publish(eventMessage, cancellationToken);
 
-        await cartRepository.DeleteCart(command.CartCheckoutDto.CustomerName, cancellationToken);
+        await cartRepository.DeleteCart(command.CartCheckoutDto.CustomerId.ToString(), cancellationToken);
 
         return new CheckoutCartResult(true);
     }

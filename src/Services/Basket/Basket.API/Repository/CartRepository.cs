@@ -5,7 +5,7 @@ public class CartRepository(IDocumentSession session)
 {
     public async Task<Cart> GetCart(string userId, CancellationToken cancellationToken = default)
     {
-        var basket = await session.LoadAsync<Cart>(userId, cancellationToken);
+        var basket = await session.Query<Cart>().FirstOrDefaultAsync(c => c.UserId == userId, cancellationToken);
 
         return basket is null ? throw new CartNotFoundException(userId) : basket;
     }
