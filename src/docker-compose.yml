@@ -40,11 +40,11 @@ services:
       context: .
       dockerfile: Services/Basket/Basket.API/Dockerfile
 
-#  promotion.api:
-#    image: ${DOCKER_REGISTRY-}promotionapi
-#    build:
-#      context: .
-#      dockerfile: Services/Promotion/Promotion.API/Dockerfile
+  #  promotion.api:
+  #    image: ${DOCKER_REGISTRY-}promotionapi
+  #    build:
+  #      context: .
+  #      dockerfile: Services/Promotion/Promotion.API/Dockerfile
 
   purchasing.api:
     image: ${DOCKER_REGISTRY-}purchasingapi

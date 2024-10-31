@@ -1,5 +1,5 @@
 ﻿@page
-@model Shoep.Shop.Pages.LoginModel
+@model LoginModel
 @{
 }
 
@@ -38,16 +38,16 @@
                     <h3>Log in to enter</h3>
                     <form method="post" class="row login_form" novalidate="novalidate">
                         <div class="col-md-12 form-group">
-                            <input type="email" class="form-control" asp-for="Input.Email" placeholder="Email" />
+                            <input type="email" class="form-control" asp-for="Input.Email" placeholder="Email"/>
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
-                            <input type="password" class="form-control" asp-for="Input.Password" placeholder="Password" />
+                            <input type="password" class="form-control" asp-for="Input.Password" placeholder="Password"/>
                             <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="creat_account">
-                                <input type="checkbox" asp-for="Input.RememberMe" />
+                                <input type="checkbox" asp-for="Input.RememberMe"/>
                                 <label asp-for="Input.RememberMe">Keep me logged in</label>
                             </div>
                         </div>
@@ -63,5 +63,5 @@
 </section>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

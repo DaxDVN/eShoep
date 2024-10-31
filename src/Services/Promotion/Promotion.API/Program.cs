@@ -1,10 +1,7 @@
-using Carter;
 using Common.Behaviors;
 using Common.Exceptions;
 using Promotion.API.Data;
 using Promotion.API.Services;
-using FluentValidation;
-using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +12,9 @@ var assembly = typeof(Program).Assembly;
 
 builder.Services.AddMediatR(config =>
 {
-  config.RegisterServicesFromAssembly(assembly);
-  config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-  config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+    config.RegisterServicesFromAssembly(assembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
 builder.Services.AddValidatorsFromAssembly(assembly);
@@ -28,7 +25,7 @@ builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetCo
     .UseLightweightSessions();
 
 if (builder.Environment.IsDevelopment())
-  builder.Services.InitializeMartenWith<PromotionInitialData>();
+    builder.Services.InitializeMartenWith<PromotionInitialData>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

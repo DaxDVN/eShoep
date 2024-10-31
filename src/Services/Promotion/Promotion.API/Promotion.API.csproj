@@ -11,27 +11,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Carter" Version="8.2.1" />
-      <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
-      <PackageReference Include="Mapster" Version="7.4.0" />
-      <PackageReference Include="Marten" Version="7.31.1" />
-      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+        <PackageReference Include="Carter" Version="8.2.1"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.66.0"/>
+        <PackageReference Include="Mapster" Version="7.4.0"/>
+        <PackageReference Include="Marten" Version="7.31.1"/>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
+        <ProjectReference Include="..\..\..\Common\Common\Common.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\coupon.proto" GrpcServices="Server" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Coupons\CreateCoupon\" />
-      <Folder Include="Coupons\DeactivateCoupon\" />
-      <Folder Include="Coupons\GetCoupons\" />
-      <Folder Include="Coupons\GetCoupon\" />
-      <Folder Include="Coupons\UpdateCoupon\" />
+        <Protobuf Include="Protos\coupon.proto" GrpcServices="Server"/>
     </ItemGroup>
 
 </Project>

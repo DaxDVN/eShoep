@@ -1,0 +1,9 @@
+﻿global using Carter;
+global using Promotion.API.Dtos;
+global using Promotion.API.Exceptions;
+global using Promotion.API.Models;
+global using Common.CQRS;
+global using FluentValidation;
+global using Mapster;
+global using Marten;
+global using MediatR;

@@ -16,7 +16,7 @@
       url: '/ShoppingCart?handler=AddToCart',
       type: 'POST',
       contentType: "application/json",
-      data: JSON.stringify({ ProductId: productId, Qty: parseInt(qty) }),
+      data: JSON.stringify({ProductId: productId, Qty: parseInt(qty)}),
       beforeSend: function (xhr) {
         xhr.setRequestHeader("XSRF-TOKEN",
           $('input:hidden[name="__RequestVerificationToken"]').val());

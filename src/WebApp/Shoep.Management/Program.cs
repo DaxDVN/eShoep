@@ -1,5 +1,5 @@
-using Shoep.Management.Services;
 using Refit;
+using Shoep.Management.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,7 +2,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shoep.Shop.Models.Basket;
-using Shoep.Shop.Pages;
 using Shoep.Shop.Services;
 
 namespace Shoep.Shop.Pages;
@@ -16,10 +15,7 @@ public class ShoppingCartModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        if (User.Identity is { IsAuthenticated: false } or null)
-        {
-            return RedirectToPage("/Login");
-        }
+        if (User.Identity is { IsAuthenticated: false } or null) return RedirectToPage("/Login");
 
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         try
@@ -41,9 +37,7 @@ public class ShoppingCartModel(
     public async Task<IActionResult> OnPostAddToCartAsync([FromBody] CartRequest request)
     {
         if (User.Identity is { IsAuthenticated: false } or null)
-        {
             return new JsonResult(new { success = false, message = "Please login" });
-        }
 
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
@@ -54,10 +48,7 @@ public class ShoppingCartModel(
         var productResponse = await catalogService.GetProduct(productId);
 
         var basket = await basketService.LoadUserBasket(userId!);
-        if (string.IsNullOrEmpty(basket.UserId))
-        {
-            basket.UserId = userId!;
-        }
+        if (string.IsNullOrEmpty(basket.UserId)) basket.UserId = userId!;
 
         var itemExist = basket.Items.FirstOrDefault(item => item.ProductId == productId);
         if (itemExist is null)
@@ -79,30 +70,21 @@ public class ShoppingCartModel(
     public async Task<IActionResult> OnPostUpdateCartAsync([FromBody] CartRequestWrapper request)
     {
         if (User.Identity is { IsAuthenticated: false } or null)
-        {
             return new JsonResult(new { success = false, message = "Please login" });
-        }
 
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
         logger.LogInformation("Add to cart button clicked");
         var basket = await basketService.LoadUserBasket(userId!);
-        if (string.IsNullOrEmpty(basket.UserId))
-        {
-            basket.UserId = userId!;
-        }
+        if (string.IsNullOrEmpty(basket.UserId)) basket.UserId = userId!;
 
         foreach (var cartRequest in request.CartRequests)
         {
             var item = basket.Items.FirstOrDefault(i => i.ProductId.ToString() == cartRequest.ProductId);
             if (cartRequest.Qty > 0)
-            {
                 item!.Quantity = cartRequest.Qty;
-            }
             else
-            {
                 basket.Items.Remove(item!);
-            }
         }
 
         await basketService.StoreBasket(new StoreCartRequest(basket));

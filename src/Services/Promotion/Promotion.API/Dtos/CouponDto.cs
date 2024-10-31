@@ -1,6 +1,6 @@
-﻿namespace Promotion.API.Models;
+﻿namespace Promotion.API.Dtos;
 
-public class Coupon
+public class CouponDto
 {
     public Guid Id { get; set; }
     public string Code { get; set; } = default!;

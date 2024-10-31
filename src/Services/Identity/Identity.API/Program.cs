@@ -19,7 +19,7 @@ builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationSche
 builder.Services.AddIdentityCore<User>(opts =>
     {
         opts.Password.RequireDigit = false;
-        opts.Password.RequireLowercase = false; 
+        opts.Password.RequireLowercase = false;
         opts.Password.RequireUppercase = false;
         opts.Password.RequireNonAlphanumeric = true;
         opts.Password.RequiredLength = 8;
@@ -67,9 +67,7 @@ app.MapPost("/api/auth/login",
     {
         var user = await userManager.FindByEmailAsync(loginRequest.Email);
         if (user == null || !await userManager.CheckPasswordAsync(user, loginRequest.Password))
-        {
             return Results.Unauthorized();
-        }
 
         var token = await tokenService.GenerateTokenAsync(user);
 

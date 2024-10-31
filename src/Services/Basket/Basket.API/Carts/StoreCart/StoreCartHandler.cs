@@ -34,7 +34,7 @@ public class StoreCartCommandHandler(
         foreach (var item in cart.Items)
         {
             var coupon = await couponProto.GetCouponAsync(new GetCouponRequest
-            { ProductId = item.ProductId.ToString() });
+                { ProductId = item.ProductId.ToString() });
             if (coupon.CouponType == "FixedAmount")
                 item.Price -= coupon.Amount;
             else

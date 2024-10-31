@@ -17,10 +17,7 @@ public class CheckoutModel(
 
     public async Task<IActionResult> OnGetAsync()
     {
-        if (User.Identity is { IsAuthenticated: false } or null)
-        {
-            return RedirectToPage("/Login");
-        }
+        if (User.Identity is { IsAuthenticated: false } or null) return RedirectToPage("/Login");
 
         var enumerable = User.Claims as Claim[] ?? User.Claims.ToArray();
         var userId = enumerable.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -47,10 +44,7 @@ public class CheckoutModel(
 
     public async Task<IActionResult> OnPostCheckoutAsync()
     {
-        if (User.Identity is { IsAuthenticated: false } or null)
-        {
-            return RedirectToPage("/Login");
-        }
+        if (User.Identity is { IsAuthenticated: false } or null) return RedirectToPage("/Login");
 
         logger.LogInformation("Checkout button clicked");
 
