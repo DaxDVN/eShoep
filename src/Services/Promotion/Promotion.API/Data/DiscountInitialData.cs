@@ -1,10 +1,10 @@
-﻿using Discount.API.Models;
-using Marten;
+﻿using Marten;
 using Marten.Schema;
+using Promotion.API.Models;
 
-namespace Discount.API.Data;
+namespace Promotion.API.Data;
 
-public class DiscountInitialData : IInitialData
+public class PromotionInitialData : IInitialData
 {
     public async Task Populate(IDocumentStore store, CancellationToken cancellation)
     {

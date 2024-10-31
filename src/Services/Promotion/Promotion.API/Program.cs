@@ -1,8 +1,8 @@
 using Carter;
 using Common.Behaviors;
 using Common.Exceptions;
-using Discount.API.Data;
-using Discount.API.Services;
+using Promotion.API.Data;
+using Promotion.API.Services;
 using FluentValidation;
 using Marten;
 
@@ -28,14 +28,14 @@ builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetCo
     .UseLightweightSessions();
 
 if (builder.Environment.IsDevelopment())
-  builder.Services.InitializeMartenWith<DiscountInitialData>();
+  builder.Services.InitializeMartenWith<PromotionInitialData>();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 
 app.MapCarter();
-app.MapGrpcService<DiscountService>();
+app.MapGrpcService<CouponService>();
 
 app.UseExceptionHandler(options => { });
 

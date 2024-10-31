@@ -13,17 +13,17 @@ services:
     volumes:
       - postgres_catalog:/var/lib/postgresql/data/
 
-  discountdb:
-    container_name: discountdb
+  promotiondb:
+    container_name: promotiondb
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=DiscountDb
+      - POSTGRES_DB=PromotionDb
     restart: always
     ports:
       - "5436:5432"
     volumes:
-      - postgres_discount:/var/lib/postgresql/data/
+      - postgres_promotion:/var/lib/postgresql/data/
 
   basketdb:
     container_name: basketdb
@@ -96,14 +96,14 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  discount.api:
+  promotion.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=discountdb;Port=5432;Database=DiscountDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
     depends_on:
-      - discountdb
+      - promotiondb
     ports:
       - "6002:8080"
       - "6062:8081"
@@ -119,7 +119,7 @@ services:
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
 #      - GrpcSettings__PromotionUrl=https://promotion.api:8081
-      - GrpcSettings__PromotionUrl=https://discount.api:8081
+      - GrpcSettings__PromotionUrl=https://promotion.api:8081
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
@@ -127,7 +127,7 @@ services:
       - basketdb
       - distributedcache
 #      - promotion.api
-      - discount.api
+      - promotion.api
       - messagebroker
     ports:
       - "6001:8080"

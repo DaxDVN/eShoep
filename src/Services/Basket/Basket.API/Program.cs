@@ -1,5 +1,5 @@
 using Common.Messaging.MassTransit;
-using Discount.API;
+using Promotion.API;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 

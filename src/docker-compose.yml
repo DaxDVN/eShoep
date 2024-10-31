@@ -4,7 +4,7 @@ services:
   catalogdb:
     image: postgres
 
-  discountdb:
+  promotiondb:
     image: postgres
 
   basketdb:
@@ -28,11 +28,11 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
-  discount.api:
-    image: ${DOCKER_REGISTRY-}discountapi
+  promotion.api:
+    image: ${DOCKER_REGISTRY-}promotionapi
     build:
       context: .
-      dockerfile: Services/Discount/Discount.API/Dockerfile
+      dockerfile: Services/Promotion/Promotion.API/Dockerfile
 
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
@@ -72,7 +72,7 @@ services:
 
 volumes:
   postgres_catalog:
-  postgres_discount:
+  postgres_promotion:
   postgres_basket:
   postgres_identity:
   postgres_purchasing:

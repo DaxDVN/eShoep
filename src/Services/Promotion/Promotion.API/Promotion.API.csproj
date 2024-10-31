@@ -26,4 +26,12 @@
         <Protobuf Include="Protos\coupon.proto" GrpcServices="Server" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Coupons\CreateCoupon\" />
+      <Folder Include="Coupons\DeactivateCoupon\" />
+      <Folder Include="Coupons\GetCoupons\" />
+      <Folder Include="Coupons\GetCoupon\" />
+      <Folder Include="Coupons\UpdateCoupon\" />
+    </ItemGroup>
+
 </Project>

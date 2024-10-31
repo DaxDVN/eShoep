@@ -1,12 +1,13 @@
 ﻿using Common.Exceptions;
-using Discount.API.Models;
+using Promotion.API;
 using Grpc.Core;
 using Mapster;
 using Marten;
+using Promotion.API.Models;
 
-namespace Discount.API.Services;
+namespace Promotion.API.Services;
 
-public class DiscountService(IDocumentSession session, ILogger<DiscountService> logger)
+public class CouponService(IDocumentSession session, ILogger<CouponService> logger)
     : CouponProtoService.CouponProtoServiceBase
 {
     public override async Task<CouponModel> GetCoupon(GetCouponRequest request, ServerCallContext context)

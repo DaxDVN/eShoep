@@ -1,8 +1,8 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "Discount.API";
+option csharp_namespace = "Promotion.API";
 
-package discount;
+package promotion;
 
 // The coupon service definition.
 service CouponProtoService {
