@@ -1,4 +1,4 @@
-﻿namespace Promotion.API.Models;
+﻿namespace Discount.API.Models;
 
 public enum CouponType
 {

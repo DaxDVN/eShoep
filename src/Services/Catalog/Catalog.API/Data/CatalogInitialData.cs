@@ -8,15 +8,6 @@ public class CatalogInitialData : IInitialData
     {
         using var session = store.LightweightSession();
 
-        //var products1 = await session.Query<Product>().ToListAsync();
-        //foreach (var product in products1)
-        //{
-        //  session.Delete(product);
-        //}
-
-        //await session.SaveChangesAsync();
-        //return;
-
         if (!await session.Query<Category>().AnyAsync()) session.Store(GetPreconfiguredCategories());
 
         var products = GetPreconfiguredProducts();

@@ -9,7 +9,8 @@
         "promotion.api": "StartDebugging",
         "purchasing.api": "StartDebugging",
         "identity.api": "StartDebugging",
-        "shoep.shop": "StartDebugging"
+        "shoep.shop": "StartDebugging",
+        "discount.api": "StartDebugging"
       }
     }
   }

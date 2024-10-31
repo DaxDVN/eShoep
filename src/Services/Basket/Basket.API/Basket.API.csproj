@@ -28,8 +28,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\Promotion\Promotion.API\Protos\coupon.proto" GrpcServices="Client">
+        <Protobuf Include="..\..\Discount\Discount.API\Protos\coupon.proto" GrpcServices="Client">
             <Link>Protos\coupon.proto</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Protobuf>
     </ItemGroup>
 

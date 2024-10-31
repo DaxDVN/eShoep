@@ -1,4 +1,4 @@
-﻿using Promotion.API;
+﻿using Discount.API;
 
 namespace Basket.API.Carts.StoreCart;
 
