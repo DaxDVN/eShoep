@@ -4,7 +4,9 @@ public record CartCheckoutEvent : IntegrationEvent
 {
     public string CustomerName { get; set; } = default!;
     public Guid CustomerId { get; set; } = default!;
-    public decimal TotalPrice { get; set; } = default!;
+    public decimal TotalPrice { get; set; }
+
+    public CartItemsCheckout CartItems { get; set; } = default!;
 
     // Shipping and BillingAddress
     public string FirstName { get; set; } = default!;
@@ -21,4 +23,14 @@ public record CartCheckoutEvent : IntegrationEvent
     public string Expiration { get; set; } = default!;
     public string CVV { get; set; } = default!;
     public int PaymentMethod { get; set; } = default!;
+}
+
+public record CartItemsCheckout(List<CartItemCheckout> Items);
+
+public class CartItemCheckout
+{
+    public int Quantity { get; set; } = default!;
+    public decimal Price { get; set; } = default!;
+    public Guid ProductId { get; set; } = default!;
+    public string ProductName { get; set; } = default!;
 }

@@ -18,7 +18,7 @@ public static class OrderExtensions
                 order.Payment.CVV, order.Payment.PaymentMethod),
             order.Status,
             order.OrderItems.Select(oi =>
-                new OrderItemDto(oi.OrderId.Value, oi.ProductId.Value, oi.Quantity, oi.Price)).ToList()
+                new OrderItemDto(oi.OrderId.Value, oi.ProductId.Value, "", oi.Quantity, oi.Price)).ToList()
         ));
     }
 
@@ -43,7 +43,7 @@ public static class OrderExtensions
                 order.Payment.CVV, order.Payment.PaymentMethod),
             order.Status,
             order.OrderItems.Select(oi =>
-                new OrderItemDto(oi.OrderId.Value, oi.ProductId.Value, oi.Quantity, oi.Price)).ToList()
+                new OrderItemDto(oi.OrderId.Value, oi.ProductId.Value, "", oi.Quantity, oi.Price)).ToList()
         );
     }
 }
