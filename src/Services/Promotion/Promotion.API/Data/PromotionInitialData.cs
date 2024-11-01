@@ -8,6 +8,7 @@ public class PromotionInitialData : IInitialData
     {
         await using var session = store.LightweightSession();
 
+        // Seed Coupon
         if (!await session.Query<Coupon>().AnyAsync(cancellation))
         {
             var coupons = GetPreconfiguredCoupons();
@@ -19,6 +20,13 @@ public class PromotionInitialData : IInitialData
         {
             var usages = GetPreconfiguredCouponUsages();
             session.Store(usages);
+        }
+
+        // Seed Discount
+        if (!await session.Query<Discount>().AnyAsync(cancellation))
+        {
+            var discounts = GetPreconfiguredDiscounts();
+            session.Store(discounts);
         }
 
         await session.SaveChangesAsync(cancellation);
@@ -107,6 +115,43 @@ public class PromotionInitialData : IInitialData
                 CouponId = new Guid("b2a1b3c7-9d8f-4f5c-af72-b3f9c1e72e41"),
                 UserId = Guid.Parse("c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914"),
                 UsedAt = DateTime.UtcNow.AddDays(-2) // Giả sử đã sử dụng cách đây 2 ngày
+            }
+        };
+    }
+
+    private static IEnumerable<Discount> GetPreconfiguredDiscounts()
+    {
+        return new List<Discount>
+        {
+            new()
+            {
+                Id = new Guid("a1f1b2c3-d4e5-6f78-90ab-cdef12345678"),
+                Name = "Holiday Special",
+                PromotionType = PromotionType.Percentage,
+                Amount = 15, // giảm giá 15%
+                StartDate = DateTime.UtcNow,
+                EndDate = DateTime.UtcNow.AddDays(30),
+                ProductIds = new List<Guid> // Giả sử đây là các ID sản phẩm trong catalog
+                {
+                    Guid.Parse("5334c996-8457-4cf0-815c-ed2b77c4ff61"),
+                    Guid.Parse("12345678-1234-1234-1234-123456789012")
+                },
+                IsActive = true
+            },
+            new()
+            {
+                Id = new Guid("b2c3d4e5-f678-90ab-cdef-1234567890ab"),
+                Name = "Clearance Sale",
+                PromotionType = PromotionType.FixedAmount,
+                Amount = 100, // giảm giá cố định 100k
+                StartDate = DateTime.UtcNow.AddDays(-5),
+                EndDate = DateTime.UtcNow.AddDays(10),
+                ProductIds = new List<Guid>
+                {
+                    Guid.Parse("c67d6323-e8b1-4bdf-9a75-b0d0d2e7e914"),
+                    Guid.Parse("87654321-4321-4321-4321-210987654321")
+                },
+                IsActive = true
             }
         };
     }

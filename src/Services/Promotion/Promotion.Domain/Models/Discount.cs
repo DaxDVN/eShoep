@@ -8,6 +8,6 @@ public class Discount
     public decimal Amount { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public List<Guid> ProductIds { get; set; }
+    public List<Guid> ProductIds { get; set; } = [];
     public bool IsActive { get; set; }
 }

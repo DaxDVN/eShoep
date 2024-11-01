@@ -6,7 +6,7 @@ public record ToggleStatusDiscountRequest(Guid Id, bool IsActive);
 
 public record ToggleStatusDiscountResponse(bool IsSuccess);
 
-public class ToggleStatusDiscountEndpoint
+public class ToggleStatusDiscountEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
