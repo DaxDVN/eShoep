@@ -7,7 +7,7 @@ public record UpdateCouponRequest(
     string Code,
     string Description,
     bool IsProductSpecific,
-    string CouponType,
+    string PromotionType,
     int Amount,
     List<Guid> ProductId,
     bool IsActive,

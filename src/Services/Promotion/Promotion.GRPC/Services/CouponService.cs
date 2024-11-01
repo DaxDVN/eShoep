@@ -23,7 +23,7 @@ public class CouponService(ILogger<CouponService> logger, ISender sender)
             {
                 Id = result.Coupon.Id.ToString(),
                 Code = result.Coupon.Code,
-                CouponType = result.Coupon.CouponType.ToString(),
+                PromotionType = result.Coupon.PromotionType.ToString(),
                 Description = result.Coupon.Description,
                 Amount = result.Coupon.Amount
             };
@@ -34,7 +34,7 @@ public class CouponService(ILogger<CouponService> logger, ISender sender)
             {
                 Id = "00000000-0000-0000-0000-000000000000",
                 Code = "No Coupon Desc",
-                CouponType = "No Coupon Desc",
+                PromotionType = "No Coupon Desc",
                 Description = "No Coupon Desc",
                 Amount = 0
             };

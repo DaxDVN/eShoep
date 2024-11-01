@@ -1,6 +1,6 @@
 ﻿namespace Promotion.Domain.Models;
 
-public enum CouponType
+public enum PromotionType
 {
     Percentage,
     FixedAmount

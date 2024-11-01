@@ -32,7 +32,7 @@ public class PromotionInitialData : IInitialData
             {
                 Id = new Guid("1b4b5d6e-cf7e-4c18-a8f7-2b8c9c145b67"),
                 Code = "IPHONE150",
-                CouponType = CouponType.FixedAmount,
+                PromotionType = PromotionType.FixedAmount,
                 Description = "Giảm 150k cho iPhone",
                 Amount = 150,
                 MaxRedemptions = 20,
@@ -49,7 +49,7 @@ public class PromotionInitialData : IInitialData
             {
                 Id = new Guid("b2a1b3c7-9d8f-4f5c-af72-b3f9c1e72e41"),
                 Code = "SAMSUNG30",
-                CouponType = CouponType.Percentage,
+                PromotionType = PromotionType.Percentage,
                 Description = "Giảm 30% cho Samsung",
                 Amount = 30,
                 MaxRedemptions = 30,
@@ -65,7 +65,7 @@ public class PromotionInitialData : IInitialData
             {
                 Id = new Guid("d1f5a6a2-90c2-49c4-b1f7-8e3a56934c7e"),
                 Code = "SUMMER20",
-                CouponType = CouponType.Percentage,
+                PromotionType = PromotionType.Percentage,
                 Description = "Giảm giá 20% cho toàn bộ đơn hàng",
                 Amount = 20,
                 MaxRedemptions = 0,
@@ -78,7 +78,7 @@ public class PromotionInitialData : IInitialData
             {
                 Id = new Guid("e2b1c4d8-4f88-4ed6-8c0b-43c7ecff59c9"),
                 Code = "CLEARANCE50",
-                CouponType = CouponType.FixedAmount,
+                PromotionType = PromotionType.FixedAmount,
                 Description = "Giảm 50k cho toàn bộ hóa đơn",
                 Amount = 50,
                 MaxRedemptions = 10,

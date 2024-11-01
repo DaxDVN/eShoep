@@ -3,11 +3,14 @@
 public record UpdateCouponCommand(
     Guid Id,
     string Code,
+    string PromotionType,
     string Description,
-    string CouponType,
     int Amount,
-    bool IsActive,
-    DateTime ExpirationDate)
+    int MaxRedemptions,
+    int RedemptionCount,
+    DateTime ExpirationDate,
+    List<Guid> UserIds,
+    bool IsActive)
     : ICommand<UpdateCouponResult>;
 
 public record UpdateCouponResult(bool IsSuccess);
@@ -25,7 +28,7 @@ public class UpdateCouponCommandValidator : AbstractValidator<UpdateCouponComman
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("Description is required.");
 
-        RuleFor(x => x.CouponType)
+        RuleFor(x => x.PromotionType)
             .NotEmpty().WithMessage("Coupon type is required.")
             .IsInEnum().WithMessage("Coupon type is not valid.");
 
@@ -51,12 +54,13 @@ internal class UpdateCouponCommandHandler(IDocumentSession session)
 
         coupon.Code = command.Code;
         coupon.Description = command.Description;
-        coupon.CouponType = Enum.Parse<CouponType>(command.CouponType);
+        coupon.PromotionType = Enum.Parse<PromotionType>(command.PromotionType);
         coupon.Amount = command.Amount;
         coupon.IsActive = command.IsActive;
         coupon.ExpirationDate = command.ExpirationDate;
-
-
+        coupon.RedemptionCount = command.RedemptionCount;
+        coupon.MaxRedemptions = command.MaxRedemptions;
+        coupon.UserIds = command.UserIds;
         session.Update(coupon);
         await session.SaveChangesAsync(cancellationToken);
 
