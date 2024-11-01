@@ -10,7 +10,7 @@ public class ToggleStatusCouponEndpoint
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPut("/coupons/toggle-status",
+        app.MapPut("/promotion/coupons/toggle-status",
                 async (ToggleStatusCouponRequest request, ISender sender) =>
                 {
                     var command = request.Adapt<ToggleStatusCouponCommand>();

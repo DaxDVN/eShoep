@@ -1,6 +1,6 @@
 ﻿using Promotion.Application.Handlers.Coupons;
 
-namespace Promotion.API.Coupons.CreateCoupon;
+namespace Promotion.API.Endpoints.Coupons;
 
 public record CreateCouponRequest(
     string Code,

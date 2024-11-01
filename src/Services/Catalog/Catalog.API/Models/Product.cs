@@ -10,4 +10,11 @@ public class Product
     public Guid CategoryId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    private decimal? _discountedPrice;
+
+    public decimal DiscountedPrice
+    {
+        get => _discountedPrice ?? Price;
+        set => _discountedPrice = value;
+    }
 }
