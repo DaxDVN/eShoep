@@ -1,12 +1,5 @@
-﻿using Common.Exceptions;
-using Grpc.Core;
-using Mapster;
-using Marten;
-using MediatR;
+﻿using MediatR;
 using Promotion.API;
-using Promotion.Application.Exceptions;
-using Promotion.Application.Handlers.Coupons;
-using Promotion.Domain.Models;
 
 namespace Promotion.GRPC.Services;
 

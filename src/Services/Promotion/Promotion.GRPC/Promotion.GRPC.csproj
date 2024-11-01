@@ -11,25 +11,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Grpc.AspNetCore" Version="2.67.0-pre1" />
-        <PackageReference Include="Marten" Version="7.31.1" />
-        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.67.0-pre1"/>
+        <PackageReference Include="Marten" Version="7.31.1"/>
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Protobuf Include="Protos\coupon.proto">
-        <GrpcServices>Server</GrpcServices>
-        <Access>Public</Access>
-        <ProtoCompile>True</ProtoCompile>
-        <CompileOutputs>True</CompileOutputs>
-        <OutputDir>obj\Debug\net8.0\</OutputDir>
-        <Generator>MSBuild:Compile</Generator>
-      </Protobuf>
+        <Protobuf Include="Protos\coupon.proto">
+            <GrpcServices>Server</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <OutputDir>obj\Debug\net8.0\</OutputDir>
+            <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
-      <ProjectReference Include="..\Promotion.Application\Promotion.Application.csproj" />
+        <ProjectReference Include="..\..\..\Common\Common\Common.csproj"/>
+        <ProjectReference Include="..\Promotion.Application\Promotion.Application.csproj"/>
     </ItemGroup>
 
 </Project>

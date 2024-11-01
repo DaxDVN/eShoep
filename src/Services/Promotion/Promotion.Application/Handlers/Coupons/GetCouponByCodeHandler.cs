@@ -20,10 +20,7 @@ internal class GetCouponByCodeQueryHandler(IDocumentSession session)
             u => u.CouponId == coupon.Id
                  && u.UserId == Guid.Parse(query.UserId), cancellationToken);
 
-        if (isExist)
-        {
-            throw new Exception("Coupon is already used");
-        }
+        if (isExist) throw new Exception("Coupon is already used");
 
         var couponDto = coupon.Adapt<CouponDto>();
         return new GetCouponByCodeResult(couponDto);

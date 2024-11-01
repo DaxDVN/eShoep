@@ -19,11 +19,11 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\Common\Common\Common.csproj"/>
-        <ProjectReference Include="..\Promotion.Application\Promotion.Application.csproj" />
+        <ProjectReference Include="..\Promotion.Application\Promotion.Application.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Endpoints\" />
+        <Folder Include="Endpoints\"/>
     </ItemGroup>
 
 </Project>

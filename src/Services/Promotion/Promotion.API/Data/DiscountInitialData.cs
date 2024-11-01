@@ -8,14 +8,14 @@ public class PromotionInitialData : IInitialData
     {
         await using var session = store.LightweightSession();
 
-        if (!await session.Query<Coupon>().AnyAsync(token: cancellation))
+        if (!await session.Query<Coupon>().AnyAsync(cancellation))
         {
             var coupons = GetPreconfiguredCoupons();
             session.Store(coupons);
         }
 
         // Seed CouponUsage
-        if (!await session.Query<CouponUsage>().AnyAsync(token: cancellation))
+        if (!await session.Query<CouponUsage>().AnyAsync(cancellation))
         {
             var usages = GetPreconfiguredCouponUsages();
             session.Store(usages);
