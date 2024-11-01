@@ -2,8 +2,7 @@
 
 public record GetCouponsQuery(
     int? PageNumber = 1,
-    int? PageSize = 3,
-    int? SortType = 1)
+    int? PageSize = 7)
     : IQuery<GetCouponsResult>;
 
 public record GetCouponsResult(IEnumerable<CouponDto> Coupons, long TotalCoupons);

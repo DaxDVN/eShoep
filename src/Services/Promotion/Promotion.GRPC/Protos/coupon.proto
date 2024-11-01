@@ -7,18 +7,18 @@ package promotion;
 // The coupon service definition.
 service CouponProtoService {
   // Coupon CRUD Operations
-  rpc GetCoupon (GetCouponRequest) returns (CouponModel);
+  rpc ApplyCoupon (ApplyCouponRequest) returns (CouponModel);
 }
 
-message GetCouponRequest {
-  string productId = 1;
+message ApplyCouponRequest {
+  string userId = 1;
+  string couponId = 2;
 }
 
 message CouponModel {
   string id = 1;
   string code = 2;
-  string productId = 3;
+  string couponType = 3;
   string description = 4;
   int32 amount = 5;
-  string couponType = 6;
 }

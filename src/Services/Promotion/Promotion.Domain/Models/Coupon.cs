@@ -11,6 +11,6 @@ public class Coupon
     public int RedemptionCount { get; set; } = 0;
     public DateTime ExpirationDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public List<Guid> UserIds { get; set; }
+    public List<Guid> UserIds { get; set; } = [];
     public bool IsActive { get; set; }
 }

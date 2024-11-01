@@ -4,8 +4,7 @@ namespace Promotion.API.Endpoints.Coupons;
 
 public record GetCouponsRequest(
     int? PageNumber = 1,
-    int? PageSize = 3,
-    int? SortType = 1);
+    int? PageSize = 7);
 
 public record GetCouponsResponse(IEnumerable<CouponDto> Coupons, long TotalCoupons);
 
