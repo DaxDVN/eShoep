@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\Promotion\Promotion.API\Protos\coupon.proto">
+        <Protobuf Include="..\..\Promotion\Promotion.GRPC\Protos\coupon.proto">
             <GrpcServices>Client</GrpcServices>
             <Access>Public</Access>
             <ProtoCompile>True</ProtoCompile>

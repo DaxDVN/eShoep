@@ -6,243 +6,131 @@ services:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
       dockerfile: "Gateway/ApiGateWay/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/ApiGateWay.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "apigateway:dev"
-    ports:
-    - "127.0.0.1:57014:57100"
-    - "127.0.0.1:57214:57300"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Gateway\\ApiGateWay:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   basket.api:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
       dockerfile: "Services/Basket/Basket.API/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Basket.API.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "basketapi:dev"
-    ports:
-    - "127.0.0.1:57015:57100"
-    - "127.0.0.1:57215:57300"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Basket\\\
       Basket.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   catalog.api:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
       dockerfile: "Services/Catalog/Catalog.API/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Catalog.API.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "catalogapi:dev"
-    ports:
-    - "127.0.0.1:57016:57100"
-    - "127.0.0.1:57216:57300"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Catalog\\\
       Catalog.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   identity.api:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
       dockerfile: "Services/Identity/Identity.API/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Identity.API.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "identityapi:dev"
-    ports:
-    - "127.0.0.1:57017:57100"
-    - "127.0.0.1:57217:57300"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Identity\\\
       Identity.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"
-  promotion.api:
+  promotion.grpc:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
-      dockerfile: "Services/Promotion/Promotion.API/Dockerfile"
+      dockerfile: "Services/Promotion/Promotion.GRPC/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Promotion.GRPC.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
-    image: "promotionapi:dev"
-    ports:
-    - "127.0.0.1:57018:57100"
-    - "127.0.0.1:57218:57300"
+    image: "promotiongrpc:dev"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Promotion\\\
-      Promotion.API:/app:rw"
+      Promotion.GRPC:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   purchasing.api:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
       dockerfile: "Services/Purchasing/Purchasing.API/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Purchasing.API.dll"
     environment:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "purchasingapi:dev"
-    ports:
-    - "127.0.0.1:57019:57100"
-    - "127.0.0.1:57219:57300"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Purchasing\\\
       Purchasing.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   shoep.shop:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
       dockerfile: "WebApp/Shoep.Shop/Dockerfile"
       target: "base"
-      args:
-        BUILD_CONFIGURATION: "Debug"
     command: []
     entrypoint:
-    - "/opt/rider-debugger/linux-x64/JetBrains.Debugger.Worker"
-    - "--runtimeconfig"
-    - "/opt/rider-debugger/JetBrains.Debugger.Worker.runtimeconfig.json"
-    - "--mode=server"
-    - "--frontend-port=57100"
-    - "--backend-port=57300"
-    - "--timeout=60"
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Shoep.Shop.dll"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
       ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/Shoep.Shop.staticwebassets.runtime.CT.json"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
-      RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
-      RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "shoepshop:dev"
-    ports:
-    - "127.0.0.1:57020:57100"
-    - "127.0.0.1:57220:57300"
+    ports: []
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\WebApp\\Shoep.Shop:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2024.2.7\\\
-      Linux64:/opt/rider-debugger"
-    - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
-    - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_01_02_42_05:/var/opt/rider-debugger:rw"
     working_dir: "/app"

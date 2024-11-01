@@ -1,18 +1,15 @@
 using Common.Behaviors;
 using Common.Exceptions;
 using Promotion.API.Data;
-using Promotion.API.Services;
+using Promotion.Application;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddGrpc();
 
 var assembly = typeof(Program).Assembly;
 
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(assembly);
+    config.RegisterServicesFromAssembly(typeof(ApplicationAssemblyReference).Assembly);
     config.AddOpenBehavior(typeof(ValidationBehavior<,>));
     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
@@ -32,7 +29,6 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
 app.MapCarter();
-app.MapGrpcService<CouponService>();
 
 app.UseExceptionHandler(options => { });
 

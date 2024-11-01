@@ -58,14 +58,11 @@ services:
   purchasingdb:
     container_name: purchasingdb
     environment:
-      #      - ACCEPT_EULA=Y
-      #      - SA_PASSWORD=SwN12345678
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=PurchasingDb
     restart: always
     ports:
-      #      - "1433:1433"
       - "5434:5432"
     volumes:
       - postgres_purchasing:/var/lib/postgresql/data/
@@ -96,20 +93,20 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  promotion.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
-    depends_on:
-      - promotiondb
-    ports:
-      - "6002:8080"
-      - "6062:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  # promotion.api:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_HTTP_PORTS=8080
+  #     - ASPNETCORE_HTTPS_PORTS=8081
+  #     - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
+  #   depends_on:
+  #     - promotiondb
+  #   ports:
+  #     - "6002:8080"
+  #     - "6062:8081"
+  #   volumes:
+  #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+  #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   basket.api:
     environment:
@@ -118,16 +115,14 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
-      #      - GrpcSettings__PromotionUrl=https://promotion.api:8081
-      - GrpcSettings__PromotionUrl=https://promotion.api:8081
+      - GrpcSettings__PromotionUrl=https://promotion.grpc:8081
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
     depends_on:
       - basketdb
       - distributedcache
-      #      - promotion.api
-      - promotion.api
+      - promotion.grpc
       - messagebroker
     ports:
       - "6001:8080"
@@ -135,19 +130,6 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-
-  #  promotion.api:
-  #    environment:
-  #      - ASPNETCORE_ENVIRONMENT=Development
-  #      - ASPNETCORE_HTTP_PORTS=8080
-  #      - ASPNETCORE_HTTPS_PORTS=8081
-  #      - ConnectionStrings__Database=Data Source=promotiondb
-  #    ports:
-  #      - "6002:8080"
-  #      - "6062:8081"
-  #    volumes:
-  #      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-  #      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   purchasing.api:
     environment:
@@ -220,3 +202,18 @@ services:
 #      - ./certs:/https/
 
 
+
+  promotion.grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
+    depends_on:
+      - promotiondb
+    ports:
+      - "6002:8080"
+      - "6062:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
