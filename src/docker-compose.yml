@@ -28,11 +28,17 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
-  # promotion.api:
-  #   image: ${DOCKER_REGISTRY-}promotionapi
-  #   build:
-  #     context: .
-  #     dockerfile: Services/Promotion/Promotion.API/Dockerfile
+  promotion.api:
+    image: ${DOCKER_REGISTRY-}promotionapi
+    build:
+      context: .
+      dockerfile: Services/Promotion/Promotion.API/Dockerfile
+
+  promotion.grpc:
+    image: ${DOCKER_REGISTRY-}promotiongrpc
+    build:
+      context: .
+      dockerfile: Services/Promotion/Promotion.GRPC/Dockerfile
 
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
@@ -63,12 +69,6 @@ services:
     build:
       context: .
       dockerfile: WebApp/Shoep.Shop/Dockerfile
-
-  promotion.grpc:
-    image: ${DOCKER_REGISTRY-}promotiongrpc
-    build:
-      context: .
-      dockerfile: Services/Promotion/Promotion.GRPC/Dockerfile
 
 volumes:
   postgres_catalog:

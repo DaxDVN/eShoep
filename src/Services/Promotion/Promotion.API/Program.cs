@@ -1,5 +1,6 @@
 using Common.Behaviors;
 using Common.Exceptions;
+using Common.Messaging.MassTransit;
 using Promotion.API.Data;
 using Promotion.Application;
 
@@ -23,6 +24,8 @@ builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetCo
 
 if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<PromotionInitialData>();
+
+builder.Services.AddMessageBroker(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

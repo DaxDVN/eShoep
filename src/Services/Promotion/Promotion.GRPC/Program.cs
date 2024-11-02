@@ -1,3 +1,4 @@
+using Common.Messaging.MassTransit;
 using Marten;
 using Promotion.Application;
 using Promotion.GRPC.Services;
@@ -13,6 +14,7 @@ builder.Services.AddGrpc();
 
 builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetConnectionString("Database")!); })
     .UseLightweightSessions();
+builder.Services.AddMessageBroker(builder.Configuration);
 
 var app = builder.Build();
 

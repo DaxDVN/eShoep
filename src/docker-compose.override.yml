@@ -1,6 +1,19 @@
 version: '3.4'
 
 services:
+
+  identitydb:
+    container_name: identitydb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=IdentityDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_identity:/var/lib/postgresql/data/
+
   catalogdb:
     container_name: catalogdb
     environment:
@@ -9,9 +22,50 @@ services:
       - POSTGRES_DB=CatalogDb
     restart: always
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_catalog:/var/lib/postgresql/data/
+
+  basketdb:
+    container_name: basketdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=BasketDb
+    restart: always
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_basket:/var/lib/postgresql/data/
+
+  distributedcache:
+    container_name: distributedcache
+    restart: always
+    ports:
+      - "6379:6379"
+
+  messagebroker:
+    container_name: messagebroker
+    hostname: ecommerce-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  purchasingdb:
+    container_name: purchasingdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=PurchasingDb
+    restart: always
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_purchasing:/var/lib/postgresql/data/
 
   promotiondb:
     container_name: promotiondb
@@ -25,67 +79,30 @@ services:
     volumes:
       - postgres_promotion:/var/lib/postgresql/data/
 
-  basketdb:
-    container_name: basketdb
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=BasketDb
-    restart: always
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_basket:/var/lib/postgresql/data/
-
-  identitydb:
-    container_name: identitydb
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=IdentityDb
-    restart: always
-    ports:
-      - "5435:5432"
-    volumes:
-      - postgres_identity:/var/lib/postgresql/data/
-
-  distributedcache:
-    container_name: distributedcache
-    restart: always
-    ports:
-      - "6379:6379"
-
-  purchasingdb:
-    container_name: purchasingdb
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=PurchasingDb
-    restart: always
-    ports:
-      - "5434:5432"
-    volumes:
-      - postgres_purchasing:/var/lib/postgresql/data/
-
-  messagebroker:
-    container_name: messagebroker
-    hostname: ecommerce-mq
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
-    restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-  catalog.api:
+  apigateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
     depends_on:
-      - catalogdb
+      - catalog.api
+      - basket.api
+      - purchasing.api
+    ports:
+      - "80:8080"
+      - "443:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  identity.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=identitydb;Port=5432;Database=IdentityDb;User Id=postgres;Password=postgres;Include Error Detail=true
+    depends_on:
+      - identitydb
     ports:
       - "6000:8080"
       - "6060:8081"
@@ -93,20 +110,24 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  # promotion.api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_HTTP_PORTS=8080
-  #     - ASPNETCORE_HTTPS_PORTS=8081
-  #     - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
-  #   depends_on:
-  #     - promotiondb
-  #   ports:
-  #     - "6002:8080"
-  #     - "6062:8081"
-  #   volumes:
-  #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-  #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
+    depends_on:
+      - catalogdb
+      - messagebroker
+    ports:
+      - "6001:8080"
+      - "6061:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   basket.api:
     environment:
@@ -125,8 +146,8 @@ services:
       - promotion.grpc
       - messagebroker
     ports:
-      - "6001:8080"
-      - "6061:8081"
+      - "6002:8080"
+      - "6062:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -136,7 +157,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      #      - ConnectionStrings__Database=Server=purchasingdb;Database=PurchasingDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
       - ConnectionStrings__Database=Server=purchasingdb;Port=5432;Database=PurchasingDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - MessageBroker__UserName=guest
@@ -151,35 +171,44 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
-  apigateway:
+  promotion.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
     depends_on:
-      - catalog.api
-      - basket.api
-      - purchasing.api
+      - promotiondb
+      - messagebroker
     ports:
       - "6004:8080"
       - "6064:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  identity.api:
+
+  promotion.grpc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=identitydb;Port=5432;Database=IdentityDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
     depends_on:
-      - identitydb
+      - promotiondb
+      - messagebroker
     ports:
       - "6005:8080"
       - "6065:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
 
   #  shoep.shop:
   #    environment:
@@ -194,8 +223,8 @@ services:
   #    depends_on:
   #      - apigateway
   #    ports:
-  #      - "6006:8080"
-  #      - "6066:8081"
+  #      - "3000:8080"
+  #      - "3030:8081"
   #    volumes:
   #      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
   #      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -203,17 +232,4 @@ services:
 
 
 
-  promotion.grpc:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
-      - ConnectionStrings__Database=Server=promotiondb;Port=5432;Database=PromotionDb;User Id=postgres;Password=postgres;Include Error Detail=true
-    depends_on:
-      - promotiondb
-    ports:
-      - "6002:8080"
-      - "6062:8081"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+

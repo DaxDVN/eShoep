@@ -1,6 +1,8 @@
+using System.Reflection;
 using Catalog.API.Data;
 using Common.Behaviors;
 using Common.Exceptions;
+using Common.Messaging.MassTransit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
@@ -24,6 +26,8 @@ builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetCo
 
 if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialData>();
+
+builder.Services.AddMessageBroker(builder.Configuration, Assembly.GetExecutingAssembly());
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 

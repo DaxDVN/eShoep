@@ -1,4 +1,4 @@
-﻿namespace Catalog.API.Products.GetProducts;
+﻿namespace Catalog.API.Products.Query.GetProducts;
 
 public record GetProductsRequest(
     int? PageNumber = 1,

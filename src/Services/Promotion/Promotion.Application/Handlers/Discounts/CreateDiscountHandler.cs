@@ -1,4 +1,7 @@
-﻿namespace Promotion.Application.Handlers.Discounts;
+﻿using Common.Messaging.Events;
+using MassTransit;
+
+namespace Promotion.Application.Handlers.Discounts;
 
 public record CreateDiscountCommand(
     string Name,
@@ -40,15 +43,24 @@ public class CreateDiscountCommandValidator : AbstractValidator<CreateDiscountCo
     }
 }
 
-internal class CreateDiscountCommandHandler(IDocumentSession session)
+internal class CreateDiscountCommandHandler(IDocumentSession session, IPublishEndpoint publishEndpoint)
     : ICommandHandler<CreateDiscountCommand, CreateDiscountResult>
 {
     public async Task<CreateDiscountResult> Handle(CreateDiscountCommand command, CancellationToken cancellationToken)
     {
         var discount = command.Adapt<Discount>();
         session.Store(discount);
-
         await session.SaveChangesAsync(cancellationToken);
+
+        var eventMessage =
+            new DiscountCreatedEvent
+            {
+                DiscountId = discount.Id,
+                Amount = discount.Amount,
+                PromotionType = discount.PromotionType.ToString(),
+                ProductIds = discount.ProductIds
+            };
+        await publishEndpoint.Publish(eventMessage, cancellationToken);
 
         return new CreateDiscountResult(discount.Id);
     }

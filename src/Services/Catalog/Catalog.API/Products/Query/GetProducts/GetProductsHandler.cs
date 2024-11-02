@@ -1,6 +1,6 @@
 ﻿using Marten.Linq;
 
-namespace Catalog.API.Products.GetProducts;
+namespace Catalog.API.Products.Query.GetProducts;
 
 public record GetProductsQuery(
     int? PageNumber = 1,
