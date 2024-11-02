@@ -19,7 +19,7 @@ public class ApplyCouponHandler(IDocumentSession session) : ICommandHandler<Appl
         {
             CouponId = coupon.Id,
             UserId = command.UserId,
-            Id =  Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             UsedAt = DateTime.Now
         };
 

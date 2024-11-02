@@ -1,3 +1,4 @@
+using Basket.API.Repositories;
 using Common.Messaging.MassTransit;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -24,8 +25,8 @@ builder.Services.AddMarten(opts =>
     opts.Schema.For<Cart>().Identity(x => x.UserId);
 }).UseLightweightSessions();
 
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.Decorate<ICartRepository, CachedCartRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {

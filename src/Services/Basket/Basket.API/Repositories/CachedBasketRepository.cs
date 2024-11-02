@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace Basket.API.Data;
+namespace Basket.API.Repositories;
 
-public class CachedCartRepository(ICartRepository repository, IDistributedCache cache)
-    : ICartRepository
+public class CachedBasketRepository(IBasketRepository repository, IDistributedCache cache)
+    : IBasketRepository
 {
     public async Task<Cart> GetCart(string userId, CancellationToken cancellationToken = default)
     {
@@ -12,9 +12,9 @@ public class CachedCartRepository(ICartRepository repository, IDistributedCache 
         if (!string.IsNullOrEmpty(cachedCart))
             return JsonSerializer.Deserialize<Cart>(cachedCart)!;
 
-        var basket = await repository.GetCart(userId, cancellationToken);
-        await cache.SetStringAsync(userId, JsonSerializer.Serialize(basket), cancellationToken);
-        return basket;
+        var cart = await repository.GetCart(userId, cancellationToken);
+        await cache.SetStringAsync(userId, JsonSerializer.Serialize(cart), cancellationToken);
+        return cart;
     }
 
     public async Task<Cart> StoreCart(Cart cart, CancellationToken cancellationToken = default)

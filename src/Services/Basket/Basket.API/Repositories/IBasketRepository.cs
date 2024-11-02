@@ -1,6 +1,6 @@
-﻿namespace Basket.API.Data;
+﻿namespace Basket.API.Repositories;
 
-public interface ICartRepository
+public interface IBasketRepository
 {
     Task<Cart> GetCart(string userId, CancellationToken cancellationToken = default);
     Task<Cart> StoreCart(Cart cart, CancellationToken cancellationToken = default);

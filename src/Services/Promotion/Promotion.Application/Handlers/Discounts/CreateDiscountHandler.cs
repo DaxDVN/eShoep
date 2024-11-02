@@ -58,7 +58,8 @@ internal class CreateDiscountCommandHandler(IDocumentSession session, IPublishEn
                 DiscountId = discount.Id,
                 Amount = discount.Amount,
                 PromotionType = discount.PromotionType.ToString(),
-                ProductIds = discount.ProductIds
+                ProductIds = discount.ProductIds,
+                ExpirationDate = discount.EndDate
             };
         await publishEndpoint.Publish(eventMessage, cancellationToken);
 

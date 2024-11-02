@@ -6,4 +6,5 @@ public record DiscountCreatedEvent : IntegrationEvent
     public required string PromotionType { get; init; }
     public decimal Amount { get; init; }
     public List<Guid> ProductIds { get; set; } = [];
+    public DateTime ExpirationDate { get; set; }
 }

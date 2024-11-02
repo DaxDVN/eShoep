@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace Purchasing.Domain.Abstractions;
+﻿namespace Catalog.API.Events;
 
 public interface IDomainEvent : INotification
 {

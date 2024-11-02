@@ -1,4 +1,5 @@
 ﻿using Basket.API.Dtos;
+using Basket.API.Repositories;
 using Common.Messaging.Events;
 using MassTransit;
 
@@ -18,12 +19,12 @@ public class CheckoutCartCommandValidator
     }
 }
 
-public class CheckoutCartCommandHandler(ICartRepository cartRepository, IPublishEndpoint publishEndpoint)
+public class CheckoutCartCommandHandler(IBasketRepository basketRepository, IPublishEndpoint publishEndpoint)
     : ICommandHandler<CheckoutCartCommand, CheckoutCartResult>
 {
     public async Task<CheckoutCartResult> Handle(CheckoutCartCommand command, CancellationToken cancellationToken)
     {
-        var basket = await cartRepository.GetCart(command.CartCheckoutDto.CustomerId.ToString(), cancellationToken);
+        var basket = await basketRepository.GetCart(command.CartCheckoutDto.CustomerId.ToString(), cancellationToken);
         if (basket == null) return new CheckoutCartResult(false);
 
         var eventMessage = command.CartCheckoutDto.Adapt<CartCheckoutEvent>();
@@ -37,7 +38,7 @@ public class CheckoutCartCommandHandler(ICartRepository cartRepository, IPublish
         }).ToList());
         await publishEndpoint.Publish(eventMessage, cancellationToken);
 
-        await cartRepository.DeleteCart(command.CartCheckoutDto.CustomerId.ToString(), cancellationToken);
+        await basketRepository.DeleteCart(command.CartCheckoutDto.CustomerId.ToString(), cancellationToken);
 
         return new CheckoutCartResult(true);
     }

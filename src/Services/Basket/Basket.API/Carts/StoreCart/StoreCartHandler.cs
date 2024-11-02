@@ -1,4 +1,5 @@
-﻿using Promotion.API;
+﻿using Basket.API.Repositories;
+using Promotion.API;
 
 namespace Basket.API.Carts.StoreCart;
 
@@ -16,7 +17,7 @@ public class StoreCartCommandValidator : AbstractValidator<StoreCartCommand>
 }
 
 public class StoreCartCommandHandler(
-    ICartRepository repository,
+    IBasketRepository repository,
     CouponProtoService.CouponProtoServiceClient couponProto)
     : ICommandHandler<StoreCartCommand, StoreCartResult>
 {

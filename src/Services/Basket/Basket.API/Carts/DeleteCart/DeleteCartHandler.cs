@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Carts.DeleteCart;
+﻿using Basket.API.Repositories;
+
+namespace Basket.API.Carts.DeleteCart;
 
 public record DeleteCartCommand(string UserId) : ICommand<DeleteCartResult>;
 
@@ -12,7 +14,7 @@ public class DeleteCartCommandValidator : AbstractValidator<DeleteCartCommand>
     }
 }
 
-public class DeleteCartCommandHandler(ICartRepository repository)
+public class DeleteCartCommandHandler(IBasketRepository repository)
     : ICommandHandler<DeleteCartCommand, DeleteCartResult>
 {
     public async Task<DeleteCartResult> Handle(DeleteCartCommand command, CancellationToken cancellationToken)

@@ -1,5 +1,6 @@
 using System.Reflection;
 using Catalog.API.Data;
+using Catalog.API.Repositories;
 using Common.Behaviors;
 using Common.Exceptions;
 using Common.Messaging.MassTransit;
@@ -23,6 +24,15 @@ builder.Services.AddCarter();
 
 builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetConnectionString("Database")!); })
     .UseLightweightSessions();
+
+builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
+builder.Services.Decorate<ICatalogRepository, CacheCatalogRepository>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    //options.InstanceName = "Basket";
+});
 
 if (builder.Environment.IsDevelopment())
     builder.Services.InitializeMartenWith<CatalogInitialData>();

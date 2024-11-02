@@ -32,8 +32,8 @@ internal class GetProductsQueryHandler(IDocumentSession session)
             .Take(pageSize);
         var orderProductBatch = query.SortType switch
         {
-            1 => pagingProductBatch.OrderBy(p => p.Price),
-            2 => pagingProductBatch.OrderByDescending(p => p.Price),
+            1 => pagingProductBatch.OrderBy(p => p.DiscountedPrice),
+            2 => pagingProductBatch.OrderByDescending(p => p.DiscountedPrice),
             3 => pagingProductBatch.OrderBy(p => p.Name),
             4 => pagingProductBatch.OrderByDescending(p => p.Name),
             _ => pagingProductBatch
@@ -61,6 +61,7 @@ internal class GetProductsQueryHandler(IDocumentSession session)
                 Id = p.Id,
                 Name = p.Name,
                 Price = p.Price,
+                DiscountedPrice = p.DiscountedPrice,
                 Description = p.Description,
                 CreatedAt = p.CreatedAt,
                 UpdatedAt = p.UpdatedAt,
@@ -69,7 +70,7 @@ internal class GetProductsQueryHandler(IDocumentSession session)
                 Category = categoryDict.TryGetValue(p.CategoryId, out var category) ? category : null,
                 ProductImages = productImagesDict.TryGetValue(p.Id, out var images)
                     ? images
-                    : new List<ProductImage>()
+                    : []
             });
 
         var categoryResult = categoryBatch.Result.ToList();
@@ -77,8 +78,7 @@ internal class GetProductsQueryHandler(IDocumentSession session)
         var numberOfPage = stats.TotalResults;
 
         if (!string.IsNullOrEmpty(query.Category))
-            numberOfPage = productBatch.Result
-                .Where(p => categoryFilter != null && p.CategoryId == categoryFilter.Id).Count();
+            numberOfPage = productBatch.Result.Count(p => categoryFilter != null && p.CategoryId == categoryFilter.Id);
 
         return new GetProductsResult(productDtos, numberOfPage, categoryResult);
     }
