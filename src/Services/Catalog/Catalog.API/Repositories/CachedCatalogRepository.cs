@@ -3,7 +3,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Catalog.API.Repositories;
 
-public class CacheCatalogRepository(ICatalogRepository repository, IDistributedCache cache) : ICatalogRepository
+public class CachedCatalogRepository(ICatalogRepository repository, IDistributedCache cache) : ICatalogRepository
 {
     public async Task<CatalogBatch?> GetBatchAsync(CancellationToken cancellationToken = default)
     {
@@ -45,5 +45,12 @@ public class CacheCatalogRepository(ICatalogRepository repository, IDistributedC
             Console.WriteLine(e);
             return false;
         }
+    }
+
+    public async Task<bool> ToggleBatch(CancellationToken cancellationToken = default)
+    {
+        await repository.ToggleBatch(cancellationToken);
+        await cache.RemoveAsync("cachedBatch", cancellationToken);
+        return true;
     }
 }

@@ -6,4 +6,6 @@ public interface ICatalogRepository
 
     Task<bool> StoreCatalogBatch(List<Product> products, List<ProductDiscount> expiredDiscounts,
         CatalogBatch batch, CancellationToken cancellationToken = default);
+
+    Task<bool> ToggleBatch(CancellationToken cancellationToken = default);
 }

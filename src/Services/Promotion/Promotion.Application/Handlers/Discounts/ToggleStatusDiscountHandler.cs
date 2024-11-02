@@ -1,4 +1,7 @@
-﻿namespace Promotion.Application.Handlers.Discounts;
+﻿using Common.Messaging.Events;
+using MassTransit;
+
+namespace Promotion.Application.Handlers.Discounts;
 
 public record ToggleStatusDiscountCommand(
     Guid Id,
@@ -7,7 +10,7 @@ public record ToggleStatusDiscountCommand(
 
 public record ToggleStatusDiscountResult(bool IsSuccess);
 
-internal class ToggleStatusDiscountCommandHandler(IDocumentSession session)
+internal class ToggleStatusDiscountCommandHandler(IDocumentSession session, IPublishEndpoint publishEndpoint)
     : ICommandHandler<ToggleStatusDiscountCommand, ToggleStatusDiscountResult>
 {
     public async Task<ToggleStatusDiscountResult> Handle(ToggleStatusDiscountCommand command,
@@ -21,7 +24,7 @@ internal class ToggleStatusDiscountCommandHandler(IDocumentSession session)
 
         session.Update(discount);
         await session.SaveChangesAsync(cancellationToken);
-
+        await publishEndpoint.Publish(new CatalogBatchEvent(), cancellationToken);
         return new ToggleStatusDiscountResult(true);
     }
 }

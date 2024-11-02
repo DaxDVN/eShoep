@@ -8,7 +8,7 @@ public class CatalogRepository(IDocumentSession session) : ICatalogRepository
         {
             var latestBatch = await session.Query<CatalogBatch>()
                 .OrderByDescending(b => b.RunDate)
-                .FirstOrDefaultAsync(cancellationToken);
+                .FirstOrDefaultAsync(b => b.Status == true, cancellationToken);
             return latestBatch?.RunDate == DateTime.UtcNow ? latestBatch : null;
         }
         catch (Exception e)
@@ -30,6 +30,29 @@ public class CatalogRepository(IDocumentSession session) : ICatalogRepository
             session.Update<ProductDiscount>(expiredDiscounts);
 
             session.Store(batch);
+
+            await session.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public async Task<bool> ToggleBatch(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var latestBatch = await session.Query<CatalogBatch>()
+                .OrderByDescending(b => b.RunDate)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (latestBatch != null)
+            {
+                latestBatch.Status = false;
+                session.Update(latestBatch);
+            }
 
             await session.SaveChangesAsync(cancellationToken);
             return true;

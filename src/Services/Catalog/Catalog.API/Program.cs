@@ -26,7 +26,7 @@ builder.Services.AddMarten(opts => { opts.Connection(builder.Configuration.GetCo
     .UseLightweightSessions();
 
 builder.Services.AddScoped<ICatalogRepository, CatalogRepository>();
-builder.Services.Decorate<ICatalogRepository, CacheCatalogRepository>();
+builder.Services.Decorate<ICatalogRepository, CachedCatalogRepository>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {

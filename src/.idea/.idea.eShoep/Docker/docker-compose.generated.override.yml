@@ -23,8 +23,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "apigateway:dev"
     ports:
-    - "127.0.0.1:57056:57100"
-    - "127.0.0.1:57256:57300"
+    - "127.0.0.1:57096:57100"
+    - "127.0.0.1:57296:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Gateway\\ApiGateWay:/app:rw"
@@ -33,7 +33,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   basket.api:
     build:
@@ -57,8 +57,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "basketapi:dev"
     ports:
-    - "127.0.0.1:57057:57100"
-    - "127.0.0.1:57257:57300"
+    - "127.0.0.1:57097:57100"
+    - "127.0.0.1:57297:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Basket\\\
@@ -68,7 +68,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   catalog.api:
     build:
@@ -92,8 +92,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "catalogapi:dev"
     ports:
-    - "127.0.0.1:57058:57100"
-    - "127.0.0.1:57258:57300"
+    - "127.0.0.1:57098:57100"
+    - "127.0.0.1:57298:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Catalog\\\
@@ -103,7 +103,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   identity.api:
     build:
@@ -127,8 +127,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "identityapi:dev"
     ports:
-    - "127.0.0.1:57059:57100"
-    - "127.0.0.1:57259:57300"
+    - "127.0.0.1:57099:57100"
+    - "127.0.0.1:57299:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Identity\\\
@@ -138,7 +138,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   promotion.api:
     build:
@@ -162,8 +162,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "promotionapi:dev"
     ports:
-    - "127.0.0.1:57060:57100"
-    - "127.0.0.1:57260:57300"
+    - "127.0.0.1:57000:57100"
+    - "127.0.0.1:57200:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Promotion\\\
@@ -173,7 +173,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   promotion.grpc:
     build:
@@ -197,8 +197,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "promotiongrpc:dev"
     ports:
-    - "127.0.0.1:57061:57100"
-    - "127.0.0.1:57261:57300"
+    - "127.0.0.1:57001:57100"
+    - "127.0.0.1:57201:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Promotion\\\
@@ -208,7 +208,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   purchasing.api:
     build:
@@ -232,8 +232,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "purchasingapi:dev"
     ports:
-    - "127.0.0.1:57062:57100"
-    - "127.0.0.1:57262:57300"
+    - "127.0.0.1:57002:57100"
+    - "127.0.0.1:57202:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Purchasing\\\
@@ -243,7 +243,7 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
   shoep.shop:
     build:
@@ -269,8 +269,8 @@ services:
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
     image: "shoepshop:dev"
     ports:
-    - "127.0.0.1:57063:57100"
-    - "127.0.0.1:57263:57300"
+    - "127.0.0.1:57003:57100"
+    - "127.0.0.1:57203:57300"
     volumes:
     - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\WebApp\\Shoep.Shop:/app:rw"
@@ -279,5 +279,5 @@ services:
       Linux64:/opt/rider-debugger"
     - "C:\\Program Files\\JetBrains\\JetBrains Rider 2024.2.1\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\daxng\\AppData\\Local\\JetBrains\\Rider2024.2\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_11_02_17_18_57:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_11_02_18_02_02:/var/opt/rider-debugger:rw"
     working_dir: "/app"
