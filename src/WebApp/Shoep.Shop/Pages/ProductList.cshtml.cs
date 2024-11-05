@@ -24,14 +24,14 @@ public class ProductListModel(
         CurrentPage = currentPage;
         var response = await catalogService.GetProducts(
             CurrentPage,
-            6,
+            21,
             SortOption,
             Name,
             SelectedCategory);
         if (response.Products.Any()) CategoryModels = response.Categories;
 
         ProductModels = response.Products;
-        NumberOfPages = response.TotalProducts / 6 + 1;
+        NumberOfPages = response.TotalProducts / 21 + 1;
         return Page();
     }
 }
