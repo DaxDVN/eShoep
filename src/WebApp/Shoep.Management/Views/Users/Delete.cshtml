@@ -1,0 +1,18 @@
+﻿@model Shoep.Management.Models.Auth.User
+
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<div class="container mt-4">
+    <h2>Delete User</h2>
+    <div class="alert alert-warning">
+        <p>Are you sure you want to delete this user?</p>
+        <p><strong>Username:</strong> @Model.FirstName @Model.LastName</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+    </div>
+    <form method="post" asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-controller="Users" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

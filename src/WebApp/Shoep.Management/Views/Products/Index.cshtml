@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Shoep.Management.Models.Catalog.ProductModel>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Product List</h2>
+    <a asp-controller="Products" asp-action="Create" class="btn btn-primary mb-3">Create New Product</a>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock Quantity</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>@product.StockQuantity</td>
+                <td>@product.Category?.Name</td>
+                <td>
+                    <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info btn-sm">Detail</a>
+                    <a asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(ViewBag.CurrentPage - 1)" asp-route-pageSize="@ViewBag.PageSize" class="btn btn-primary">Previous</a>
+        }
+
+        @for (var i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" class="btn @(i == ViewBag.CurrentPage ? "btn-secondary" : "btn-light")">@i</a>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@(ViewBag.CurrentPage + 1)" asp-route-pageSize="@ViewBag.PageSize" class="btn btn-primary">Next</a>
+        }
+    </div>
+</div>

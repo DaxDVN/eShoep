@@ -1,0 +1,21 @@
+﻿@model Shoep.Management.Models.Catalog.ProductModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <h2>Product Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Product Name: @Model.Name</h5>
+            <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+            <p class="card-text"><strong>Price:</strong> @Model.Price</p>
+            <p class="card-text"><strong>Stock Quantity:</strong> @Model.StockQuantity</p>
+            <p class="card-text"><strong>Category:</strong> @Model.Category?.Name</p>
+            <a asp-controller="Products" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning mt-3">Edit</a>
+            <a asp-controller="Products" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger mt-3">Delete</a>
+            <a asp-controller="Products" asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>
+        </div>
+    </div>
+</div>

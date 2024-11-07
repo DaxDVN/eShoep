@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Refit;
 using Shoep.Management.Data;
 using Shoep.Management.Extensions;
+using Shoep.Management.Interfaces;
 using Shoep.Management.Models.Auth;
 using Shoep.Management.Services;
 
@@ -52,8 +53,7 @@ builder.Services.AddRefitClient<IOrderService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
 
 builder.Services.AddScoped<TokenService>();
-
-
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

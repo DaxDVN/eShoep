@@ -1,0 +1,19 @@
+﻿@model Shoep.Management.Models.Auth.User
+
+@{
+    ViewData["Title"] = "User Detail";
+}
+
+<div class="container mt-4">
+    <h2>User Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Username: @Model.FirstName @Model.LastName</h5>
+            <p class="card-text">Email: @Model.Email</p>
+            <p class="card-text">User ID: @Model.Id</p>
+            <a asp-controller="Users" asp-action="Index" class="btn btn-secondary">Back to List</a>
+            <a asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+            <a asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>

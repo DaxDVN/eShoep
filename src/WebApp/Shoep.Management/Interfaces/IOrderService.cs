@@ -1,7 +1,7 @@
 ﻿using Refit;
 using Shoep.Management.Models.Purchasing;
 
-namespace Shoep.Management.Services;
+namespace Shoep.Management.Interfaces;
 
 public interface IOrderService
 {

@@ -22,3 +22,7 @@ public record GetProductsResponse(
     List<CategoryModel> Categories);
 
 public record GetProductByIdResponse(ProductModel Product);
+
+public record GetProductCreate(Guid Id);
+public record GetProductUpdate(bool Success);
+public record GetProductDelete(bool Success);

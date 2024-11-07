@@ -1,7 +1,7 @@
 ﻿using Refit;
 using Shoep.Management.Models.Catalog;
 
-namespace Shoep.Management.Services;
+namespace Shoep.Management.Interfaces;
 
 public interface ICatalogService
 {
@@ -12,4 +12,12 @@ public interface ICatalogService
 
     [Get("/catalog-service/products/{id}")]
     Task<GetProductByIdResponse> GetProduct(Guid id);
+    [Post("/catalog-service/products")]
+    Task<GetProductCreate> CreateProduct(ProductModel Product);
+
+    [Put("/catalog-service/products")]
+    Task<GetProductUpdate> UpdateProduct(bool succcess);
+
+    [Delete("/catalog-service/products")]
+    Task<GetProductDelete> DeleteProduct(bool succcess);
 }
