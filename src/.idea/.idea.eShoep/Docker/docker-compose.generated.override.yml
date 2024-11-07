@@ -57,25 +57,6 @@ services:
       Catalog.API:/app:rw"
     - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
     working_dir: "/app"
-  identity.api:
-    build:
-      context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"
-      dockerfile: "Services/Identity/Identity.API/Dockerfile"
-      target: "base"
-    command: []
-    entrypoint:
-    - "dotnet"
-    - "/app/bin/Debug/net8.0/Identity.API.dll"
-    environment:
-      DOTNET_USE_POLLING_FILE_WATCHER: "true"
-    image: "identityapi:dev"
-    ports: []
-    volumes:
-    - "C:\\Users\\daxng\\.nuget\\packages:/home/app/.nuget/packages"
-    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src\\Services\\Identity\\\
-      Identity.API:/app:rw"
-    - "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src:/src:rw"
-    working_dir: "/app"
   promotion.api:
     build:
       context: "D:\\FULearning\\fall24\\2_PRN231\\2_PRN231\\eShoep\\src"

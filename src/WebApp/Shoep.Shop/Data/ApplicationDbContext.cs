@@ -1,8 +1,8 @@
-﻿using Identity.API.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Shoep.Shop.Models.Auth;
 
-namespace Identity.API.Data;
+namespace Shoep.Shop.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<User>(options)
 {

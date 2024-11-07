@@ -58,12 +58,6 @@ services:
       context: .
       dockerfile: Gateway/ApiGateWay/Dockerfile
 
-  identity.api:
-    image: ${DOCKER_REGISTRY-}identityapi
-    build:
-      context: .
-      dockerfile: Services/Identity/Identity.API/Dockerfile
-
   shoep.shop:
     image: ${DOCKER_REGISTRY-}shoepshop
     build:
