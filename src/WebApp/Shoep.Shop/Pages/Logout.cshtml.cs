@@ -6,9 +6,10 @@ namespace Shoep.Shop.Pages;
 
 public class LogoutModel : PageModel
 {
-    public async Task<IActionResult> OnGetAsync()
+    public async Task<RedirectToPageResult> OnGetAsync()
     {
-        await HttpContext.SignOutAsync();
+        await HttpContext.SignOutAsync("Cookies");
+
         return RedirectToPage("/Index");
     }
 }

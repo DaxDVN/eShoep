@@ -23,59 +23,34 @@
     <div class="container">
         <h3 class="title_confirmation">Thank you. Your order has been received.</h3>
         <div class="row order_d_inner">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <div class="details_item">
                     <h4>Order Info</h4>
                     <ul class="list">
                         <li>
-                            <a href="#"><span>Order number</span> : 60235</a>
+                            <a href="#"><span>Customer</span> : @Model.Order?.FirstName + @Model.Order?.LastName</a>
                         </li>
                         <li>
-                            <a href="#"><span>Date</span> : Los Angeles</a>
+                            <a href="#"><span>Date</span> : @DateTime.Now</a>
                         </li>
                         <li>
-                            <a href="#"><span>Total</span> : USD 2210</a>
-                        </li>
-                        <li>
-                            <a href="#"><span>Payment method</span> : Check payments</a>
+                            <a href="#"><span>Total</span> : @Model.Order?.TotalPrice</a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
                 <div class="details_item">
                     <h4>Billing Address</h4>
                     <ul class="list">
                         <li>
-                            <a href="#"><span>Street</span> : 56/8</a>
+                            <a href="#"><span>Street</span> : @Model.Order?.AddressLine</a>
                         </li>
                         <li>
-                            <a href="#"><span>City</span> : Los Angeles</a>
+                            <a href="#"><span>Country</span> : @Model.Order?.Country</a>
                         </li>
                         <li>
-                            <a href="#"><span>Country</span> : United States</a>
-                        </li>
-                        <li>
-                            <a href="#"><span>Postcode </span> : 36952</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="details_item">
-                    <h4>Shipping Address</h4>
-                    <ul class="list">
-                        <li>
-                            <a href="#"><span>Street</span> : 56/8</a>
-                        </li>
-                        <li>
-                            <a href="#"><span>City</span> : Los Angeles</a>
-                        </li>
-                        <li>
-                            <a href="#"><span>Country</span> : United States</a>
-                        </li>
-                        <li>
-                            <a href="#"><span>Postcode </span> : 36952</a>
+                            <a href="#"><span>ZipCode </span> : @Model.Order?.ZipCode</a>
                         </li>
                     </ul>
                 </div>
@@ -93,39 +68,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            <p>Pixelstore fresh Blackberry</p>
-                        </td>
-                        <td>
-                            <h5>x 02</h5>
-                        </td>
-                        <td>
-                            <p>$720.00</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Pixelstore fresh Blackberry</p>
-                        </td>
-                        <td>
-                            <h5>x 02</h5>
-                        </td>
-                        <td>
-                            <p>$720.00</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Pixelstore fresh Blackberry</p>
-                        </td>
-                        <td>
-                            <h5>x 02</h5>
-                        </td>
-                        <td>
-                            <p>$720.00</p>
-                        </td>
-                    </tr>
+                    @foreach (var item in Model.Cart.Items)
+                    {
+                        <tr>
+                            <td>
+                                <p>@item.ProductName</p>
+                            </td>
+                            <td>
+                                <h5>x @item.Quantity</h5>
+                            </td>
+                            <td>
+                                <p>$@(item.Price * item.Quantity)</p>
+                            </td>
+                        </tr>
+                    }
+
                     <tr>
                         <td>
                             <h4>Subtotal</h4>
@@ -134,7 +91,7 @@
                             <h5></h5>
                         </td>
                         <td>
-                            <p>$2160.00</p>
+                            <p>$@Model.Cart.TotalPrice</p>
                         </td>
                     </tr>
                     <tr>
@@ -145,7 +102,7 @@
                             <h5></h5>
                         </td>
                         <td>
-                            <p>Flat rate: $50.00</p>
+                            <p>Flat rate: $5.00</p>
                         </td>
                     </tr>
                     <tr>
@@ -156,7 +113,17 @@
                             <h5></h5>
                         </td>
                         <td>
-                            <p>$2210.00</p>
+                            <p>$@(Model.Cart.TotalPrice + 5)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <a class="primary-btn" asp-page="/ProductList">Continue to buy</a>
                         </td>
                     </tr>
                     </tbody>

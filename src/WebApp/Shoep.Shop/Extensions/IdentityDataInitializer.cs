@@ -1,7 +1,7 @@
-﻿using Identity.API.Entities;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Shoep.Shop.Models.Auth;
 
-namespace Identity.API.Extensions;
+namespace Shoep.Shop.Extensions;
 
 public static class IdentityDataInitializer
 {

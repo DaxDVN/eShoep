@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
-namespace Identity.API.Entities;
+namespace Shoep.Shop.Models.Auth;
 
 public class User : IdentityUser
 {

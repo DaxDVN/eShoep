@@ -1,11 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Identity.API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Shoep.Shop.Models.Auth;
 
-namespace Identity.API.Services;
+namespace Shoep.Shop.Services;
 
 public class TokenService
 {

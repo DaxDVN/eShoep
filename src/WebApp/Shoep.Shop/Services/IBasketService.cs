@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Refit;
+using Shoep.Shop.Models.Auth;
 using Shoep.Shop.Models.Basket;
 
 namespace Shoep.Shop.Services;

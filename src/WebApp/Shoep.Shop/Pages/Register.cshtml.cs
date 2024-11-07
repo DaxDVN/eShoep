@@ -1,33 +1,88 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Shoep.Shop.Models.Auth;
-using Shoep.Shop.Services;
+using System.Threading.Tasks;
 
-namespace Shoep.Shop.Pages;
-
-public class RegisterModel(IIdentityService identityService) : PageModel
+namespace Shoep.Shop.Pages
 {
-    [BindProperty] public RegisterInputModel Input { get; set; }
-    public string RegistrationError { get; set; } = string.Empty;
-
-    public async Task<IActionResult> OnPostAsync()
+    public class RegisterModel(
+        UserManager<User> userManager,
+        SignInManager<User> signInManager,
+        ILogger<RegisterModel> logger)
+        : PageModel
     {
-        if (!ModelState.IsValid) return Page();
+        [BindProperty]
+        public RegisterInputModel Input { get; set; }
+        public string RegistrationError { get; set; } = string.Empty;
 
-        var registerRequest = new RegisterRequest
+        public async Task<IActionResult> OnPostAsync()
         {
-            FirstName = Input.FirstName,
-            LastName = Input.LastName,
-            Email = Input.Email,
-            PhoneNumber = Input.PhoneNumber,
-            Password = Input.Password
-        };
+            if (!ModelState.IsValid) return Page();
 
-        var response = await identityService.RegisterAsync(registerRequest);
+            var user = new User
+            {
+                FirstName = Input.FirstName,
+                LastName = Input.LastName,
+                Email = Input.Email,
+                PhoneNumber = Input.PhoneNumber,
+                UserName = Input.Email
+            };
 
-        if (response.IsSuccessStatusCode) return RedirectToPage("/Login");
+            var result = await userManager.CreateAsync(user, Input.Password);
 
-        RegistrationError = "Registration failed. Please check input again.";
-        return Page();
+            if (result.Succeeded)
+            {
+                logger.LogInformation("User registered successfully.");
+
+                // Sign in the user if desired
+                await signInManager.SignInAsync(user, isPersistent: false);
+
+                return RedirectToPage("/Login");
+            }
+
+            // Add errors to the ModelState
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            RegistrationError = "Registration failed. Please check input again.";
+            return Page();
+        }
+    }
+
+    public class RegisterInputModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "The password must be at least {2} and at max {1} characters long.")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

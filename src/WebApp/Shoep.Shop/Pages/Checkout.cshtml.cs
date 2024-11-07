@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using Shoep.Shop.Models.Basket;
 using Shoep.Shop.Models.Purchasing;
 using Shoep.Shop.Services;
@@ -48,7 +49,9 @@ public class CheckoutModel(
 
         logger.LogInformation("Checkout button clicked");
 
-        Cart = await basketService.LoadUserBasket();
+        var enumerable = User.Claims as Claim[] ?? User.Claims.ToArray();
+        var userId = enumerable.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        Cart = await basketService.LoadUserBasket(userId!);
         if (!ModelState.IsValid) return Page();
 
         Order.CustomerId = Guid.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
@@ -70,6 +73,9 @@ public class CheckoutModel(
         Order.PaymentMethod = 1;
 
         await basketService.CheckoutBasket(new CheckoutCartRequest(Order));
+
+        TempData["Cart"] = JsonConvert.SerializeObject(Cart);
+        TempData["Order"] = JsonConvert.SerializeObject(Order);
 
         return RedirectToPage("/Confirmation");
     }

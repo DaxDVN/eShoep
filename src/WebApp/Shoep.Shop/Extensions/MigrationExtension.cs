@@ -1,7 +1,7 @@
-﻿using Identity.API.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Shoep.Shop.Data;
 
-namespace Identity.API.Extensions;
+namespace Shoep.Shop.Extensions;
 
 public static class MigrationExtension
 {
