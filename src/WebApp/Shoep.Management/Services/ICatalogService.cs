@@ -12,13 +12,4 @@ public interface ICatalogService
 
     [Get("/catalog-service/products/{id}")]
     Task<GetProductByIdResponse> GetProduct(Guid id);
-
-    [Post("/catalog-service/products")]
-    Task<CreateProductResponse> CreateProduct([Body] CreateProductRequest request);
-
-    [Put("/catalog-service/products")]
-    Task<UpdateProductResponse> UpdateProduct([Body] UpdateProductRequest request);
-
-    [Delete("/catalog-service/products/{id}")]
-    Task<DeleteProductResponse> DeleteProduct(Guid id);
 }
