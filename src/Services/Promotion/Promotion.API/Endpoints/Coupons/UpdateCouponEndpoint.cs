@@ -6,10 +6,11 @@ public record UpdateCouponRequest(
     Guid Id,
     string Code,
     string Description,
-    bool IsProductSpecific,
     string PromotionType,
     int Amount,
-    List<Guid> ProductId,
+    int MaxRedemptions,
+    int RedemptionCount,
+    List<Guid> UserIds,
     bool IsActive,
     DateTime ExpirationDate);
 

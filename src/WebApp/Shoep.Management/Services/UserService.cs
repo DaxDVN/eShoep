@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shoep.Management.Interfaces;
 using Shoep.Management.Models.Auth;
@@ -63,5 +64,15 @@ public class UserService(UserManager<User> userManager) : IUserService
 
         var result = await userManager.DeleteAsync(user);
         return result.Succeeded;
+    }
+
+
+    public async Task<List<User>> SearchUsersByEmail(string email)
+    {
+        var user = await userManager.Users
+            .Where(u => u.Email != null && u.Email.ToLower()
+                .Contains(email.ToLower()))
+            .ToListAsync();
+        return user;
     }
 }

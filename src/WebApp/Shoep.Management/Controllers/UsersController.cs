@@ -103,4 +103,13 @@ public class UsersController(IUserService userService) : Controller
         ModelState.AddModelError(string.Empty, "Failed to delete user.");
         return View();
     }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchUserByEmail(string email)
+    {
+        var users = await userService.SearchUsersByEmail(email);
+
+        var result = users.Select(u => new { u.Id, u.Email }).ToList();
+        return Json(result);
+    }
 }

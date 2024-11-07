@@ -5,10 +5,11 @@ namespace Promotion.API.Endpoints.Coupons;
 public record CreateCouponRequest(
     string Code,
     string Description,
-    bool IsProductSpecific,
     string PromotionType,
     int Amount,
-    List<Guid> ProductId,
+    int MaxRedemptions,
+    int RedemptionCount,
+    List<Guid> UserIds,
     bool IsActive,
     DateTime ExpirationDate);
 

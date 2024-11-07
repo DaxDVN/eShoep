@@ -1,0 +1,62 @@
+﻿@model Shoep.Management.Interfaces.GetCouponsResponse
+
+@{
+ViewData["Title"] = "Coupons";
+}
+
+<h1>Coupons</h1>
+
+@if (ViewBag.Message != null)
+{
+<div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<!-- Thêm nút Create ở đầu bảng -->
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Coupons")" class="btn btn-success">Create Coupon</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Promotion Type</th>
+        <th>Amount</th>
+        <th>Expiration Date</th>
+        <th>Is Active</th>
+        <th>Actions</th> <!-- Thêm cột "Actions" -->
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var coupon in Model.Coupons)
+    {
+    <tr>
+        <td>@coupon.Code</td>
+        <td>@coupon.Description</td>
+        <td>@coupon.PromotionType</td>
+        <td>@coupon.Amount</td>
+        <td>@coupon.ExpirationDate.ToString("yyyy-MM-dd")</td>
+        <td>@(coupon.IsActive ? "Active" : "Inactive")</td>
+        <td>
+            <!-- Thêm các nút điều hướng -->
+            <a href="@Url.Action("Edit", "Coupons", new { id = coupon.Id })" class="btn btn-warning btn-sm">Edit</a>
+            <a href="@Url.Action("Delete", "Coupons", new { id = coupon.Id })" class="btn btn-danger btn-sm">Delete</a>
+            <a href="@Url.Action("Details", "Coupons", new { id = coupon.Id })" class="btn btn-info btn-sm">Details</a>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
+
+@if (Model.TotalCoupons > Model.Coupons.Count())
+{
+<div class="pagination">
+    <a href="@Url.Action("Index", new { pageNumber = ViewBag.PageNumber - 1, pageSize = ViewBag.PageSize })" class="btn btn-primary" @(ViewBag.PageNumber == 1 ? "disabled" : "")>
+        Previous
+    </a>
+    <a href="@Url.Action("Index", new { pageNumber = ViewBag.PageNumber + 1, pageSize = ViewBag.PageSize })" class="btn btn-primary" @(ViewBag.PageNumber * ViewBag.PageSize >= Model.TotalCoupons ? "disabled" : "")>
+        Next
+    </a>
+</div>
+}

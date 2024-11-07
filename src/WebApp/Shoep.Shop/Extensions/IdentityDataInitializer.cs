@@ -20,9 +20,18 @@ public static class IdentityDataInitializer
 
     private static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
     {
-        if (!await roleManager.RoleExistsAsync("Admin")) await roleManager.CreateAsync(new IdentityRole("Admin"));
+        try
+        {
+            if (!await roleManager.RoleExistsAsync("Admin"))
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
 
-        if (!await roleManager.RoleExistsAsync("Customer")) await roleManager.CreateAsync(new IdentityRole("Customer"));
+            if (!await roleManager.RoleExistsAsync("Customer"))
+                await roleManager.CreateAsync(new IdentityRole("Customer"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 
     private static async Task SeedUsers(UserManager<User> userManager)
