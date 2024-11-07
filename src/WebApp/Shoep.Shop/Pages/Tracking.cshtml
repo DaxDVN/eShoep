@@ -21,22 +21,116 @@
 <!--================Tracking Box Area =================-->
 <section class="tracking_box_area section_gap">
     <div class="container">
-        <div class="tracking_box_inner">
-            <p>
-                To track your order please enter your Order ID in the box below and press the "Track" button. This
-                was given to you on your receipt and in the confirmation email you should have received.
-            </p>
-            <form class="row tracking_form" action="#" method="post" novalidate="novalidate">
-                <div class="col-md-12 form-group">
-                    <input type="text" class="form-control" id="order" name="order" placeholder="Order ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Order ID'">
+        <div class="cart_inner">
+            @if (Model.Orders.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table" id="cart_table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Order</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var orderModel in Model.Orders)
+                        {
+                            <tr data-product-id="@orderModel.Id">
+                                <td>
+                                    @orderModel.Id
+                                </td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in orderModel.OrderItems)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <p>@item.ProductId</p>
+                                                </td>
+                                                <td>
+                                                    <h5>x @item.Quantity</h5>
+                                                </td>
+                                                <td>
+                                                    <p>$@(item.Price * item.Quantity)</p>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                        <tr>
+                                            <td>
+                                                <h4>Subtotal</h4>
+                                            </td>
+                                            <td>
+                                                <h5></h5>
+                                            </td>
+                                            <td>
+                                                <p>$@orderModel.TotalPrice</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4>Shipping</h4>
+                                            </td>
+                                            <td>
+                                                <h5></h5>
+                                            </td>
+                                            <td>
+                                                <p>Flat rate: $5.00</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h4>Total</h4>
+                                            </td>
+                                            <td>
+                                                <h5></h5>
+                                            </td>
+                                            <td>
+                                                <p>$@(orderModel.TotalPrice + 5)</p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <h5 class="item-price">$@orderModel.Status</h5>
+                                </td>
+                            </tr>
+                        }
+
+                        <tr class="out_button_area">
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <a class="gray_btn" asp-page="/ProductList">Continue Shopping</a>
+                                    <a class="primary-btn" asp-page="/Checkout">Proceed to checkout</a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-md-12 form-group">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Billing Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Billing Email Address'">
-                </div>
-                <div class="col-md-12 form-group">
-                    <button type="submit" value="submit" class="primary-btn">Track Order</button>
-                </div>
-            </form>
+            }
+            else
+            {
+                <h3>
+                    You have yet add anything to your cart
+                </h3>
+                <button class="btn btn-outline-info">
+                    Back to buy something!
+                </button>
+            }
         </div>
     </div>
 </section>

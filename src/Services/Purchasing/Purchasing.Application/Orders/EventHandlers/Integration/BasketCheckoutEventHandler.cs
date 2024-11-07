@@ -39,7 +39,8 @@ public class BasketCheckoutEventHandler(ISender sender, ILogger<BasketCheckoutEv
             addressDto,
             paymentDto,
             OrderStatus.Pending,
-            listOrderItemDto);
+            listOrderItemDto,
+            message.TotalPrice);
 
         return new CreateOrderCommand(orderDto);
     }
