@@ -58,7 +58,7 @@ public class ShoppingCartModel(
                 ProductName = productResponse.Product.Name,
                 Price = productResponse.Product.Price,
                 Quantity = qty,
-                ImageUrl = productResponse.Product.ProductImages.FirstOrDefault()?.ImageUrl,
+                ImageUrl = productResponse.Product.ProductImages.FirstOrDefault()?.ImageUrl
             });
         else
             itemExist.Quantity += qty;

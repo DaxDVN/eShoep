@@ -13,6 +13,7 @@ public class ProductDto
     public List<ProductImage> ProductImages { get; set; } = [];
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+
     public decimal DiscountedPrice
     {
         get => _discountedPrice ?? Price;

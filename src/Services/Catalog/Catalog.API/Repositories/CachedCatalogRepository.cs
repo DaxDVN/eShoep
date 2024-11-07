@@ -10,16 +10,11 @@ public class CachedCatalogRepository(ICatalogRepository repository, IDistributed
         try
         {
             var cachedBatch = await cache.GetStringAsync("cachedBatch", cancellationToken);
-            if (!string.IsNullOrWhiteSpace(cachedBatch))
-            {
-                return JsonSerializer.Deserialize<CatalogBatch>(cachedBatch);
-            }
+            if (!string.IsNullOrWhiteSpace(cachedBatch)) return JsonSerializer.Deserialize<CatalogBatch>(cachedBatch);
 
             var catalogBatch = await repository.GetBatchAsync(cancellationToken);
             if (cachedBatch is not null)
-            {
                 await cache.SetStringAsync("cachedBatch", JsonSerializer.Serialize(catalogBatch), cancellationToken);
-            }
 
             return catalogBatch;
         }

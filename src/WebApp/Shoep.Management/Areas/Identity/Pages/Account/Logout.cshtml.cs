@@ -7,19 +7,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Shoep.Management.Areas.Identity.Pages.Account
-{
-    public class LogoutModel : PageModel
-    {
-        public async Task<IActionResult> OnPost(string returnUrl = null)
-        {
-            await HttpContext.SignOutAsync("Cookies");
-            if (returnUrl != null)
-            {
-                return LocalRedirect(returnUrl);
-            }
+namespace Shoep.Management.Areas.Identity.Pages.Account;
 
-            return RedirectToPage();
-        }
+public class LogoutModel : PageModel
+{
+    public async Task<IActionResult> OnPost(string returnUrl = null)
+    {
+        await HttpContext.SignOutAsync("Cookies");
+        if (returnUrl != null) return LocalRedirect(returnUrl);
+
+        return RedirectToPage();
     }
 }

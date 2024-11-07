@@ -1,4 +1,5 @@
-﻿@model Shoep.Management.Models.Catalog.ProductModel
+﻿@using Shoep.Management.Models.Catalog
+@model Shoep.Management.Models.Catalog.ProductModel
 
 @{
     ViewData["Title"] = "Edit Product";
@@ -27,10 +28,10 @@
         <div class="form-group">
             <label for="CategoryId">Category</label>
             <select class="form-control" id="CategoryId" name="CategoryId" required>
-                @foreach (var category in (ViewBag.Categories as List<Shoep.Management.Models.Catalog.CategoryModel>)!)
+                @foreach (var category in (ViewBag.Categories as List<CategoryModel>)!)
                 {
                     <option value="@category.Id"
-                            selected="@((category.Id == Model.CategoryId) ? "selected" : "")">
+                            selected="@(category.Id == Model.CategoryId ? "selected" : "")">
                         @category.Name
                     </option>
                 }

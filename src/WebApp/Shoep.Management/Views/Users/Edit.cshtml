@@ -1,24 +1,24 @@
 ﻿@model Shoep.Management.Models.Auth.User
 
 @{
-ViewData["Title"] = "Update User";
+    ViewData["Title"] = "Update User";
 }
 
 <div class="container mt-4">
     <h2>Update User</h2>
     <form method="post" asp-controller="Users" asp-action="Edit" asp-route-id="@Model.Id">
-        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Id" value="@Model.Id"/>
         <div class="form-group">
             <label for="Firstname">Firstname</label>
-            <input type="text" class="form-control" id="Firstname" name="FirstName" value="@Model.FirstName" required />
+            <input type="text" class="form-control" id="Firstname" name="FirstName" value="@Model.FirstName" required/>
         </div>
         <div class="form-group">
             <label for="Lastname">Lastname</label>
-            <input type="text" class="form-control" id="Lastname" name="LastName" value="@Model.LastName" required />
+            <input type="text" class="form-control" id="Lastname" name="LastName" value="@Model.LastName" required/>
         </div>
         <div class="form-group">
             <label for="Email">Email</label>
-            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required />
+            <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required/>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <a asp-controller="Users" asp-action="Index" class="btn btn-secondary">Back to List</a>

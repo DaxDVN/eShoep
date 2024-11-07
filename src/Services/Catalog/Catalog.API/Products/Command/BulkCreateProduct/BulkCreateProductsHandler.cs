@@ -12,7 +12,8 @@ public record BulkCreateProductsResult(
 internal class BulkCreateProductsHandler(IDocumentSession session)
     : ICommandHandler<BulkCreateProductsCommand, BulkCreateProductsResult>
 {
-    public async Task<BulkCreateProductsResult> Handle(BulkCreateProductsCommand command, CancellationToken cancellationToken)
+    public async Task<BulkCreateProductsResult> Handle(BulkCreateProductsCommand command,
+        CancellationToken cancellationToken)
     {
         var productIds = new List<Guid>();
 

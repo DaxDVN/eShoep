@@ -33,9 +33,7 @@ public class BatchProductHandler(IDocumentSession session, ICatalogRepository ca
             discount.IsActive = false;
 
             if (discountedProducts.TryGetValue(discount.ProductId, out var product))
-            {
                 product.DiscountedPrice = product.Price;
-            }
         }
 
         var updatedProducts = expiredDiscounts

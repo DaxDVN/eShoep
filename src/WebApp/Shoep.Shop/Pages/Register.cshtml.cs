@@ -1,88 +1,83 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using Shoep.Shop.Models.Auth;
-using System.Threading.Tasks;
 
-namespace Shoep.Shop.Pages
+namespace Shoep.Shop.Pages;
+
+public class RegisterModel(
+    UserManager<User> userManager,
+    SignInManager<User> signInManager,
+    ILogger<RegisterModel> logger)
+    : PageModel
 {
-    public class RegisterModel(
-        UserManager<User> userManager,
-        SignInManager<User> signInManager,
-        ILogger<RegisterModel> logger)
-        : PageModel
-    {
-        [BindProperty]
-        public RegisterInputModel Input { get; set; }
-        public string RegistrationError { get; set; } = string.Empty;
+    [BindProperty] public RegisterInputModel Input { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+    public string RegistrationError { get; set; } = string.Empty;
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid) return Page();
+
+        var user = new User
         {
-            if (!ModelState.IsValid) return Page();
+            FirstName = Input.FirstName,
+            LastName = Input.LastName,
+            Email = Input.Email,
+            PhoneNumber = Input.PhoneNumber,
+            UserName = Input.Email
+        };
 
-            var user = new User
-            {
-                FirstName = Input.FirstName,
-                LastName = Input.LastName,
-                Email = Input.Email,
-                PhoneNumber = Input.PhoneNumber,
-                UserName = Input.Email
-            };
+        var result = await userManager.CreateAsync(user, Input.Password);
 
-            var result = await userManager.CreateAsync(user, Input.Password);
+        if (result.Succeeded)
+        {
+            logger.LogInformation("User registered successfully.");
 
-            if (result.Succeeded)
-            {
-                logger.LogInformation("User registered successfully.");
+            // Sign in the user if desired
+            await signInManager.SignInAsync(user, false);
 
-                // Sign in the user if desired
-                await signInManager.SignInAsync(user, isPersistent: false);
-
-                return RedirectToPage("/Login");
-            }
-
-            // Add errors to the ModelState
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-
-            RegistrationError = "Registration failed. Please check input again.";
-            return Page();
+            return RedirectToPage("/Login");
         }
+
+        // Add errors to the ModelState
+        foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
+
+        RegistrationError = "Registration failed. Please check input again.";
+        return Page();
     }
+}
 
-    public class RegisterInputModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+public class RegisterInputModel
+{
+    [Required]
+    [EmailAddress]
+    [Display(Name = "Email")]
+    public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+    [Required]
+    [Display(Name = "First Name")]
+    public string FirstName { get; set; }
 
-        [Required]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+    [Required]
+    [Display(Name = "Last Name")]
+    public string LastName { get; set; }
 
-        [Required]
-        [Phone]
-        [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
+    [Required]
+    [Phone]
+    [Display(Name = "Phone Number")]
+    public string PhoneNumber { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "The password must be at least {2} and at max {1} characters long.")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
+    [Required]
+    [StringLength(100, MinimumLength = 6,
+        ErrorMessage = "The password must be at least {2} and at max {1} characters long.")]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password")]
+    public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm Password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-    }
+    [DataType(DataType.Password)]
+    [Display(Name = "Confirm Password")]
+    [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+    public string ConfirmPassword { get; set; }
 }

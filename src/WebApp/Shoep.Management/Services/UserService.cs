@@ -25,20 +25,14 @@ public class UserService(UserManager<User> userManager) : IUserService
     public async Task<User?> GetUserById(string id)
     {
         var user = await userManager.FindByIdAsync(id);
-        if (user == null)
-        {
-            throw new KeyNotFoundException("User not found.");
-        }
+        if (user == null) throw new KeyNotFoundException("User not found.");
         return user;
     }
 
     public async Task<User?> GetUserByEmail(string email)
     {
         var user = await userManager.FindByEmailAsync(email);
-        if (user == null)
-        {
-            throw new KeyNotFoundException("User not found.");
-        }
+        if (user == null) throw new KeyNotFoundException("User not found.");
         return user;
     }
 
@@ -51,10 +45,7 @@ public class UserService(UserManager<User> userManager) : IUserService
     public async Task<bool> UpdateUser(User user)
     {
         var existingUser = await userManager.FindByIdAsync(user.Id);
-        if (existingUser == null)
-        {
-            throw new KeyNotFoundException("User not found.");
-        }
+        if (existingUser == null) throw new KeyNotFoundException("User not found.");
 
         existingUser.UserName = user.UserName;
         existingUser.Email = user.Email;
@@ -68,10 +59,7 @@ public class UserService(UserManager<User> userManager) : IUserService
     public async Task<bool> DeleteUser(string id)
     {
         var user = await userManager.FindByIdAsync(id);
-        if (user == null)
-        {
-            throw new KeyNotFoundException("User not found.");
-        }
+        if (user == null) throw new KeyNotFoundException("User not found.");
 
         var result = await userManager.DeleteAsync(user);
         return result.Succeeded;

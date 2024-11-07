@@ -1,27 +1,20 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using Shoep.Management.Models.Auth;
 using Shoep.Management.Services;
 
-namespace Shoep.Management.Areas.Identity.Pages.Account
-{
+namespace Shoep.Management.Areas.Identity.Pages.Account;
 
 public class LoginModel(
     SignInManager<User> signInManager,
@@ -36,25 +29,11 @@ public class LoginModel(
 
     [TempData] public string ErrorMessage { get; set; }
 
-    public class InputModel
-    {
-        [Required] [EmailAddress] public string Email { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        public bool RememberMe { get; set; }
-    }
-
     public async Task OnGetAsync(string returnUrl = null)
     {
-        ClaimsPrincipal currentUser = User;
+        var currentUser = User;
 
-        if (!string.IsNullOrEmpty(ErrorMessage))
-        {
-            ModelState.AddModelError(string.Empty, ErrorMessage);
-        }
+        if (!string.IsNullOrEmpty(ErrorMessage)) ModelState.AddModelError(string.Empty, ErrorMessage);
 
         returnUrl ??= Url.Content("~/");
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -89,15 +68,12 @@ public class LoginModel(
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Name, user.UserName ?? user.Email),
-            new Claim("access_token", accessToken)
+            new(ClaimTypes.NameIdentifier, user.Id),
+            new(ClaimTypes.Name, user.UserName ?? user.Email),
+            new("access_token", accessToken)
         };
 
-        foreach (var role in roles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
+        foreach (var role in roles) claims.Add(new Claim(ClaimTypes.Role, role));
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -113,5 +89,15 @@ public class LoginModel(
 
         return RedirectToPage("/Index");
     }
-}
+
+    public class InputModel
+    {
+        [Required] [EmailAddress] public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        public bool RememberMe { get; set; }
+    }
 }

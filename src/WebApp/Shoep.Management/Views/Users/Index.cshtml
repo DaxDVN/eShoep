@@ -9,12 +9,12 @@
     <a asp-controller="Users" asp-action="Create" class="btn btn-primary mb-3">Create New User</a>
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
         @foreach (var user in Model.Users)
@@ -43,7 +43,7 @@
                 </li>
             }
 
-            @for (int i = 1; i <= Model.TotalPages; i++)
+            @for (var i = 1; i <= Model.TotalPages; i++)
             {
                 <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
                     <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize">@i</a>

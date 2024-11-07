@@ -1,6 +1,7 @@
 ﻿using Catalog.API.Products.Command.CreateProduct;
 
 namespace Catalog.API.Products.Command.BulkCreateProduct;
+
 public record BulkCreateProductsRequest(
     List<CreateProductRequest> Products);
 
