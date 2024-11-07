@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Shoep.Management.Interfaces;
 using Shoep.Management.Models.Catalog;
 
@@ -9,7 +10,8 @@ namespace Shoep.Management.Controllers
         // Inject ICatalogService into the controller
 
         // GET: ProductsController
-        public async Task<ActionResult> Index(int pageNumber = 1, int pageSize = 10, int sortType = 1, string name = "", string category = "")
+        public async Task<ActionResult> Index(int pageNumber = 1, int pageSize = 10, int sortType = 1, string name = "",
+            string category = "")
         {
             try
             {
@@ -19,7 +21,11 @@ namespace Shoep.Management.Controllers
                 ViewBag.CurrentPage = pageNumber;
                 ViewBag.TotalPages = response.TotalProducts / 10;
                 ViewBag.PageSize = pageSize;
-
+                var categoriesJson = JsonConvert.SerializeObject(response.Categories);
+                HttpContext.Response.Cookies.Append("Categories", categoriesJson, new CookieOptions
+                {
+                    Expires = DateTimeOffset.Now.AddDays(7) // Set expiration time for the cookie
+                });
                 return View(response.Products);
             }
             catch
@@ -46,6 +52,12 @@ namespace Shoep.Management.Controllers
         // GET: ProductsController/Create
         public ActionResult Create()
         {
+            var categoriesCookie = HttpContext.Request.Cookies["Categories"];
+            if (categoriesCookie == null) return View();
+            var categories = JsonConvert.DeserializeObject<List<CategoryModel>>(categoriesCookie);
+
+            if (categories != null) ViewBag.Categories = categories;
+
             return View();
         }
 
@@ -58,7 +70,18 @@ namespace Shoep.Management.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var response = await catalogService.CreateProduct(product);
+                    product.Id = Guid.NewGuid();
+
+                    var temp = new CreateProductModel
+                    {
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        ProductImages = ["https://paymentcloudinc.com/blog/wp-content/uploads/2021/08/product-ideas-to-sell.jpg"],
+                        CategoryId = product.CategoryId.ToString(),
+                        StockQuantity = product.StockQuantity,
+                    };
+                    var response = await catalogService.CreateProduct(temp);
                     if (response.Id != null)
                     {
                         return RedirectToAction(nameof(Index));
@@ -67,7 +90,7 @@ namespace Shoep.Management.Controllers
 
                 return View();
             }
-            catch
+            catch (Exception ex)
             {
                 return View("Error");
             }
@@ -81,6 +104,12 @@ namespace Shoep.Management.Controllers
                 var response = await catalogService.GetProduct(id);
                 if (response.Product != null)
                 {
+                    var categoriesCookie = HttpContext.Request.Cookies["Categories"];
+                    if (categoriesCookie == null) return View();
+                    var categories = JsonConvert.DeserializeObject<List<CategoryModel>>(categoriesCookie);
+
+                    if (categories != null) ViewBag.Categories = categories;
+
                     return View(response.Product);
                 }
 
@@ -99,21 +128,33 @@ namespace Shoep.Management.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                var updateProductModel = new UpdateProductModel
                 {
-                    var response = await catalogService.UpdateProduct(true); // Assuming true is passed for success
-                    if (response.Success == true)
-                    {
-                        return RedirectToAction(nameof(Index));
-                    }
-                }
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    StockQuantity = product.StockQuantity,
+                    CategoryId = product.CategoryId.ToString(),
+                    ProductImages = ["https://paymentcloudinc.com/blog/wp-content/uploads/2021/08/product-ideas-to-sell.jpg"],
+                };
 
-                return View(product);
+                var response = await catalogService.UpdateProduct(updateProductModel);
+
+                if (response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Update Fail!");
+                }
             }
             catch
             {
                 return View("Error");
             }
+            return View(product);
         }
 
         // GET: ProductsController/Delete/5
@@ -142,8 +183,8 @@ namespace Shoep.Management.Controllers
         {
             try
             {
-                var response = await catalogService.DeleteProduct(true); // Assuming true for successful deletion
-                if (response.Success != null)
+                var response = await catalogService.DeleteProduct(id);
+                if (response.IsSuccess)
                 {
                     return RedirectToAction(nameof(Index));
                 }

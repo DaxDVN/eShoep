@@ -64,12 +64,19 @@ services:
       context: .
       dockerfile: WebApp/Shoep.Shop/Dockerfile
 
+  shoep.management:
+    image: ${DOCKER_REGISTRY-}shoepmanagement
+    build:
+      context: .
+      dockerfile: WebApp/Shoep.Management/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_promotion:
   postgres_basket:
   postgres_identity:
   postgres_purchasing:
+
 
 
 

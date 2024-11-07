@@ -11,7 +11,8 @@
         "identity.api": "StartDebugging",
         "shoep.shop": "StartDebugging",
         "discount.api": "StartDebugging",
-        "promotion.grpc": "StartDebugging"
+        "promotion.grpc": "StartDebugging",
+        "shoep.management": "StartDebugging"
       }
     }
   }

@@ -12,12 +12,26 @@ public interface ICatalogService
 
     [Get("/catalog-service/products/{id}")]
     Task<GetProductByIdResponse> GetProduct(Guid id);
+
     [Post("/catalog-service/products")]
-    Task<GetProductCreate> CreateProduct(ProductModel Product);
+    Task<CreateProductResponse> CreateProduct(CreateProductModel product);
 
     [Put("/catalog-service/products")]
-    Task<GetProductUpdate> UpdateProduct(bool succcess);
+    Task<UpdateProductResponse> UpdateProduct(UpdateProductModel product);
 
-    [Delete("/catalog-service/products")]
-    Task<GetProductDelete> DeleteProduct(bool succcess);
+    [Delete("/catalog-service/products/{id}")]
+    Task<DeleteProductResponse> DeleteProduct(Guid id);
 }
+
+public record GetProductsResponse(
+    IEnumerable<ProductModel> Products,
+    long TotalProducts,
+    List<CategoryModel> Categories);
+
+public record GetProductByIdResponse(ProductModel Product);
+
+public record CreateProductResponse(Guid Id);
+
+public record UpdateProductResponse(bool IsSuccess);
+
+public record DeleteProductResponse(bool IsSuccess);

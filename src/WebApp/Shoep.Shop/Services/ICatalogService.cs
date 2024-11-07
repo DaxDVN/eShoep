@@ -12,4 +12,5 @@ public interface ICatalogService
 
     [Get("/catalog-service/products/{id}")]
     Task<GetProductByIdResponse> GetProduct(Guid id);
+
 }
