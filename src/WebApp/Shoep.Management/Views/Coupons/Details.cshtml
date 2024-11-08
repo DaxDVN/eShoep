@@ -1,0 +1,45 @@
+﻿@model Shoep.Management.Models.Promotion.Coupon
+
+@{
+    ViewBag.Title = "Coupon Details";
+}
+
+<h2>Coupon Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Code</dt>
+            <dd class="col-sm-9">@Model.Code</dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3">Max Redemption</dt>
+            <dd class="col-sm-9">@(Model.MaxRedemptions == 0 ? "No limitation" : Model.MaxRedemptions)</dd>
+
+            <dt class="col-sm-3">Redemption Count</dt>
+            <dd class="col-sm-9">@(Model.RedemptionCount == 0 ? "Unknown" : Model.RedemptionCount)</dd>
+
+            <dt class="col-sm-3">CreatedAt</dt>
+            <dd class="col-sm-9">@Model.CreatedAt</dd>
+
+            <dt class="col-sm-3">ExpirationDate</dt>
+            <dd class="col-sm-9">@Model.ExpirationDate</dd>
+
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">@Model.PromotionType</dd>
+
+            <dt class="col-sm-3">Amount</dt>
+            <dd class="col-sm-9">@Model.Amount @(Model.PromotionType.ToString() == "FixedAmount" ? "" : "%")</dd>
+
+            <dt class="col-sm-3">Is Active</dt>
+            <dd class="col-sm-9">@(Model.IsActive ? "Yes" : "No")</dd>
+        </dl>
+    </div>
+</div>
+<a href="~/Coupons/Edit/@Model.Id" class="btn btn-primary">Edit Coupon</a>
+<a href="~/Coupons" class="btn btn-secondary">Back to List</a>

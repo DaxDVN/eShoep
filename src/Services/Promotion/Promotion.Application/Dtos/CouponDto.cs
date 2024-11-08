@@ -11,4 +11,5 @@ public class CouponDto
     public int RedemptionCount { get; set; } = 0;
     public DateTime ExpirationDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public bool IsActive { get; set; }
 }

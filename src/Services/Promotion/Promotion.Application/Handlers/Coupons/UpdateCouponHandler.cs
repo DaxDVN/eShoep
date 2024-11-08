@@ -9,7 +9,7 @@ public record UpdateCouponCommand(
     int MaxRedemptions,
     int RedemptionCount,
     DateTime ExpirationDate,
-    List<Guid> UserIds,
+    // List<Guid> UserIds,
     bool IsActive)
     : ICommand<UpdateCouponResult>;
 
@@ -60,7 +60,7 @@ internal class UpdateCouponCommandHandler(IDocumentSession session)
         coupon.ExpirationDate = command.ExpirationDate;
         coupon.RedemptionCount = command.RedemptionCount;
         coupon.MaxRedemptions = command.MaxRedemptions;
-        coupon.UserIds = command.UserIds;
+        // coupon.UserIds = command.UserIds;
         session.Update(coupon);
         await session.SaveChangesAsync(cancellationToken);
 

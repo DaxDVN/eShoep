@@ -1,0 +1,64 @@
+﻿@model Shoep.Management.Models.Promotion.UpdateCouponRequest;
+
+@{
+    ViewBag.Title = "Edit Coupon";
+}
+
+<h2>Edit Coupon</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id"/>
+
+    <div class="form-group">
+        <label asp-for="Code"></label>
+        <input asp-for="Code" class="form-control"/>
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control"/>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MaxRedemptions"></label>
+        <input asp-for="MaxRedemptions" type="number" class="form-control"/>
+        <span asp-validation-for="MaxRedemptions" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="RedemptionCount"></label>
+        <input asp-for="RedemptionCount" type="number" class="form-control" readonly/>
+        <span asp-validation-for="RedemptionCount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ExpirationDate"></label>
+        <input asp-for="ExpirationDate" type="datetime-local" class="form-control"/>
+        <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PromotionType"></label>
+        <select asp-for="PromotionType" class="form-control">
+            <option value="FixedAmount">Fixed Amount</option>
+            <option value="Percentage">Percentage</option>
+        </select>
+        <span asp-validation-for="PromotionType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Amount"></label>
+        <input asp-for="Amount" type="number" class="form-control"/>
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="IsActive" class="form-check-input" type="checkbox"/>
+        <label asp-for="IsActive" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+    <a href="~/Coupons" class="btn btn-secondary">Cancel</a>
+</form>
