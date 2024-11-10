@@ -86,13 +86,30 @@ public class CheckoutModel(
 
         if (coupon != null)
         {
+            var maxDiscountAmount = Order.TotalPrice * 3 / 10;
+
+
             if (coupon.PromotionType == PromotionType.Percentage)
             {
-                Order.TotalPrice -= Order.TotalPrice * coupon.Amount / 100;
+                var discountAmount = Order.TotalPrice * coupon.Amount / 100;
+
+                if (discountAmount > maxDiscountAmount)
+                {
+                    discountAmount = maxDiscountAmount;
+                }
+
+                Order.TotalPrice -= discountAmount;
             }
             else
             {
-                Order.TotalPrice -= coupon.Amount;
+                var discountAmount = (decimal)coupon.Amount;
+
+                if (discountAmount > maxDiscountAmount)
+                {
+                    discountAmount = maxDiscountAmount;
+                }
+
+                Order.TotalPrice -= discountAmount;
             }
         }
 

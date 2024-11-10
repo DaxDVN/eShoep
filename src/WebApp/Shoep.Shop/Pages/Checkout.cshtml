@@ -204,17 +204,15 @@
                         } else {
                             discountAmount = response.coupon.amount;
                         }
-
+                        var tempDiscount = discountAmount;
                         const maxDiscount = totalPrice * 0.3;
                         if (discountAmount > maxDiscount) {
                             discountAmount = maxDiscount;
                         }
 
                         const totalVal = totalPrice - discountAmount;
-                        let couponVal = 0;
-                        console.log(discountAmount)
-                        console.log(maxDiscount)
-                        if(discountAmount <= maxDiscount){
+                        let couponVal;
+                        if(tempDiscount <= maxDiscount){
                             couponVal = response.promotionType === "Percentage"
                                 ? discountAmount + "(-" + response.coupon.amount + "%)"
                                 : discountAmount;
@@ -224,7 +222,6 @@
                                 ? maxDiscount + "(-30%)"
                                 : maxDiscount;
                         }
-                        console.log(couponVal)
 
                         $('#couponMessage').text("Coupon applied: " +
                             (response.coupon.code === undefined

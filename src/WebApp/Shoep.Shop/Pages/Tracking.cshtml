@@ -4,45 +4,49 @@
 }
 
 <!-- Start Banner Area -->
-<section class="banner-area organic-breadcrumb">
+<section class="banner-area bg-light py-5">
     <div class="container">
-        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-between">
             <div class="col-first">
-                <h1>Order Tracking</h1>
+                <h1 class="display-6">Order Tracking</h1>
                 <nav class="d-flex align-items-center">
-                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
-                    <a href="category.html">Fashon Category</a>
+                    <a href="index.html" class="text-decoration-none text-dark">Home <span class="mx-2">/</span></a>
+                    <a href="category.html" class="text-decoration-none text-muted">Fashion Category</a>
                 </nav>
             </div>
         </div>
     </div>
 </section>
 <!-- End Banner Area -->
-<!--================Tracking Box Area =================-->
-<section class="tracking_box_area section_gap">
+
+<!-- Start Tracking Box Area -->
+<section class="tracking_box_area section_gap mt-5">
     <div class="container">
-        <div class="cart_inner">
-            @if (Model.Orders.Any())
-            {
+        <div class="card shadow-lg">
+            <div class="card-body">
+                @if (Model.Orders.Any())
+                {
                 <div class="table-responsive">
-                    <table class="table" id="cart_table">
-                        <thead>
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
                         <tr>
                             <th scope="col">Order</th>
+                            <th scope="col">Details</th>
                             <th scope="col">Status</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach (var orderModel in Model.Orders)
                         {
-                            <tr data-product-id="@orderModel.Id">
-                                <td>
-                                    @orderModel.Id
-                                </td>
-                                <td>
-                                    <table class="table">
+                        <tr>
+                            <td>
+                                <strong>@orderModel.Id</strong>
+                            </td>
+                            <td>
+                                <div class="table-responsive">
+                                    <table class="table mb-0">
                                         <thead>
-                                        <tr>
+                                        <tr class="table-light">
                                             <th scope="col">Product</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Total</th>
@@ -51,87 +55,52 @@
                                         <tbody>
                                         @foreach (var item in orderModel.OrderItems)
                                         {
-                                            <tr>
-                                                <td>
-                                                    <p>@item.ProductId</p>
-                                                </td>
-                                                <td>
-                                                    <h5>x @item.Quantity</h5>
-                                                </td>
-                                                <td>
-                                                    <p>$@(item.Price * item.Quantity)</p>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>@item.ProductId</td>
+                                            <td>x @item.Quantity</td>
+                                            <td>$@(item.Price * item.Quantity)</td>
+                                        </tr>
                                         }
-
-                                        <tr>
-                                            <td>
-                                                <h4>Subtotal</h4>
-                                            </td>
-                                            <td>
-                                                <h5></h5>
-                                            </td>
-                                            <td>
-                                                <p>$@orderModel.TotalPrice</p>
-                                            </td>
+                                        <tr class="table-secondary">
+                                            <td><strong>Subtotal</strong></td>
+                                            <td></td>
+                                            <td>$@orderModel.TotalPrice</td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <h4>Shipping</h4>
-                                            </td>
-                                            <td>
-                                                <h5></h5>
-                                            </td>
-                                            <td>
-                                                <p>Flat rate: $5.00</p>
-                                            </td>
+                                        <tr class="table-secondary">
+                                            <td><strong>Shipping</strong></td>
+                                            <td></td>
+                                            <td>Flat rate: $5.00</td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <h4>Total</h4>
-                                            </td>
-                                            <td>
-                                                <h5></h5>
-                                            </td>
-                                            <td>
-                                                <p>$@(orderModel.TotalPrice + 5)</p>
-                                            </td>
+                                        <tr class="table-dark text-white">
+                                            <td><strong>Total</strong></td>
+                                            <td></td>
+                                            <td>$@(orderModel.TotalPrice + 5)</td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </td>
-                                <td>
-                                    <h5 class="item-price">$@orderModel.Status</h5>
-                                </td>
-                            </tr>
-                        }
-
-                        <tr class="out_button_area">
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                                <div class="checkout_btn_inner d-flex align-items-center">
-                                    <a class="gray_btn" asp-page="/ProductList">Continue Shopping</a>
-                                    <a class="primary-btn" asp-page="/Checkout">Proceed to checkout</a>
                                 </div>
                             </td>
+                            <td class="align-middle text-center">
+                                <span class="badge bg-primary fs-6">@orderModel.Status</span>
+                            </td>
                         </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
-            }
-            else
-            {
-                <h3>
-                    You have yet add anything to your cart
-                </h3>
-                <button class="btn btn-outline-info">
-                    Back to buy something!
-                </button>
-            }
+                }
+                else
+                {
+                <div class="alert alert-warning text-center" role="alert">
+                    <h4 class="alert-heading">No Orders Found</h4>
+                    <p>You haven't purchased anything yet.</p>
+                    <a class="btn btn-outline-primary mt-3" asp-page="/ProductList">
+                        Back to Shop
+                    </a>
+                </div>
+                }
+            </div>
         </div>
     </div>
 </section>
-<!--================End Tracking Box Area =================-->
+<!-- End Tracking Box Area -->

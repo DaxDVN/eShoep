@@ -25,11 +25,18 @@ internal class GetProductsQueryHandler(IPublishEndpoint publishEndpoint, IDocume
         var pageSize = query.PageSize ?? 10;
         var skip = (pageNumber - 1) * pageSize;
 
+        var categoryFilter = new Category();
+        if (query.Category != "")
+            categoryFilter = await session.Query<Category>()
+                .FirstOrDefaultAsync(c => c.Name == query.Category, token: cancellationToken);
+
         var batch = session.CreateBatchQuery();
         QueryStatistics stats;
         var filterProductBatch = batch.Query<Product>()
             .Where(p => p.Name != null && query.Name != null &&
-                        p.Name.Contains(query.Name, StringComparison.OrdinalIgnoreCase));
+                        p.Name.Contains(query.Name, StringComparison.OrdinalIgnoreCase)
+                        && categoryFilter != null
+                        && (query.Category == "" || p.CategoryId == categoryFilter.Id));
 
         var pagingProductBatch = filterProductBatch
             .Stats(out stats).Skip(skip)
@@ -55,11 +62,7 @@ internal class GetProductsQueryHandler(IPublishEndpoint publishEndpoint, IDocume
             .GroupBy(img => img.ProductId)
             .ToDictionary(g => g.Key, g => g.ToList());
 
-        var categoryFilter = new Category();
-        if (query.Category != "") categoryFilter = categoryBatch.Result.FirstOrDefault(c => c.Name == query.Category);
-
         var productDtos = productBatch.Result
-            .Where(p => categoryFilter != null && (query.Category == "" || p.CategoryId == categoryFilter.Id))
             .Select(p => new ProductDto
             {
                 Id = p.Id,
