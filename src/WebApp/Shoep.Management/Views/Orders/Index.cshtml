@@ -1,1 +1,70 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Shoep.Management.Enum
+@model Shoep.Management.Models.Purchasing.PaginatedResult<Shoep.Management.Models.Purchasing.OrderModel>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Total Price</th>
+        <th>Status</th>
+        <th>Actions</th> <!-- Cột mới cho Action -->
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in Model.Data)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.CustomerId</td>
+            <td>@order.TotalPrice</td>
+            <td>
+                <select class="form-control" id="orderStatus_@order.Id" data-order-id="@order.Id">
+                    <option value="1" selected="@(order.Status == OrderStatus.Draft)">Draft</option>
+                    <option value="2" selected="@(order.Status == OrderStatus.Pending)">Pending</option>
+                    <option value="3" selected="@(order.Status == OrderStatus.Completed)">Completed</option>
+                    <option value="4" selected="@(order.Status == OrderStatus.Cancelled)">Cancelled</option>
+                </select>
+
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "Orders", new { id = order.Id })" class="btn btn-info btn-sm">View Detail</a>
+                <button class="btn btn-primary btn-sm change-status" data-order-id="@order.Id">Change Status</button>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    @* Pagination controls, based on the Model.PageIndex and Model.PageSize *@
+</div>
+
+<script>
+    document.querySelectorAll('.change-status').forEach(button => {
+        button.addEventListener('click', function() {
+            var orderId = button.getAttribute('data-order-id');
+            var status = document.getElementById(`orderStatus_${orderId}`).value;
+
+            fetch('/order/change-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ orderId: orderId, status: status })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Status updated successfully!');
+                } else {
+                    alert('Failed to update status');
+                }
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        });
+    });
+</script>

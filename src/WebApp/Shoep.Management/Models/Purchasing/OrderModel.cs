@@ -1,4 +1,6 @@
-﻿namespace Shoep.Management.Models.Purchasing;
+﻿using Shoep.Management.Enum;
+
+namespace Shoep.Management.Models.Purchasing;
 
 public record OrderModel(
     Guid Id,
@@ -23,14 +25,6 @@ public record AddressModel(
     string ZipCode);
 
 public record PaymentModel(string CardName, string CardNumber, string Expiration, string Cvv, int PaymentMethod);
-
-public enum OrderStatus
-{
-    Draft = 1,
-    Pending = 2,
-    Completed = 3,
-    Cancelled = 4
-}
 
 //wrapper classes
 public record GetOrdersResponse(PaginatedResult<OrderModel> Orders);
