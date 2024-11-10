@@ -7,11 +7,21 @@
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">General Information</div>
         <div class="card-body">
-            <p><strong>Order ID:</strong> @Model.Id</p>
-            <p><strong>Customer ID:</strong> @Model.CustomerId</p>
-            <p><strong>Order Name:</strong> @Model.OrderName</p>
-            <p><strong>Status:</strong> @Model.Status</p>
-            <p><strong>Total Price:</strong> @Model.TotalPrice.ToString("C")</p>
+            <p>
+                <strong>Order ID:</strong> @Model.Id
+            </p>
+            <p>
+                <strong>Customer ID:</strong> @Model.CustomerId
+            </p>
+            <p>
+                <strong>Order Name:</strong> @Model.OrderName
+            </p>
+            <p>
+                <strong>Status:</strong> @Model.Status
+            </p>
+            <p>
+                <strong>Total Price:</strong> @Model.TotalPrice.ToString("C")
+            </p>
         </div>
     </div>
 
@@ -19,13 +29,27 @@
     <div class="card mb-4">
         <div class="card-header bg-secondary text-white">Shipping Address</div>
         <div class="card-body">
-            <p><strong>First Name:</strong> @Model.ShippingAddress.FirstName</p>
-            <p><strong>Last Name:</strong> @Model.ShippingAddress.LastName</p>
-            <p><strong>Email:</strong> @Model.ShippingAddress.EmailAddress</p>
-            <p><strong>Address Line:</strong> @Model.ShippingAddress.AddressLine</p>
-            <p><strong>Country:</strong> @Model.ShippingAddress.Country</p>
-            <p><strong>State:</strong> @Model.ShippingAddress.State</p>
-            <p><strong>Zip Code:</strong> @Model.ShippingAddress.ZipCode</p>
+            <p>
+                <strong>First Name:</strong> @Model.ShippingAddress.FirstName
+            </p>
+            <p>
+                <strong>Last Name:</strong> @Model.ShippingAddress.LastName
+            </p>
+            <p>
+                <strong>Email:</strong> @Model.ShippingAddress.EmailAddress
+            </p>
+            <p>
+                <strong>Address Line:</strong> @Model.ShippingAddress.AddressLine
+            </p>
+            <p>
+                <strong>Country:</strong> @Model.ShippingAddress.Country
+            </p>
+            <p>
+                <strong>State:</strong> @Model.ShippingAddress.State
+            </p>
+            <p>
+                <strong>Zip Code:</strong> @Model.ShippingAddress.ZipCode
+            </p>
         </div>
     </div>
 
@@ -33,13 +57,27 @@
     <div class="card mb-4">
         <div class="card-header bg-secondary text-white">Billing Address</div>
         <div class="card-body">
-            <p><strong>First Name:</strong> @Model.BillingAddress.FirstName</p>
-            <p><strong>Last Name:</strong> @Model.BillingAddress.LastName</p>
-            <p><strong>Email:</strong> @Model.BillingAddress.EmailAddress</p>
-            <p><strong>Address Line:</strong> @Model.BillingAddress.AddressLine</p>
-            <p><strong>Country:</strong> @Model.BillingAddress.Country</p>
-            <p><strong>State:</strong> @Model.BillingAddress.State</p>
-            <p><strong>Zip Code:</strong> @Model.BillingAddress.ZipCode</p>
+            <p>
+                <strong>First Name:</strong> @Model.BillingAddress.FirstName
+            </p>
+            <p>
+                <strong>Last Name:</strong> @Model.BillingAddress.LastName
+            </p>
+            <p>
+                <strong>Email:</strong> @Model.BillingAddress.EmailAddress
+            </p>
+            <p>
+                <strong>Address Line:</strong> @Model.BillingAddress.AddressLine
+            </p>
+            <p>
+                <strong>Country:</strong> @Model.BillingAddress.Country
+            </p>
+            <p>
+                <strong>State:</strong> @Model.BillingAddress.State
+            </p>
+            <p>
+                <strong>Zip Code:</strong> @Model.BillingAddress.ZipCode
+            </p>
         </div>
     </div>
 
@@ -47,11 +85,17 @@
     <div class="card mb-4">
         <div class="card-header bg-info text-white">Payment Information</div>
         <div class="card-body">
-            <p><strong>Card Name:</strong> @Model.Payment.CardName</p>
+            <p>
+                <strong>Card Name:</strong> @Model.Payment.CardName
+            </p>
             <p><strong>Card Number:</strong> **** **** **** @Model.Payment.CardNumber[^4..]</p>
-            <p><strong>Expiration:</strong> @Model.Payment.Expiration</p>
+            <p>
+                <strong>Expiration:</strong> @Model.Payment.Expiration
+            </p>
             <p><strong>CVV:</strong> ***</p>
-            <p><strong>Payment Method:</strong> @Model.Payment.PaymentMethod</p>
+            <p>
+                <strong>Payment Method:</strong> @Model.Payment.PaymentMethod
+            </p>
         </div>
     </div>
 
@@ -71,12 +115,12 @@
                 <tbody>
                 @foreach (var item in Model.OrderItems)
                 {
-                <tr>
-                    <td>@item.ProductId</td>
-                    <td>@item.ProductName</td>
-                    <td>@item.Quantity</td>
-                    <td>@item.Price.ToString("C")</td>
-                </tr>
+                    <tr>
+                        <td>@item.ProductId</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Price.ToString("C")</td>
+                    </tr>
                 }
                 </tbody>
             </table>

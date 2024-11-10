@@ -34,10 +34,7 @@ public class CheckoutCartCommandHandler(
         if (basket == null) return new CheckoutCartResult(false);
 
 
-        if (cartCheckout.CouponApply != string.Empty)
-        {
-            cartCheckout = await ApplyCouponAsync(cartCheckout);
-        }
+        if (cartCheckout.CouponApply != string.Empty) cartCheckout = await ApplyCouponAsync(cartCheckout);
 
         var eventMessage = cartCheckout.Adapt<CartCheckoutEvent>();
         eventMessage.CartItems = new CartItemsCheckout(basket.Items.Select(item => new CartItemCheckout
@@ -67,23 +64,15 @@ public class CheckoutCartCommandHandler(
         decimal discountAmount;
 
         if (coupon.PromotionType == "FixedAmount")
-        {
             discountAmount = coupon.Amount;
-        }
         else
-        {
             discountAmount = cartCheckout.TotalPrice * coupon.Amount / 100;
-        }
 
         var maxDiscount = cartCheckout.TotalPrice * 0.3m;
-        if (discountAmount > maxDiscount)
-        {
-            discountAmount = maxDiscount;
-        }
+        if (discountAmount > maxDiscount) discountAmount = maxDiscount;
 
         cartCheckout.TotalPrice -= discountAmount;
 
         return cartCheckout;
     }
-
 }

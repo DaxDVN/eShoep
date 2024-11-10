@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Converters;
 
 namespace Shoep.Management.Enum;
+
 [JsonConverter(typeof(StringEnumConverter), true)]
 public enum OrderStatus
 {

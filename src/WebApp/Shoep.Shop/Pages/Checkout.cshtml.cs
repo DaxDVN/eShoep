@@ -7,7 +7,6 @@ using Shoep.Shop.Models.Basket;
 using Shoep.Shop.Models.Promotion;
 using Shoep.Shop.Models.Purchasing;
 using Shoep.Shop.Services;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Shoep.Shop.Pages;
 
@@ -93,10 +92,7 @@ public class CheckoutModel(
             {
                 var discountAmount = Order.TotalPrice * coupon.Amount / 100;
 
-                if (discountAmount > maxDiscountAmount)
-                {
-                    discountAmount = maxDiscountAmount;
-                }
+                if (discountAmount > maxDiscountAmount) discountAmount = maxDiscountAmount;
 
                 Order.TotalPrice -= discountAmount;
             }
@@ -104,10 +100,7 @@ public class CheckoutModel(
             {
                 var discountAmount = (decimal)coupon.Amount;
 
-                if (discountAmount > maxDiscountAmount)
-                {
-                    discountAmount = maxDiscountAmount;
-                }
+                if (discountAmount > maxDiscountAmount) discountAmount = maxDiscountAmount;
 
                 Order.TotalPrice -= discountAmount;
             }
@@ -122,9 +115,7 @@ public class CheckoutModel(
     public async Task<JsonResult> OnPostApplyCouponAsync([FromBody] string couponCode)
     {
         if (string.IsNullOrEmpty(couponCode))
-        {
             return new JsonResult(new { isValid = false, message = "Coupon code is required." });
-        }
 
         try
         {

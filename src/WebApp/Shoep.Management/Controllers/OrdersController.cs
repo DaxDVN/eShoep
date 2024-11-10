@@ -34,7 +34,8 @@ public class OrdersController(IOrderService orderService) : Controller
         try
         {
             var response =
-                await orderService.UpdateOrderStatus(new UpdateOrderStatusRequest(request.OrderId, request.Status.ToString()));
+                await orderService.UpdateOrderStatus(new UpdateOrderStatusRequest(request.OrderId,
+                    request.Status.ToString()));
             return Json(new { success = response.IsSuccess });
         }
         catch (Exception e)

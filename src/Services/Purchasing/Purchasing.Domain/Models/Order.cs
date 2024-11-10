@@ -5,6 +5,8 @@ namespace Purchasing.Domain.Models;
 public class Order : Aggregate<OrderId>
 {
     private readonly List<OrderItem> _orderItems = new();
+
+    [NotMapped] private decimal _discountedTotalPrice;
     public IReadOnlyList<OrderItem> OrderItems => _orderItems.AsReadOnly();
 
     public CustomerId CustomerId { get; private set; } = default!;
@@ -19,8 +21,6 @@ public class Order : Aggregate<OrderId>
         get => _discountedTotalPrice > 0 ? _discountedTotalPrice : OrderItems.Sum(x => x.Price * x.Quantity);
         private set => _discountedTotalPrice = value;
     }
-
-    [NotMapped] private decimal _discountedTotalPrice;
 
     [NotMapped]
     public decimal DiscountedTotalPrice

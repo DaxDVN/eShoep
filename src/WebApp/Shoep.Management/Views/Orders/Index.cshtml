@@ -49,7 +49,7 @@
                 </li>
             }
 
-            @for (int i = 1; i <= Math.Ceiling((double)Model.Count / Model.PageSize); i++)
+            @for (var i = 1; i <= Math.Ceiling((double)Model.Count / Model.PageSize); i++)
             {
                 <li class="page-item @(Model.PageIndex == i ? "active" : "")">
                     <a class="page-link" href="@Url.Action("Index", new { pageIndex = i, pageSize = Model.PageSize })">@i</a>

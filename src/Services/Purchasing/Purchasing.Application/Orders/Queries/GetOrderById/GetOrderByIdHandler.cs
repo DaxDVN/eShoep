@@ -21,7 +21,8 @@ public class GetOrderByIdHandler(IApplicationDbContext dbContext)
             orders.ShippingAddress.Adapt<AddressDto>(),
             orders.BillingAddress.Adapt<AddressDto>(),
             orders.Payment.Adapt<PaymentDto>(), orders.Status,
-            orders.OrderItems.Select(o => new OrderItemDto(o.OrderId.Value, o.ProductId.Value, o.ProductName, o.Quantity, o.Price)).ToList(),
+            orders.OrderItems.Select(o =>
+                new OrderItemDto(o.OrderId.Value, o.ProductId.Value, o.ProductName, o.Quantity, o.Price)).ToList(),
             orders.TotalPrice);
 
         return new GetOrderByIdResult(orderDto);

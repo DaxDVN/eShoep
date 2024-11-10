@@ -80,13 +80,9 @@ public class DiscountsController(IDiscountService discountService) : Controller
         var response = await discountService.ToggleStatusAsync(request);
 
         if (response.IsSuccess)
-        {
             ViewBag.Message = isActive ? "Discount activated successfully!" : "Discount deactivated successfully!";
-        }
         else
-        {
             ViewBag.Message = "Failed to update discount status.";
-        }
 
         return RedirectToAction("Index");
     }

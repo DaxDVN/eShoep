@@ -1,5 +1,4 @@
 ﻿using Basket.API.Repositories;
-using Promotion.API;
 
 namespace Basket.API.Carts.StoreCart;
 

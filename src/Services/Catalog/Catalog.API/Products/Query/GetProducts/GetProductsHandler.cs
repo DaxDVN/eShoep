@@ -28,7 +28,7 @@ internal class GetProductsQueryHandler(IPublishEndpoint publishEndpoint, IDocume
         var categoryFilter = new Category();
         if (query.Category != "")
             categoryFilter = await session.Query<Category>()
-                .FirstOrDefaultAsync(c => c.Name == query.Category, token: cancellationToken);
+                .FirstOrDefaultAsync(c => c.Name == query.Category, cancellationToken);
 
         var batch = session.CreateBatchQuery();
         QueryStatistics stats;

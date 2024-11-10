@@ -1,5 +1,4 @@
 ﻿using Promotion.Application.Handlers.Coupons;
-using Promotion.Application.Handlers.Discounts;
 
 namespace Promotion.API.Endpoints.Discounts;
 

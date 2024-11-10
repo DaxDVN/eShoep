@@ -1,5 +1,4 @@
 ﻿using Refit;
-using Shoep.Management.Enum;
 using Shoep.Management.Models.Purchasing;
 
 namespace Shoep.Management.Interfaces;

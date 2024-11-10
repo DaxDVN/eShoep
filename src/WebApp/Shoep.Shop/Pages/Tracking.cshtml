@@ -26,78 +26,84 @@
             <div class="card-body">
                 @if (Model.Orders.Any())
                 {
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Order</th>
-                            <th scope="col">Details</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var orderModel in Model.Orders)
-                        {
-                        <tr>
-                            <td>
-                                <strong>@orderModel.Id</strong>
-                            </td>
-                            <td>
-                                <div class="table-responsive">
-                                    <table class="table mb-0">
-                                        <thead>
-                                        <tr class="table-light">
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Total</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach (var item in orderModel.OrderItems)
-                                        {
-                                        <tr>
-                                            <td>@item.ProductId</td>
-                                            <td>x @item.Quantity</td>
-                                            <td>$@(item.Price * item.Quantity)</td>
-                                        </tr>
-                                        }
-                                        <tr class="table-secondary">
-                                            <td><strong>Subtotal</strong></td>
-                                            <td></td>
-                                            <td>$@orderModel.TotalPrice</td>
-                                        </tr>
-                                        <tr class="table-secondary">
-                                            <td><strong>Shipping</strong></td>
-                                            <td></td>
-                                            <td>Flat rate: $5.00</td>
-                                        </tr>
-                                        <tr class="table-dark text-white">
-                                            <td><strong>Total</strong></td>
-                                            <td></td>
-                                            <td>$@(orderModel.TotalPrice + 5)</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center">
-                                <span class="badge bg-primary fs-6">@orderModel.Status</span>
-                            </td>
-                        </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Order</th>
+                                <th scope="col">Details</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var orderModel in Model.Orders)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@orderModel.Id</strong>
+                                    </td>
+                                    <td>
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                <tr class="table-light">
+                                                    <th scope="col">Product</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Total</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach (var item in orderModel.OrderItems)
+                                                {
+                                                    <tr>
+                                                        <td>@item.ProductId</td>
+                                                        <td>x @item.Quantity</td>
+                                                        <td>$@(item.Price * item.Quantity)</td>
+                                                    </tr>
+                                                }
+                                                <tr class="table-secondary">
+                                                    <td>
+                                                        <strong>Subtotal</strong>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>$@orderModel.TotalPrice</td>
+                                                </tr>
+                                                <tr class="table-secondary">
+                                                    <td>
+                                                        <strong>Shipping</strong>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>Flat rate: $5.00</td>
+                                                </tr>
+                                                <tr class="table-dark text-white">
+                                                    <td>
+                                                        <strong>Total</strong>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>$@(orderModel.TotalPrice + 5)</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge bg-primary fs-6">@orderModel.Status</span>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 }
                 else
                 {
-                <div class="alert alert-warning text-center" role="alert">
-                    <h4 class="alert-heading">No Orders Found</h4>
-                    <p>You haven't purchased anything yet.</p>
-                    <a class="btn btn-outline-primary mt-3" asp-page="/ProductList">
-                        Back to Shop
-                    </a>
-                </div>
+                    <div class="alert alert-warning text-center" role="alert">
+                        <h4 class="alert-heading">No Orders Found</h4>
+                        <p>You haven't purchased anything yet.</p>
+                        <a class="btn btn-outline-primary mt-3" asp-page="/ProductList">
+                            Back to Shop
+                        </a>
+                    </div>
                 }
             </div>
         </div>
