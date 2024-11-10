@@ -56,7 +56,7 @@ public class ShoppingCartModel(
             {
                 ProductId = productId,
                 ProductName = productResponse.Product.Name,
-                Price = productResponse.Product.Price,
+                Price = productResponse.Product.DiscountedPrice,
                 Quantity = qty,
                 ImageUrl = productResponse.Product.ProductImages.FirstOrDefault()?.ImageUrl
             });

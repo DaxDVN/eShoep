@@ -40,7 +40,16 @@
             <div class="col-lg-5 offset-lg-1">
                 <div class="s_product_text">
                     <h3>@Model.Product.Name</h3>
-                    <h2>$@Model.Product.Price</h2>
+
+                    @if (Model.Product.DiscountedPrice != Model.Product.Price)
+                    {
+                        <h2>$@Model.Product.DiscountedPrice</h2>
+                        <h2 class="l-through">$@Model.Product.Price</h2>
+                    }
+                    else
+                    {
+                        <h2>$@Model.Product.Price</h2>
+                    }
                     <ul class="list">
                         <li>
                             <span class="active"><span>Category</span> : @Model.Product.Category?.Name</span>

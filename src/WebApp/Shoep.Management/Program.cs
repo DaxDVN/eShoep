@@ -53,6 +53,8 @@ builder.Services.AddRefitClient<IOrderService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
 builder.Services.AddRefitClient<ICouponService>()
     .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
+builder.Services.AddRefitClient<IDiscountService>()
+    .ConfigureHttpClient(c => { c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!); });
 
 
 builder.Services.AddScoped<TokenService>();

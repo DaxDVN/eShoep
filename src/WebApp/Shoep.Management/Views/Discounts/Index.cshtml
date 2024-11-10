@@ -1,0 +1,66 @@
+﻿@using Shoep.Management.Enum
+@model Shoep.Management.Interfaces.GeDiscountsResponse
+
+@{
+    ViewData["Title"] = "Discounts";
+}
+
+<h1>Discounts</h1>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<!-- Thêm nút Create ở đầu bảng -->
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Discounts")" class="btn btn-success">Create Discount</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Promotion Type</th>
+        <th>Amount</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Is Active</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var discount in Model.Discounts)
+    {
+        <tr>
+            <td>@discount.Name</td>
+            <td>@discount.PromotionType</td>
+            <td>@discount.Amount @(discount.PromotionType == PromotionType.Percentage ? "%" : "")</td>
+            <td>@discount.StartDate.ToString("yyyy-MM-dd")</td>
+            <td>@discount.EndDate.ToString("yyyy-MM-dd")</td>
+            <td>@(discount.IsActive ? "Active" : "Inactive")</td>
+            <td>
+                <form asp-action="ToggleStatus" asp-controller="Discounts" method="post" class="d-inline">
+                    <input type="hidden" name="id" value="@discount.Id"/>
+                    <input type="hidden" name="isActive" value="@(discount.IsActive ? "false" : "true")"/>
+                    <button type="submit" class="btn @(discount.IsActive ? "btn-secondary" : "btn-success") btn-sm">
+                        @(discount.IsActive ? "Deactivate" : "Activate")
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@if (Model.TotalDiscounts > Model.Discounts.Count())
+{
+    <div class="pagination">
+        <a href="@Url.Action("Index", new { pageNumber = ViewBag.PageNumber - 1, pageSize = ViewBag.PageSize })" class="btn btn-primary" @(ViewBag.PageNumber == 1 ? "disabled" : "")>
+            Previous
+        </a>
+        <a href="@Url.Action("Index", new { pageNumber = ViewBag.PageNumber + 1, pageSize = ViewBag.PageSize })" class="btn btn-primary" @(ViewBag.PageNumber * ViewBag.PageSize >= Model.TotalDiscounts ? "disabled" : "")>
+            Next
+        </a>
+    </div>
+}

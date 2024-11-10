@@ -164,8 +164,15 @@
                                         @product.Name
                                     </h6>
                                     <div class="price">
-                                        <h6>$@product.Price</h6>
-                                        <h6 class="l-through">$@product.Price</h6>
+                                        @if (product.DiscountedPrice != product.Price)
+                                        {
+                                            <h6>$@product.DiscountedPrice</h6>
+                                            <h6 class="l-through">$@product.Price</h6>
+                                        }
+                                        else
+                                        {
+                                            <h6>$@product.Price</h6>
+                                        }
                                     </div>
                                     <form id="add_cart_form" data-product-id="@product.Id" class="prd-bottom">
                                         <a href="#" class="social-info addToCartButton mr-4">

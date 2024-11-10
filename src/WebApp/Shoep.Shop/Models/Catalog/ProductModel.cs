@@ -12,6 +12,13 @@ public class ProductModel
     public List<ProductImage> ProductImages { get; set; } = [];
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
+    private decimal? _discountedPrice;
+
+    public decimal DiscountedPrice
+    {
+        get => _discountedPrice ?? Price;
+        set => _discountedPrice = value;
+    }
 }
 
 public record ProductImage(Guid Id, Guid ProductId, string ImageUrl, bool IsMain, DateTime CreatedAt);
