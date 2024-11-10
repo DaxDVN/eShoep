@@ -1,4 +1,6 @@
-﻿namespace Purchasing.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Purchasing.Domain.Models;
 
 public class OrderItem : Entity<OrderItemId>
 {
@@ -13,6 +15,7 @@ public class OrderItem : Entity<OrderItemId>
 
     public OrderId OrderId { get; private set; } = default!;
     public ProductId ProductId { get; private set; } = default!;
+    [NotMapped] public string? ProductName { get; private set; } = default!;
     public int Quantity { get; private set; }
     public decimal Price { get; private set; }
 }

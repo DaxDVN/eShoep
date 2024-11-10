@@ -1,21 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using Shoep.Management.Interfaces;
-using Shoep.Management.Models.Purchasing;
 
 namespace Shoep.Management.Controllers;
 
 public class OrdersController(IOrderService orderService) : Controller
 {
     // GET: OrdersController
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> Index(int pageIndex = 1, int pageSize = 5)
     {
-        var orders = (await orderService.GetOrders(new PaginationRequest())).Orders.Data.ToList();
-        return View(new PaginatedResult<OrderModel>(1, 10, orders.Count, orders));
+        var response = await orderService.GetOrders(new PaginationRequest(pageIndex, pageSize));
+        return View(response.Orders);
     }
 
     // GET: OrdersController/Details/5
-    public ActionResult Details(int id)
+    public async Task<ActionResult> Details(string id)
     {
-        return View();
+        try
+        {
+            var response = await orderService.GetOrderById(new Guid(id));
+            return View(response.Order);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

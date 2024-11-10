@@ -5,12 +5,15 @@ namespace Shoep.Management.Interfaces;
 
 public interface IOrderService
 {
-    [Get("/purchasing-service/orders/customer/{customerId}")]
-    Task<GetOrdersByCustomerResponse> GetOrdersByCustomer(string customerId);
-
     [Get("/purchasing-service/orders")]
     Task<GetOrdersResponse> GetOrders(PaginationRequest request);
+
+    [Get("/purchasing-service/orders/{id}")]
+    Task<GetOrderByIdResponse> GetOrderById(Guid id);
 }
 
-public record GetOrdersResponse(PaginatedResult<OrderModel> Orders);
+public record GetOrdersResponse(PaginatedResult<OrderDto> Orders);
+
 public record PaginationRequest(int PageIndex = 1, int PageSize = 10);
+
+public record GetOrderByIdResponse(OrderDto Order);
