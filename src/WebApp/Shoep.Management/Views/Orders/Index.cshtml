@@ -42,27 +42,27 @@
         <ul class="pagination">
             @if (Model.PageIndex > 1)
             {
-            <li class="page-item">
-                <a class="page-link" href="@Url.Action("Index", new { pageIndex = Model.PageIndex - 1, pageSize = Model.PageSize })" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageIndex = Model.PageIndex - 1, pageSize = Model.PageSize })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
             }
 
             @for (int i = 1; i <= Math.Ceiling((double)Model.Count / Model.PageSize); i++)
             {
-            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
-                <a class="page-link" href="@Url.Action("Index", new { pageIndex = i, pageSize = Model.PageSize })">@i</a>
-            </li>
+                <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { pageIndex = i, pageSize = Model.PageSize })">@i</a>
+                </li>
             }
 
             @if (Model.PageIndex < Math.Ceiling((double)Model.Count / Model.PageSize))
             {
-            <li class="page-item">
-                <a class="page-link" href="@Url.Action("Index", new { pageIndex = Model.PageIndex + 1, pageSize = Model.PageSize })" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action("Index", new { pageIndex = Model.PageIndex + 1, pageSize = Model.PageSize })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             }
         </ul>
     </nav>
@@ -75,24 +75,24 @@
             var orderId = button.getAttribute('data-order-id');
             var status = document.getElementById(`orderStatus_${orderId}`).value;
 
-            fetch('/order/change-status', {
+            fetch('/Orders/ChangeStatus', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ orderId: orderId, status: status })
+                body: JSON.stringify({ orderId: orderId, status: parseInt(status) })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Status updated successfully!');
-                } else {
-                    alert('Failed to update status');
-                }
-            })
-            .catch(error => {
-                alert('Error: ' + error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Status updated successfully!');
+                    } else {
+                        alert('Failed to update status: ' + (data.message || 'Unknown error'));
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error);
+                });
         });
     });
 </script>

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Shoep.Management.Enum;
 using Shoep.Management.Interfaces;
 
 namespace Shoep.Management.Controllers;
@@ -26,4 +27,21 @@ public class OrdersController(IOrderService orderService) : Controller
             throw;
         }
     }
+
+    [HttpPost]
+    public async Task<IActionResult> ChangeStatus([FromBody] ChangeStatusRequest request)
+    {
+        try
+        {
+            var response =
+                await orderService.UpdateOrderStatus(new UpdateOrderStatusRequest(request.OrderId, request.Status.ToString()));
+            return Json(new { success = response.IsSuccess });
+        }
+        catch (Exception e)
+        {
+            return Json(new { success = false, message = e.Message });
+        }
+    }
+
+    public record ChangeStatusRequest(Guid OrderId, OrderStatus Status);
 }

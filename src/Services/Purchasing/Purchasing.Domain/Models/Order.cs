@@ -83,4 +83,9 @@ public class Order : Aggregate<OrderId>
 
         _discountedTotalPrice = TotalPrice - discountAmount;
     }
+
+    public void UpdateStatus(OrderStatus newStatus)
+    {
+        Status = newStatus;
+    }
 }
