@@ -68,7 +68,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.Cart.Items)
+                    @foreach (var item in Model.Cart!.Items)
                     {
                         <tr>
                             <td>
@@ -107,13 +107,24 @@
                     </tr>
                     <tr>
                         <td>
+                            <h4>Discount</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>$@(Model.Cart.TotalPrice + 5 - Model.Order!.TotalPrice)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                             <h4>Total</h4>
                         </td>
                         <td>
                             <h5></h5>
                         </td>
                         <td>
-                            <p>$@(Model.Cart.TotalPrice + 5)</p>
+                            <p>$@(Model.Order.TotalPrice + 5)</p>
                         </td>
                     </tr>
                     <tr>

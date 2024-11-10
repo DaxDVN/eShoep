@@ -2,18 +2,23 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using Shoep.Shop.Enums;
 using Shoep.Shop.Models.Basket;
+using Shoep.Shop.Models.Promotion;
 using Shoep.Shop.Models.Purchasing;
 using Shoep.Shop.Services;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Shoep.Shop.Pages;
 
 public class CheckoutModel(
     IBasketService basketService,
+    ICouponService couponService,
     ILogger<ProductListModel> logger) : PageModel
 {
     public CartCheckoutModel Order { get; set; } = new();
     public CartModel Cart { get; set; } = new();
+    public string CouponCode { get; set; }
     [BindProperty] public CustomerCheckout UserInfo { get; set; } = new();
 
     public async Task<IActionResult> OnGetAsync()
@@ -58,6 +63,11 @@ public class CheckoutModel(
         Order.CustomerName = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)!.Value;
         Order.TotalPrice = Cart.TotalPrice;
 
+        var coupon = JsonConvert.DeserializeObject<Coupon>(TempData["Coupon"]?.ToString() ?? string.Empty);
+        var orderCouponApply = coupon?.Code;
+        if (orderCouponApply != null)
+            Order.CouponApply = orderCouponApply;
+
         Order.FirstName = UserInfo.FirstName!;
         Order.LastName = UserInfo.Lastname!;
         Order.EmailAddress = UserInfo.Email!;
@@ -74,9 +84,75 @@ public class CheckoutModel(
 
         await basketService.CheckoutBasket(new CheckoutCartRequest(Order));
 
+        if (coupon != null)
+        {
+            if (coupon.PromotionType == PromotionType.Percentage)
+            {
+                Order.TotalPrice -= Order.TotalPrice * coupon.Amount / 100;
+            }
+            else
+            {
+                Order.TotalPrice -= coupon.Amount;
+            }
+        }
+
         TempData["Cart"] = JsonConvert.SerializeObject(Cart);
         TempData["Order"] = JsonConvert.SerializeObject(Order);
 
         return RedirectToPage("/Confirmation");
+    }
+
+    public async Task<JsonResult> OnPostApplyCouponAsync([FromBody] string couponCode)
+    {
+        if (string.IsNullOrEmpty(couponCode))
+        {
+            return new JsonResult(new { isValid = false, message = "Coupon code is required." });
+        }
+
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId != null)
+            {
+                Cart = await basketService.LoadUserBasket(userId);
+                var coupon = await couponService.GetCouponByCode(userId, couponCode);
+                if (coupon != null)
+                {
+                    TempData["Coupon"] = JsonConvert.SerializeObject(coupon.Coupon);
+                    await basketService.StoreBasket(new StoreCartRequest(Cart));
+                    return new JsonResult(new
+                    {
+                        isValid = true, coupon.Coupon,
+                        promotionType = coupon.Coupon.PromotionType.ToString()
+                    });
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return new JsonResult(new { isValid = false, message = "Coupon is invalid." });
+    }
+
+
+    public async Task<JsonResult> OnPostCancelCouponAsync()
+    {
+        try
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId != null)
+            {
+                Cart = await basketService.LoadUserBasket(userId);
+                return new JsonResult(new { isValid = true });
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return new JsonResult(new { isValid = false });
     }
 }

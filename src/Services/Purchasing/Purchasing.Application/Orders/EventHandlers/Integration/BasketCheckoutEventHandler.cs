@@ -10,7 +10,6 @@ public class BasketCheckoutEventHandler(ISender sender, ILogger<BasketCheckoutEv
 {
     public async Task Consume(ConsumeContext<CartCheckoutEvent> context)
     {
-        // TODO: Create new order and start order fullfillment process
         logger.LogInformation("Integration Event handled: {IntegrationEvent}", context.Message.GetType().Name);
 
         var command = MapToCreateOrderCommand(context.Message);

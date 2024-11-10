@@ -13,7 +13,7 @@ public class CouponService(ILogger<CouponService> logger, ISender sender)
     {
         try
         {
-            var command = new ApplyCouponCommand(Guid.Parse(request.UserId), Guid.Parse(request.CouponId));
+            var command = new ApplyCouponCommand(Guid.Parse(request.UserId), request.CouponCode);
             var result = await sender.Send(command, context.CancellationToken);
 
             logger.LogInformation("Coupon retrieved for UserId: {productId}, Amount: {amount}",

@@ -1,4 +1,6 @@
-﻿namespace Purchasing.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Purchasing.Domain.Models;
 
 public class Order : Aggregate<OrderId>
 {
@@ -14,8 +16,17 @@ public class Order : Aggregate<OrderId>
 
     public decimal TotalPrice
     {
-        get => OrderItems.Sum(x => x.Price * x.Quantity);
-        private set { }
+        get => _discountedTotalPrice > 0 ? _discountedTotalPrice : OrderItems.Sum(x => x.Price * x.Quantity);
+        private set => _discountedTotalPrice = value;
+    }
+
+    [NotMapped] private decimal _discountedTotalPrice;
+
+    [NotMapped]
+    public decimal DiscountedTotalPrice
+    {
+        get => _discountedTotalPrice > 0 ? _discountedTotalPrice : TotalPrice;
+        set => _discountedTotalPrice = value;
     }
 
     public static Order Create(OrderId id, CustomerId customerId, OrderName orderName, Address shippingAddress,
@@ -62,5 +73,14 @@ public class Order : Aggregate<OrderId>
     {
         var orderItem = _orderItems.FirstOrDefault(x => x.ProductId == productId);
         if (orderItem is not null) _orderItems.Remove(orderItem);
+    }
+
+    public void ApplyCoupon(decimal discountAmount)
+    {
+        if (discountAmount < 0 || discountAmount > TotalPrice)
+            throw new ArgumentOutOfRangeException(nameof(discountAmount),
+                "Discount amount must be positive and less than the total price.");
+
+        _discountedTotalPrice = TotalPrice - discountAmount;
     }
 }

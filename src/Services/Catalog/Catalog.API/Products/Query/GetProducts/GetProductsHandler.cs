@@ -1,4 +1,6 @@
-﻿using Marten.Linq;
+﻿using Common.Messaging.Events;
+using Marten.Linq;
+using MassTransit;
 
 namespace Catalog.API.Products.Query.GetProducts;
 
@@ -12,11 +14,13 @@ public record GetProductsQuery(
 
 public record GetProductsResult(IEnumerable<ProductDto> Products, long TotalProducts, List<Category> Categories);
 
-internal class GetProductsQueryHandler(IDocumentSession session)
+internal class GetProductsQueryHandler(IPublishEndpoint publishEndpoint, IDocumentSession session)
     : IQueryHandler<GetProductsQuery, GetProductsResult>
 {
     public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
     {
+        await publishEndpoint.Publish(new CatalogBatchEvent(), cancellationToken);
+
         var pageNumber = query.PageNumber ?? 1;
         var pageSize = query.PageSize ?? 10;
         var skip = (pageNumber - 1) * pageSize;

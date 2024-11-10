@@ -12,7 +12,7 @@ service CouponProtoService {
 
 message ApplyCouponRequest {
   string userId = 1;
-  string couponId = 2;
+  string couponCode = 2;
 }
 
 message CouponModel {

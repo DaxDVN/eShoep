@@ -18,7 +18,7 @@ public interface IBasketService
     [Post("/basket-service/basket/checkout")]
     Task<CheckoutCartResponse> CheckoutBasket(CheckoutCartRequest request);
 
-    public async Task<CartModel> LoadUserBasket(string userId = "swn")
+    public async Task<CartModel> LoadUserBasket(string userId = "dax")
     {
         CartModel basket;
 

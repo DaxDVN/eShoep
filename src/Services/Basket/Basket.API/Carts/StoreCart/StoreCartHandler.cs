@@ -17,29 +17,13 @@ public class StoreCartCommandValidator : AbstractValidator<StoreCartCommand>
 }
 
 public class StoreCartCommandHandler(
-    IBasketRepository repository,
-    CouponProtoService.CouponProtoServiceClient couponProto)
+    IBasketRepository repository)
     : ICommandHandler<StoreCartCommand, StoreCartResult>
 {
     public async Task<StoreCartResult> Handle(StoreCartCommand command, CancellationToken cancellationToken)
     {
-        await DeductPromotion(command.Cart, cancellationToken);
-
         await repository.StoreCart(command.Cart, cancellationToken);
 
         return new StoreCartResult(command.Cart.UserId);
-    }
-
-    private async Task DeductPromotion(Cart cart, CancellationToken cancellationToken)
-    {
-        // foreach (var item in cart.Items)
-        // {
-        //     var coupon = await couponProto.GetCouponAsync(new GetCouponRequest
-        //         { ProductId = item.ProductId.ToString() });
-        //     if (coupon.CouponType == "FixedAmount")
-        //         item.Price -= coupon.Amount;
-        //     else
-        //         item.Price -= item.Price * coupon.Amount / 100;
-        // }
     }
 }

@@ -4,8 +4,8 @@ public class CartCheckoutModel
 {
     public Guid CustomerId { get; set; } = default!;
     public string CustomerName { get; set; } = default!;
-
     public decimal TotalPrice { get; set; } = default!;
+    public string CouponApply { get; set; } = string.Empty;
 
     // Shipping and BillingAddress
     public string FirstName { get; set; } = default!;

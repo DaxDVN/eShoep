@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using Shoep.Shop.Models.Basket;
+using Shoep.Shop.Models.Promotion;
 
 namespace Shoep.Shop.Pages;
 

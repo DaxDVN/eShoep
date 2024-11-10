@@ -25,8 +25,10 @@
             <div class="check_title">
                 <h2>Have a coupon?</h2>
             </div>
-            <input type="text" placeholder="Enter coupon code">
-            <a class="tp_btn" href="#">Apply Coupon</a>
+            <input type="text" id="couponInput" placeholder="Enter coupon code">
+            <a id="applyCouponBtn" class="tp_btn">Apply Coupon</a>
+            <a id="cancelCouponBtn" class="tp_btn">Cancel Coupon</a>
+            <span id="couponMessage"></span>
         </div>
         <div class="billing_details">
             <div class="row">
@@ -128,16 +130,16 @@
 
                         <ul class="list list_2">
                             <li>
-                                <a href="#">Subtotal <span>$@Model.Cart.TotalPrice</span></a>
+                                <a href="#">Subtotal <span id="subPrice" data-val="@Model.Cart.TotalPrice">$@Model.Cart.TotalPrice</span></a>
                             </li>
                             <li>
                                 <a href="#">Shipping <span>$5</span></a>
                             </li>
                             <li>
-                                <a href="#">Promotion <span>$50.00</span></a>
+                                <a href="#" id="couponTag">Coupon: <span id="couponVal">$50.00</span></a>
                             </li>
                             <li>
-                                <a href="#">Total <span>$@(Model.Cart.TotalPrice + 5)</span></a>
+                                <a href="#">Total <span id="totalPrice" data-val="@(Model.Cart.TotalPrice + 5)">$@(Model.Cart.TotalPrice + 5)</span></a>
                             </li>
                         </ul>
                         <div class="creat_account">
@@ -157,6 +159,9 @@
 
 <script>
     $(document).ready(function() {
+        const cancelBtn = $('#cancelCouponBtn');
+        cancelBtn.hide();
+        $("#couponTag").hide();
         $('.product-name').each(function() {
             const maxLength = 20; 
             let text = $(this).text().trim();
@@ -169,5 +174,112 @@
             e.preventDefault(); 
             $('#checkoutForm').submit();
         });
+
+        $('#applyCouponBtn').on('click', function (e) {
+            e.preventDefault();
+            const couponCode = $('#couponInput').val();
+            if (couponCode.trim() === "") {
+                $('#couponMessage').text("Please enter a coupon code.");
+                return;
+            }
+
+            $.ajax({
+                url: '/Checkout?handler=ApplyCoupon',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify(couponCode),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.isValid) {
+                        const totalPrice = $('#totalPrice').data('val');
+                        let discountAmount;
+
+                        if (response.promotionType === "Percentage") {
+                            discountAmount = totalPrice * (response.coupon.amount / 100);
+                        } else {
+                            discountAmount = response.coupon.amount;
+                        }
+
+                        const maxDiscount = totalPrice * 0.3;
+                        if (discountAmount > maxDiscount) {
+                            discountAmount = maxDiscount;
+                        }
+
+                        const totalVal = totalPrice - discountAmount;
+                        let couponVal = 0;
+                        console.log(discountAmount)
+                        console.log(maxDiscount)
+                        if(discountAmount <= maxDiscount){
+                            couponVal = response.promotionType === "Percentage"
+                                ? discountAmount + "(-" + response.coupon.amount + "%)"
+                                : discountAmount;
+                        }
+                        else{
+                            couponVal = response.promotionType === "Percentage"
+                                ? maxDiscount + "(-30%)"
+                                : maxDiscount;
+                        }
+                        console.log(couponVal)
+
+                        $('#couponMessage').text("Coupon applied: " +
+                            (response.coupon.code === undefined
+                                ? response.coupon.Code
+                                : response.coupon.code));
+                        $('#applyCouponBtn').hide();
+                        $(cancelBtn).show();
+                        $('#couponInput').val('');
+                        $("#couponTag").show();
+
+                        $('#couponVal').html("$" + couponVal);
+                        $('#totalPrice').html("$" + totalVal);
+                    } else {
+                        $('#couponMessage').text("Coupon is invalid");
+                    }
+                },
+                error: function () {
+                    $('#couponMessage').text("An error occurred. Please try again.");
+                }
+            });
+        });
+
+
+        $(cancelBtn).on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/Checkout?handler=CancelCoupon',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success: function (response) {
+                    if (response.isValid) {
+                    const couponVal = $('#couponVal');
+                        $('#couponMessage').text("");
+                        $('#applyCouponBtn').show();
+                        $('#cancelCouponBtn').hide();
+                        $('#couponInput').val('');
+                        $(couponVal).html("");
+                        $("#couponTag").hide();
+                        const totalPriceTxt = $('#totalPrice');
+                        $(totalPriceTxt).html("$" + $(totalPriceTxt).data('val'));
+
+                    } else {
+                        $('#couponMessage').text("Somethings went wrong, please try again.");
+                    }
+                },
+                error: function () {
+                    $('#couponMessage').text("An error occurred. Please try again.");
+                }
+            });
+        });
+
     });
 </script>
