@@ -54,11 +54,17 @@ public class LoginModel(
 
         logger.LogInformation("User logged in.");
 
-        // Sinh token
         var user = await signInManager.UserManager.FindByEmailAsync(Input.Email);
 
         var roles = await userManager.GetRolesAsync(user);
-
+        var roleName = roles.FirstOrDefault();
+        if (roleName is not null)
+        {
+            if (roleName != "Admin")
+            {
+                return Page();
+            }
+        }
         var accessToken = await tokenService.GenerateTokenAsync(user);
 
         var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));

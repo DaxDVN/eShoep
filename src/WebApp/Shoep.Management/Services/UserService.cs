@@ -14,6 +14,7 @@ public class UserService(UserManager<User> userManager) : IUserService
         var totalPages = (int)Math.Ceiling((double)totalUsers / pageSize);
 
         var users = await userManager.Users
+            .Where(u => !u.Email!.Contains("admin", StringComparison.CurrentCultureIgnoreCase))
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
